@@ -3,3 +3,8 @@
 ################################################################################
 
 /RealEstate/RealEstate/obj/Debug/netstandard2.0
+/RealEstate/RealEstate.Entities/obj
+/RealEstate/RealEstate.Interfaces/obj
+/RealEstate/RealEstate.MVC/obj
+/RealEstate/RealEstate/obj
+/RealEstate/.vs/RealEstate/v16

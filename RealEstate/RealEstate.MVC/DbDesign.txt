@@ -1,0 +1,8 @@
+-Propery (type, Title, description,AgentId, Status, Area)
+-Documents(Id, Bytes)
+-Images(Id, documentId)
+-ItemImages(ItemId, ImageId)
+-PropertyTypes (Id, Name)
+-Agent(Id, UserId, IsVerified)
+ -PropertyStatus(Id, Name)
+-
