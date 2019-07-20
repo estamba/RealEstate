@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using RealEstate.Core.Entities;
 using System;
 
@@ -7,22 +8,23 @@ namespace RealEstate.Repository
 {
     public class RealEstateDbContext : IdentityDbContext<ApplicationUser>
     {
+        private readonly IConfiguration configuration;
 
-        public RealEstateDbContext()
+        public RealEstateDbContext(IConfiguration configuration)
         {
-
+            this.configuration = configuration;
         }
-        public RealEstateDbContext(DbContextOptions<RealEstateDbContext> options) :base(options)
-        {
-            
-        }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //public RealEstateDbContext(DbContextOptions<RealEstateDbContext> options, IConfiguration configuration) :base(options)
         //{
-        //    if (!optionsBuilder.IsConfigured)
-        //    {
-        //        optionsBuilder.UseSqlServer("Server=localhost;Database=RealEstate;Trusted_Connection=True;MultipleActiveResultSets=true;Integrated Security=SSPI");
-        //    }
+        //    this.configuration = configuration;
         //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+              optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            }
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -37,6 +39,11 @@ namespace RealEstate.Repository
                 .WithMany(PI => PI.PropertyImages)
                 .HasForeignKey(PI => PI.ImageId);
 
+            modelBuilder.Entity<Agent>()
+            .Property(a => a.Isverified)
+            .HasDefaultValue(false);
+
+        
         }
         public DbSet<Agent> Agent { get; set; }
         public DbSet<Document> Document { get; set; }

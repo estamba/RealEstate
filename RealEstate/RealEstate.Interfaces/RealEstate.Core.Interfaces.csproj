@@ -4,4 +4,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="ApplicationUser\" />
+    <Folder Include="Services\ApplicationUsers\" />
+    <Folder Include="Services\Properties\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RealEstate.Entities\RealEstate.Core.Entities.csproj" />
+  </ItemGroup>
+
 </Project>

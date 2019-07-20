@@ -14,6 +14,7 @@
           "Microsoft.Extensions.Identity.Stores": "2.2.0",
           "NETStandard.Library": "2.0.3",
           "RealEstate.Core.Entities": "1.0.0",
+          "RealEstate.Core.Interfaces": "1.0.0",
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "2.2.0.0"
         },
         "runtime": {
@@ -645,6 +646,14 @@
           "RealEstate.Core.Entities.dll": {}
         }
       },
+      "RealEstate.Core.Interfaces/1.0.0": {
+        "dependencies": {
+          "RealEstate.Core.Entities": "1.0.0"
+        },
+        "runtime": {
+          "RealEstate.Core.Interfaces.dll": {}
+        }
+      },
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore/2.2.0.0": {
         "runtime": {
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll": {
@@ -1096,6 +1105,11 @@
       "hashPath": "system.threading.tasks.4.0.11.nupkg.sha512"
     },
     "RealEstate.Core.Entities/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "RealEstate.Core.Interfaces/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

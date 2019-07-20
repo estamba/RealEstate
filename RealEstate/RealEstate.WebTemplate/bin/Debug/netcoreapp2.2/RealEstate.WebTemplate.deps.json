@@ -242,12 +242,24 @@
           "RealEstate.Core.Entities.dll": {}
         }
       },
+      "RealEstate.Core.Interfaces/1.0.0": {
+        "dependencies": {
+          "RealEstate.Core.Entities": "1.0.0"
+        },
+        "runtime": {
+          "RealEstate.Core.Interfaces.dll": {}
+        },
+        "compile": {
+          "RealEstate.Core.Interfaces.dll": {}
+        }
+      },
       "RealEstate.Repositories/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "2.2.6",
           "Microsoft.EntityFrameworkCore.SqlServer": "2.2.6",
           "Microsoft.Extensions.Identity.Stores": "2.2.0",
-          "RealEstate.Core.Entities": "1.0.0"
+          "RealEstate.Core.Entities": "1.0.0",
+          "RealEstate.Core.Interfaces": "1.0.0"
         },
         "runtime": {
           "RealEstate.Repositories.dll": {}
@@ -3441,6 +3453,11 @@
       "hashPath": "system.text.encoding.codepages.4.5.0.nupkg.sha512"
     },
     "RealEstate.Core.Entities/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "RealEstate.Core.Interfaces/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

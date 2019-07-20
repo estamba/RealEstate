@@ -136,7 +136,9 @@ namespace RealEstate.Repositories.Migrations
 
                     b.Property<string>("ApplicationUserId");
 
-                    b.Property<bool>("Isverified");
+                    b.Property<bool>("Isverified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.HasKey("Id");
 

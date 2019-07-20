@@ -32,3 +32,5 @@ C:\ws\RealEstate\RealEstate\RealEstate.WebTemplate\bin\Debug\netcoreapp2.2\RealE
 C:\ws\RealEstate\RealEstate\RealEstate.WebTemplate\bin\Debug\netcoreapp2.2\RealEstate.Core.Entities.pdb
 C:\ws\RealEstate\RealEstate\RealEstate.WebTemplate\bin\Debug\netcoreapp2.2\RealEstate.Repositories.pdb
 C:\ws\RealEstate\RealEstate\RealEstate.WebTemplate\obj\Debug\netcoreapp2.2\RealEstate.WebTemplate.csprojAssemblyReference.cache
+C:\ws\RealEstate\RealEstate\RealEstate.WebTemplate\bin\Debug\netcoreapp2.2\RealEstate.Core.Interfaces.dll
+C:\ws\RealEstate\RealEstate\RealEstate.WebTemplate\bin\Debug\netcoreapp2.2\RealEstate.Core.Interfaces.pdb

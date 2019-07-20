@@ -12,3 +12,5 @@ C:\ws\RealEstate\RealEstate\RealEstate.Repository\bin\Debug\netstandard2.0\RealE
 C:\ws\RealEstate\RealEstate\RealEstate.Repository\obj\Debug\netstandard2.0\RealEstate.Repositories.csproj.CopyComplete
 C:\ws\RealEstate\RealEstate\RealEstate.Repository\obj\Debug\netstandard2.0\RealEstate.Repositories.dll
 C:\ws\RealEstate\RealEstate\RealEstate.Repository\obj\Debug\netstandard2.0\RealEstate.Repositories.pdb
+C:\ws\RealEstate\RealEstate\RealEstate.Repository\bin\Debug\netstandard2.0\RealEstate.Core.Interfaces.dll
+C:\ws\RealEstate\RealEstate\RealEstate.Repository\bin\Debug\netstandard2.0\RealEstate.Core.Interfaces.pdb

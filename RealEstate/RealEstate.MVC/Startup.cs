@@ -35,17 +35,21 @@ namespace RealEstate.MVC
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            
 
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<RealEstateDbContext>()
+    .AddDefaultTokenProviders();
 
-            services.AddIdentityCore<ApplicationUser>()
-    .AddEntityFrameworkStores<RealEstateDbContext>();
+            services.AddServices()
+                .AddRepositories();
 
             services.Configure<IdentityOptions>(options =>
             {
                 // Password settings.
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = true;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = true;
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 1;
@@ -67,7 +71,7 @@ namespace RealEstate.MVC
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 
-                options.LoginPath = "/Identity/Account/Login";
+                options.LoginPath = "/Account/Login";
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });

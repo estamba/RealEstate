@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RealEstate.Entities\RealEstate.Core.Entities.csproj" />
+    <ProjectReference Include="..\RealEstate.Interfaces\RealEstate.Core.Interfaces.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RealEstate.Repository\RealEstate.Repositories.csproj" />
+    <ProjectReference Include="..\RealEstate\RealEstate.Core.Services.csproj" />
   </ItemGroup>
 
 

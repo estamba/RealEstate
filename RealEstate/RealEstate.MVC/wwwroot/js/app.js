@@ -412,7 +412,7 @@ $(function () {
     }
     $(document).on('click', '.color-plate', function () {
         var name = $(this).attr('data-color');
-        $('link[id="style_sheet"]').attr('href', 'css/skins/' + name + '.css');
+        $('link[id="style_sheet"]').attr('href', '~/css/skins/' + name + '.css');
     });
 
     $(document).on('click', '.setting-button', function () {
