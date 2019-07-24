@@ -12,13 +12,16 @@ namespace RealEstate.Core.Entities
         public PropertyType Type { get; set; }
         public Agent Ágent { get; set; }
         public Guid AgentId { get; set; }
-        public int Area { get; set; }
+        public double Area { get; set; }
         public PropertyStatus Status { get; set; }
         public short StatusId  { get; set; }
         public int ViewCount { get; set; }
         public decimal Price { get; set; }
         public DateTime DateCreated { get; set; }
         public Location Location { get; set; }
+        public short SateId { get; set; }
+        public PropertyState State { get; set; }
+
         public ICollection<PropertyImage> PropertyImages { get; set; }
 
     }

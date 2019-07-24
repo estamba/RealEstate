@@ -88,8 +88,8 @@
     <header class="main-header fixed-header-2">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="navbar-brand company-logo" href="index.html">
-                    <img src="img/logos/black-logo.png" alt="logo">
+                <a class="navbar-brand company-logo"  asp-action="Index" asp-controller="Home">
+                    <img src="~/img/logos/black-logo.png" alt="logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -200,8 +200,8 @@
                                 My Account
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="login.html">Login</a></li>
-                                <li><a class="dropdown-item" href="signup.html">Register</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Login","Account")">Login</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("Signup","Account")">Register</a></li>
                                 <li><a class="dropdown-item" href="forgot-password.html">Forgot Password</a></li>
                                 <li><a class="dropdown-item" href="dashboard.html">Dashboard</a></li>
                                 <li><a class="dropdown-item" href="my-profile.html">My Profile</a></li>
@@ -210,18 +210,18 @@
                                 <li><a class="dropdown-item" href="favorited-properties.html">Favorited Properties</a></li>
                                 <li><a class="dropdown-item" href="messages.html">Messages</a></li>
                                 <li><a class="dropdown-item" href="bookings.html">Bookings</a></li>
-                                <li><a class="dropdown-item" href="submit-property.html">Submit Property</a></li>
+                                <li><a class="dropdown-item" href="@Url.Action("add","property")">Submit Property</a></li>
                             </ul>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item ">
-                            <a class="nav-link" href="login.html">
+                            <a class="nav-link" href="@Url.Action("Login","Account")">
                                 <i class="flaticon-logout"></i>Sign In
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="submit-property.html" class="nav-link link-color"><i class="flaticon-plus"></i>Submit Property</a>
+                            <a href="@Url.Action("Add","Property")" class="nav-link link-color"><i class="flaticon-plus"></i>Submit Property</a>
                         </li>
                     </ul>
                 </div>
@@ -237,7 +237,7 @@
             <div class="row">
                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                     <div class="footer-item clearfix">
-                        <img src="img/logos/logo.png" alt="logo" class="f-logo">
+                        <img src="~/img/logos/logo.png" alt="logo" class="f-logo">
                         <ul class="contact-info">
                             <li>
                                 <i class="flaticon-pin"></i>20/F Green Road, Dhanmondi, Dhaka
@@ -291,7 +291,7 @@
                                 <a href="my-profile.html">My Profile</a>
                             </li>
                             <li>
-                                <a href="submit-property.html">Submit Property</a>
+                                <a href="@Url.Action("Add","Property")">Submit Property</a>
                             </li>
                         </ul>
                     </div>

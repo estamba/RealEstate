@@ -4,12 +4,11 @@ using System.Text;
 
 namespace RealEstate.Core.Entities
 {
-    public class City
+   public class Region
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public Region Region { get; set; }
-        public int RegionId { get; set; }
+        public List<City> Cities { get; set; }
 
     }
 }

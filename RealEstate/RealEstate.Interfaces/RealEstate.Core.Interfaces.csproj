@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ApplicationUser\" />
     <Folder Include="Services\ApplicationUsers\" />
+    <Folder Include="Services\MetaData\" />
     <Folder Include="Services\Properties\" />
   </ItemGroup>
 
