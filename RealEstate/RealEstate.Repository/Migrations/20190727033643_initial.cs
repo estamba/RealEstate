@@ -63,11 +63,22 @@ namespace RealEstate.Repositories.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PropertyState",
+                columns: table => new
+                {
+                    Id = table.Column<short>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PropertyState", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PropertyStatus",
                 columns: table => new
                 {
-                    Id = table.Column<short>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<short>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -79,13 +90,24 @@ namespace RealEstate.Repositories.Migrations
                 name: "PropertyType",
                 columns: table => new
                 {
-                    Id = table.Column<short>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<short>(nullable: false),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PropertyType", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Region",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Region", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -115,7 +137,7 @@ namespace RealEstate.Repositories.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     ApplicationUserId = table.Column<string>(nullable: true),
-                    Isverified = table.Column<bool>(nullable: false)
+                    Isverified = table.Column<bool>(nullable: false, defaultValue: false)
                 },
                 constraints: table =>
                 {
@@ -232,6 +254,47 @@ namespace RealEstate.Repositories.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "City",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    RegionId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_City", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_City_Region_RegionId",
+                        column: x => x.RegionId,
+                        principalTable: "Region",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Location",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CityId = table.Column<int>(nullable: true),
+                    Address = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Location", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Location_City_CityId",
+                        column: x => x.CityId,
+                        principalTable: "City",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Property",
                 columns: table => new
                 {
@@ -240,11 +303,14 @@ namespace RealEstate.Repositories.Migrations
                     Description = table.Column<string>(nullable: true),
                     TypeId = table.Column<short>(nullable: true),
                     AgentId = table.Column<Guid>(nullable: false),
-                    Area = table.Column<int>(nullable: false),
+                    Area = table.Column<double>(nullable: false),
                     StatusId = table.Column<short>(nullable: false),
                     ViewCount = table.Column<int>(nullable: false),
                     Price = table.Column<decimal>(nullable: false),
-                    DateCreated = table.Column<DateTime>(nullable: false)
+                    DateCreated = table.Column<DateTime>(nullable: false),
+                    LocationId = table.Column<int>(nullable: true),
+                    SateId = table.Column<short>(nullable: false),
+                    StateId = table.Column<short>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -255,6 +321,18 @@ namespace RealEstate.Repositories.Migrations
                         principalTable: "Agent",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Property_Location_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Location",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Property_PropertyState_StateId",
+                        column: x => x.StateId,
+                        principalTable: "PropertyState",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Property_PropertyStatus_StatusId",
                         column: x => x.StatusId,
@@ -338,14 +416,34 @@ namespace RealEstate.Repositories.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_City_RegionId",
+                table: "City",
+                column: "RegionId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Image_DocumentId",
                 table: "Image",
                 column: "DocumentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Location_CityId",
+                table: "Location",
+                column: "CityId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Property_AgentId",
                 table: "Property",
                 column: "AgentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Property_LocationId",
+                table: "Property",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Property_StateId",
+                table: "Property",
+                column: "StateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Property_StatusId",
@@ -399,6 +497,12 @@ namespace RealEstate.Repositories.Migrations
                 name: "Agent");
 
             migrationBuilder.DropTable(
+                name: "Location");
+
+            migrationBuilder.DropTable(
+                name: "PropertyState");
+
+            migrationBuilder.DropTable(
                 name: "PropertyStatus");
 
             migrationBuilder.DropTable(
@@ -406,6 +510,12 @@ namespace RealEstate.Repositories.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "City");
+
+            migrationBuilder.DropTable(
+                name: "Region");
         }
     }
 }

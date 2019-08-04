@@ -43,7 +43,25 @@ namespace RealEstate.Repository
             .Property(a => a.Isverified)
             .HasDefaultValue(false);
 
-        
+
+            modelBuilder.Entity<PropertyState>()
+            .Property(a => a.Id)
+            .ValueGeneratedNever();
+            modelBuilder.Entity<PropertyType>()
+          .Property(a => a.Id)
+          .ValueGeneratedNever();
+
+            modelBuilder.Entity<PropertyStatus>()
+           .Property(a => a.Id)
+           .ValueGeneratedNever();
+
+            modelBuilder.Entity<Region>()
+           .Property(a => a.Id)
+           .ValueGeneratedNever();
+
+
+
+
         }
         public DbSet<Agent> Agent { get; set; }
         public DbSet<Document> Document { get; set; }
@@ -52,6 +70,11 @@ namespace RealEstate.Repository
         public DbSet<PropertyImage> PropertyImage { get; set; }
         public DbSet<PropertyStatus> PropertyStatus { get; set; }
         public DbSet<PropertyType> PropertyType { get; set; }
+        public DbSet<PropertyState> PropertyState { get; set; }
+        public DbSet<Region> Region { get; set; }
+        public DbSet<City> City { get; set; }
+
+
 
 
 

@@ -3,27 +3,51 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RealEstate.Repositories.Migrations
 {
-    public partial class addedcitylocation : Migration
+    public partial class removedlocationtable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
+            migrationBuilder.DropForeignKey(
+                name: "FK_Property_Location_LocationId",
+                table: "Property");
+
+            migrationBuilder.DropTable(
+                name: "Location");
+
+            migrationBuilder.RenameColumn(
                 name: "LocationId",
                 table: "Property",
-                nullable: true);
+                newName: "CityId");
 
-            migrationBuilder.CreateTable(
-                name: "City",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_City", x => x.Id);
-                });
+            migrationBuilder.RenameIndex(
+                name: "IX_Property_LocationId",
+                table: "Property",
+                newName: "IX_Property_CityId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Property_City_CityId",
+                table: "Property",
+                column: "CityId",
+                principalTable: "City",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Property_City_CityId",
+                table: "Property");
+
+            migrationBuilder.RenameColumn(
+                name: "CityId",
+                table: "Property",
+                newName: "LocationId");
+
+            migrationBuilder.RenameIndex(
+                name: "IX_Property_CityId",
+                table: "Property",
+                newName: "IX_Property_LocationId");
 
             migrationBuilder.CreateTable(
                 name: "Location",
@@ -31,8 +55,8 @@ namespace RealEstate.Repositories.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CityId = table.Column<int>(nullable: true),
                     Address = table.Column<string>(nullable: true),
+                    CityId = table.Column<int>(nullable: true),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -47,11 +71,6 @@ namespace RealEstate.Repositories.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Property_LocationId",
-                table: "Property",
-                column: "LocationId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Location_CityId",
                 table: "Location",
                 column: "CityId");
@@ -63,27 +82,6 @@ namespace RealEstate.Repositories.Migrations
                 principalTable: "Location",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
-        }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Property_Location_LocationId",
-                table: "Property");
-
-            migrationBuilder.DropTable(
-                name: "Location");
-
-            migrationBuilder.DropTable(
-                name: "City");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Property_LocationId",
-                table: "Property");
-
-            migrationBuilder.DropColumn(
-                name: "LocationId",
-                table: "Property");
         }
     }
 }

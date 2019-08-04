@@ -2,7 +2,10 @@
 using RealEstate.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RealEstate.Repositories
 {
@@ -28,14 +31,41 @@ namespace RealEstate.Repositories
             dbContext.SaveChanges();
 
         }
-        public void Delete(object Id)
+        public virtual void Delete(object Id)
         {
             TEntity entity = dbSet.Find(Id);
             dbContext.Remove(entity);
             dbContext.SaveChanges();
 
         }
-        public void Update(TEntity entity)
+
+        public virtual async Task<List<TEntity>> GetAllAsync()
+        {
+            return await dbSet.ToListAsync();
+        }
+        public async virtual Task<List<TEntity>> FindAsync(
+           Expression<Func<TEntity, bool>> filter = null,
+           
+           string includeProperties = "")
+        {
+            IQueryable<TEntity> query = dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+
+
+            return await query.ToListAsync();
+        }
+        public virtual void Update(TEntity entity)
         {
             dbContext.Attach(entity).State = EntityState.Deleted;
             dbContext.SaveChanges();

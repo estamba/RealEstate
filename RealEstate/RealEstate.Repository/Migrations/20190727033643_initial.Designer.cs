@@ -10,8 +10,8 @@ using RealEstate.Repository;
 namespace RealEstate.Repositories.Migrations
 {
     [DbContext(typeof(RealEstateDbContext))]
-    [Migration("20190718161630_added-city-location")]
-    partial class addedcitylocation
+    [Migration("20190727033643_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -138,7 +138,9 @@ namespace RealEstate.Repositories.Migrations
 
                     b.Property<string>("ApplicationUserId");
 
-                    b.Property<bool>("Isverified");
+                    b.Property<bool>("Isverified")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.HasKey("Id");
 
@@ -206,7 +208,11 @@ namespace RealEstate.Repositories.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<int>("RegionId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("RegionId");
 
                     b.ToTable("City");
                 });
@@ -269,7 +275,7 @@ namespace RealEstate.Repositories.Migrations
 
                     b.Property<Guid>("AgentId");
 
-                    b.Property<int>("Area");
+                    b.Property<double>("Area");
 
                     b.Property<DateTime>("DateCreated");
 
@@ -278,6 +284,10 @@ namespace RealEstate.Repositories.Migrations
                     b.Property<int?>("LocationId");
 
                     b.Property<decimal>("Price");
+
+                    b.Property<short>("SateId");
+
+                    b.Property<short?>("StateId");
 
                     b.Property<short>("StatusId");
 
@@ -292,6 +302,8 @@ namespace RealEstate.Repositories.Migrations
                     b.HasIndex("AgentId");
 
                     b.HasIndex("LocationId");
+
+                    b.HasIndex("StateId");
 
                     b.HasIndex("StatusId");
 
@@ -313,11 +325,20 @@ namespace RealEstate.Repositories.Migrations
                     b.ToTable("PropertyImage");
                 });
 
+            modelBuilder.Entity("RealEstate.Core.Entities.PropertyState", b =>
+                {
+                    b.Property<short>("Id");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PropertyState");
+                });
+
             modelBuilder.Entity("RealEstate.Core.Entities.PropertyStatus", b =>
                 {
-                    b.Property<short>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<short>("Id");
 
                     b.Property<string>("Name");
 
@@ -328,15 +349,24 @@ namespace RealEstate.Repositories.Migrations
 
             modelBuilder.Entity("RealEstate.Core.Entities.PropertyType", b =>
                 {
-                    b.Property<short>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<short>("Id");
 
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
 
                     b.ToTable("PropertyType");
+                });
+
+            modelBuilder.Entity("RealEstate.Core.Entities.Region", b =>
+                {
+                    b.Property<int>("Id");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Region");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -391,6 +421,14 @@ namespace RealEstate.Repositories.Migrations
                         .HasForeignKey("ApplicationUserId");
                 });
 
+            modelBuilder.Entity("RealEstate.Core.Entities.City", b =>
+                {
+                    b.HasOne("RealEstate.Core.Entities.Region", "Region")
+                        .WithMany("Cities")
+                        .HasForeignKey("RegionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("RealEstate.Core.Entities.Image", b =>
                 {
                     b.HasOne("RealEstate.Core.Entities.Document", "Document")
@@ -416,6 +454,10 @@ namespace RealEstate.Repositories.Migrations
                     b.HasOne("RealEstate.Core.Entities.Location", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId");
+
+                    b.HasOne("RealEstate.Core.Entities.PropertyState", "State")
+                        .WithMany()
+                        .HasForeignKey("StateId");
 
                     b.HasOne("RealEstate.Core.Entities.PropertyStatus", "Status")
                         .WithMany()

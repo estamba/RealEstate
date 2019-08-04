@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RealEstate.Core.Entities;
 using RealEstate.Repository;
+using AutoMapper;
 
 namespace RealEstate.MVC
 {
@@ -76,7 +77,12 @@ namespace RealEstate.MVC
                 options.SlidingExpiration = true;
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddViewOptions(options =>
+            {
+                options.HtmlHelperOptions.ClientValidationEnabled = true;
+            });
+            services.AddAutoMapper(typeof(Startup));
+            SeedData(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -103,6 +109,12 @@ namespace RealEstate.MVC
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+        private static void SeedData(IServiceCollection services)
+        {
+            var provider = services.BuildServiceProvider();
+            var dbContext = (RealEstateDbContext)provider.GetService<DbContext>();
+            DatabaseSeed.SeedDatabase(dbContext);
         }
     }
 }

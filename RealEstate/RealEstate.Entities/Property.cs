@@ -10,6 +10,8 @@ namespace RealEstate.Core.Entities
         public string Title { get; set; }
         public string Description { get; set; }
         public PropertyType Type { get; set; }
+        public short TypeId { get; set; }
+
         public Agent Ágent { get; set; }
         public Guid AgentId { get; set; }
         public double Area { get; set; }
@@ -18,7 +20,9 @@ namespace RealEstate.Core.Entities
         public int ViewCount { get; set; }
         public decimal Price { get; set; }
         public DateTime DateCreated { get; set; }
-        public Location Location { get; set; }
+        public City City { get; set; }
+        public int CityId { get; set; }
+
         public short SateId { get; set; }
         public PropertyState State { get; set; }
 
