@@ -15,7 +15,7 @@ namespace RealEstate.Core.Services.Properties
         {
             this.propertyRepository = propertyRepository;
         }
-        public void Add(PostPropertyModel postPropertyModel)
+        public Property Add(PostPropertyModel postPropertyModel)
         {
            
             Property property = new Property()
@@ -34,7 +34,7 @@ namespace RealEstate.Core.Services.Properties
 
             };
 
-            propertyRepository.Add(property);
+            return propertyRepository.Add(property);
         }
         private List<PropertyImage> GetPropertyImages(List<Document> documents)
         {

@@ -7,8 +7,10 @@ namespace RealEstate.Core.Interfaces.Repositories
 {
     public interface IPropertyRepository : IBaseRepository<Property>
     {
+        Property GetPropertyById(Guid Id);
         List<PropertyState> GetPropertyStates();
         List<PropertyStatus> GetPropertyStatuses();
         List<PropertyType> GetPropertyTypes();
+   
     }
 }

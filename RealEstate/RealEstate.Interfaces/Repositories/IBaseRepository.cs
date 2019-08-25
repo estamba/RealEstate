@@ -7,11 +7,11 @@ namespace RealEstate.Core.Interfaces.Repositories
 {
     public interface IBaseRepository<TEntity> where TEntity : class
     {
-        void Add(TEntity entity);
+        TEntity Add(TEntity entity);
         void AddRange(List<TEntity> entities);
         void Delete(object Id);
         void Update(TEntity entity);
         Task<List<TEntity>> GetAllAsync();
-        Task<List<TEntity>> FindAsync(System.Linq.Expressions.Expression<Func<TEntity, bool>> filter = null, string includeProperties = "");
+        Task<List<TEntity>> FindAsync(System.Linq.Expressions.Expression<Func<TEntity, bool>> filter = null, string includeProperties = "", int count =0);
     }
 }

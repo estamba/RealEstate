@@ -1,4 +1,5 @@
-﻿using RealEstate.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using RealEstate.Core.Entities;
 using RealEstate.Core.Interfaces.Repositories;
 using RealEstate.Repository;
 using System;
@@ -29,6 +30,19 @@ namespace RealEstate.Repositories
         public List<PropertyType> GetPropertyTypes()
         {
             return dbContext.PropertyType.ToList();
+        }
+        public Property GetPropertyById(Guid Id)
+        {
+            return dbContext.Property
+                .Include(d => d.Ágent)
+               .Include(d => d.Status)
+               .Include(d => d.Type)
+                .Include(d => d.PropertyImages)
+                .Include(d => d.City)
+                .Include(d => d.Status)
+
+
+                .Where(d => d.Id == Id).FirstOrDefault();
         }
     }
 }

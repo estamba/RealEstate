@@ -259,6 +259,7 @@
 @section scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
+        var detailsPageUrl = "/Property/Details/";
         function myParamName() {
             return "files";
         }
@@ -267,7 +268,7 @@
                 url: "/Property/Add",
                 autoProcessQueue: false,
                 addRemoveLinks: true,
-                // uploadMultiple: true,
+                uploadMultiple: true,
 
                 paramName: myParamName,
                 maxFilesize: 2,
@@ -290,6 +291,13 @@
                             formData.append(el.name, el.value);
                         });
                     });
+                     this.on('success', function (file, response) {
+                         // Append all form inputs to the formData Dropzone will POST
+                         var url = '@Url.Action("Details", "Property",new {Id= "_Id"   })';
+                         window.location.href = url.replace('_Id', response);
+                        
+                    });
+                  
                 }
             });
         });

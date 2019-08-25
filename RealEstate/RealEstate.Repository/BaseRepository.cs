@@ -19,10 +19,11 @@ namespace RealEstate.Repositories
             this.dbContext = dbContext;
             dbSet = dbContext.Set<TEntity>();
         }
-        public virtual void Add(TEntity entity)
+        public TEntity  Add(TEntity entity)
         {
             dbSet.Add(entity);
             dbContext.SaveChanges();
+            return entity;
 
         }
         public virtual void AddRange(List<TEntity> entities)
@@ -46,7 +47,7 @@ namespace RealEstate.Repositories
         public async virtual Task<List<TEntity>> FindAsync(
            Expression<Func<TEntity, bool>> filter = null,
            
-           string includeProperties = "")
+           string includeProperties = "", int count =0)
         {
             IQueryable<TEntity> query = dbSet;
 
@@ -60,6 +61,7 @@ namespace RealEstate.Repositories
             {
                 query = query.Include(includeProperty);
             }
+            if (count > 0) query = query.Take(count);
 
 
 

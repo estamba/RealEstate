@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using RealEstate.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,10 +27,20 @@ namespace RealEstate.MVC.Models
         [Required (ErrorMessage ="City  field is required")] public int SelectedCity { get; set; }
         [Required(ErrorMessage = "Region  field is required")] public int SelectedRegion{ get; set; }
 
+    }
+    public class PropertyDetailsVm
+    {
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string City { get; set; }
+        public decimal Price { get; set; }
+        public string Type { get; set; }
+        public string Status { get; set; }
 
 
-
-
+        public List<Guid> ImageIds { get; set; }
+        public  Agent Agent { get; set; }
+        public List<Property>SimilarProperties { get; set; }
     }
   
 }

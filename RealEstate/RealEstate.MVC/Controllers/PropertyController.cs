@@ -27,8 +27,9 @@ namespace RealEstate.MVC.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IAgentService agentService;
         private readonly IAddPropertyService addPropertyService;
+        private readonly IPropertyService propertyService;
 
-        public PropertyController(IRegionService regionService, IMetadataService metadataService,IMapper mapper, UserManager<ApplicationUser> userManager, IAgentService agentService, IAddPropertyService addPropertyService)
+        public PropertyController(IRegionService regionService, IMetadataService metadataService,IMapper mapper, UserManager<ApplicationUser> userManager, IAgentService agentService, IAddPropertyService addPropertyService, IPropertyService propertyService)
         {
             this.regionService = regionService;
             this.metadataService = metadataService;
@@ -36,6 +37,7 @@ namespace RealEstate.MVC.Controllers
             this.userManager = userManager;
             this.agentService = agentService;
             this.addPropertyService = addPropertyService;
+            this.propertyService = propertyService;
         }
         public IActionResult Index()
         {
@@ -62,7 +64,28 @@ namespace RealEstate.MVC.Controllers
             var agent = await agentService.GetAgentByApplicationUserIdAsync(userId);
             postPropertyModel.Documents = await GetDocuments(files);
             postPropertyModel.AgentId = agent.Id;
-            addPropertyService.Add(postPropertyModel);
+            var property = addPropertyService.Add(postPropertyModel);
+            return Ok(property.Id);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Details(Guid Id)
+        {
+            var property = propertyService.GetProperty(Id);
+            var similarProperties = await propertyService.GetPropertiesByTypeAsync(property.TypeId,8);
+            PropertyDetailsVm vm = new PropertyDetailsVm()
+            {
+                Agent = property.Ágent,
+                ImageIds = property.PropertyImages.Select(i => i.ImageId).ToList(),
+                Description = property.Description,
+                Title = property.Title,
+                City = property.City.Name,
+                Price = property.Price,
+                Type = property.Type.Name,
+                Status = property.Status.Name,
+
+                SimilarProperties = similarProperties
+            };
             return View(vm);
         }
 

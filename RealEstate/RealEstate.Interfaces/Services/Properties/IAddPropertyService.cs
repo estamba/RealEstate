@@ -7,6 +7,6 @@ namespace RealEstate.Core.Interfaces.Services.Properties
 {
     public interface IAddPropertyService
     {
-        void Add(PostPropertyModel postPropertyModel);
+        Property Add(PostPropertyModel postPropertyModel);
     }
 }
