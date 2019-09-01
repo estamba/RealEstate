@@ -30,17 +30,39 @@ namespace RealEstate.MVC.Models
     }
     public class PropertyDetailsVm
     {
+        public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string City { get; set; }
         public decimal Price { get; set; }
         public string Type { get; set; }
         public string Status { get; set; }
-
+        public int ViewCount { get; set; }
 
         public List<Guid> ImageIds { get; set; }
         public  Agent Agent { get; set; }
         public List<Property>SimilarProperties { get; set; }
+
+        public PropertySearchFormVm PropertySearchFormVm { get; set; }
+    }
+    public class PropertySearchFormVm
+    {
+        public IEnumerable<SelectListItem> PropertyTypes { get; set; }
+        public IEnumerable<SelectListItem> PropertyStatuses { get; set; }
+    }
+    public class PropertySearchVM
+    {
+        public PropertySearchVM()
+        {
+            SearchFilter = new PropertySearchFilter();
+        }
+        public IEnumerable<SelectListItem> PropertyStatuses { get; set; }
+
+        public IEnumerable<SelectListItem> PropertyTypes { get; set; }
+        public IEnumerable<SelectListItem> SortOptions { get; set; }
+
+        public PropertySearchFilter SearchFilter { get; set; }
+        public PaginatedSearchResult<Property> searchResult { get; set; }
     }
   
 }

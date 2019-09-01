@@ -1,0 +1,48 @@
+﻿@model List<Property>
+@{
+    foreach (var property in Model)
+    {
+
+
+        <div class="property-box-2">
+            <div class="row">
+                <div class="col-lg-5 col-md-5 col-pad">
+                    <div class="property-thumbnail">
+                        <a href="@Url.Action("Details","property", new { Id = property.Id})" class="property-img">
+                            <img src="@Url.Action("GetImage","Document", new {ImageId = property.PropertyImages.FirstOrDefault().ImageId })" style="width:300px; height:210px" alt="properties" class="img-fluid">
+                            <div class="tag">Featured</div>
+                            <div class="price-box"><span>D @property.Price </span> month</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-md-7 col-pad align-self-center">
+                    <div class="detail">
+                        <h3 class="title">
+                            <a href="@Url.Action("Details","property", new { Id = property.Id})">@property.Title</a>
+                        </h3>
+                        <h5 class="location">
+                            <a href="@Url.Action("Details","property", new { Id = property.Id})">
+                                <i class="flaticon-pin"></i>@property.City.Name
+                            </a>
+                        </h5>
+                        <ul class="facilities-list clearfix">
+                            <li>
+                                <i class="flaticon-bed"></i> 3 Beds
+                            </li>
+                            <li>
+                                <i class="flaticon-bathroom"></i> 2 Baths
+                            </li>
+                            <li>
+                                <i class="flaticon-ui"></i> <span>@property.Area M</span><sup>2</sup>
+                            </li>
+                            <li>
+                                <i class="flaticon-car"></i> 1 Garage
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+}

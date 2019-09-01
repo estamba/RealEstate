@@ -8,5 +8,9 @@ namespace RealEstate.Core.Interfaces.Repositories
    public  interface IRegionRepository : IBaseRepository<Region>
     {
         List<City> GetCities(int regionId);
+        List<Region> GetRegions();
+
+
+
     }
 }

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace RealEstate.Core.Interfaces.Services.Regions
 {
-    public interface IRegionService
+    public interface ILocationService
     {
         Task<List<Region>>GetRegionsAsync();
         List<City> GetCities(int regionId);
+        List<Region> GetRegions();
+
     }
 }

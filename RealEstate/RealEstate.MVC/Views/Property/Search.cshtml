@@ -1,0 +1,251 @@
+﻿@model PropertySearchVM
+@inject IHttpContextAccessor httpContextAccessor
+@{
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- Sub banner start -->
+<div class="sub-banner">
+    <div class="container breadcrumb-area">
+        <div class="breadcrumb-areas">
+            <h1>Properties Grid</h1>
+            <ul class="breadcrumbs">
+                <li><a href="index.html">Home</a></li>
+                <li class="active">Properties Grid</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Sub Banner end -->
+<!-- Properties section body start -->
+<div class="properties-section-body content-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-12">
+                <div class="sidebar-left">
+                    <!-- Advanced search start -->
+                    <div class="widget advanced-search">
+                        <h3 class="sidebar-title">Search Properties</h3>
+                        <form method="GET" asp-action="Search" asp-controller="Property">
+                            <input type="hidden" id="viewStyle" value="list" />
+                            <input type="hidden" name="page" id="pageNumber" value="@httpContextAccessor.HttpContext.Request.Query["page"]" />
+
+                            <input type="hidden" asp-for="@Model.SearchFilter.SortOption" id="sortOption" />
+                            <div class="form-group">
+                                <input class="form-control" id="location" placeholder="enter your location" asp-for="SearchFilter.Location" />
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" asp-items="@Model.PropertyTypes" asp-for="SearchFilter.TypeId">
+                                    <option value="">All Property Types</option>
+
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <select class="form-control" asp-items="@Model.PropertyStatuses" asp-for="SearchFilter.StatusId">
+                                    <option value="">All Status</option>
+
+                                </select>
+                            </div>
+
+                            <div class="range-slider">
+                                <label>Price</label>
+                                <div data-min="0" data-max="150000" data-min-name="min_price" data-max-name="max_price" data-unit="USD" class="range-slider-ui ui-slider" aria-disabled="false">
+
+                                    <span class='min-value'></span>
+                                    <span class='max-value'></span>
+                                    <input class='current-min' type='hidden' asp-for="SearchFilter.MinPrice">
+                                    <input class='current-max' type='hidden' asp-for="SearchFilter.Maxprice">
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+
+                            <div class="form-group mb-0">
+                                <button class="search-button">Search</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <!-- Option bar start -->
+                <div class="option-bar clearfix">
+                    <div class="sorting-options2">
+                        <span class="sort">Sort by:</span>
+                        <select class="selectpicker search-fields" name="default-order" asp-items="@Model.SortOptions" asp-for="SearchFilter.SortOption" id="sortOptions"></select>
+                    </div>
+                    <div class="sorting-options float-right">
+                        <a class="change-view-btn active-view-btn" id="list"><i class="fa fa-th-list"></i></a>
+                        <a class="change-view-btn" id="grid"><i class="fa fa-th-large"></i></a>
+                    </div>
+                </div>
+
+                @{
+                    if (Model.searchResult.Results?.Count == 0)
+                    {
+                        <h3>No results for your search</h3>
+                    }
+                }
+                <div id="gridResults">
+                    @await Html.PartialAsync("_SearchResultsGridPartial", Model.searchResult?.Results)
+
+                </div>
+                <div id="listResults">
+                    @await Html.PartialAsync("_SearchResultsListPartial", Model.searchResult?.Results)
+
+                </div>
+
+                <!-- Page navigation start -->
+                <div class="pagination-box text-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            @{
+                                        var pageCount = Model.searchResult.PageCount;
+                                <li class="page-item">
+                                    <a class="page-link prevPage" href="#"><i class="fa fa-angle-left"></i></a>
+                                </li>
+                                for (int i = 1; i <= pageCount; i++)
+                                {
+
+                                    <li class="page-item"><a class="page-link active pageNumber" data-pageNumber="@i">@i</a></li>
+
+
+                                }
+                                <li class="page-item">
+                                    <a class="page-link nextPage"><i class="fa fa-angle-right"></i></a>
+                                </li>
+                            }
+
+
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section styles{
+    <link href="~/css/custom.css" rel="stylesheet" />
+    <link href="~/css/jquery-ui.min.css" rel="stylesheet" />
+
+}
+@section scripts{
+    <script src="~/js/jquery-ui.min.js"></script>
+
+
+    <script>
+    function ChangeViewStyle(style) {
+
+        if (style == "grid") {
+            $("#listResults").hide();
+            $("#gridResults").show();
+
+            $("#grid").removeClass("active-view-btn").addClass("active-view-btn");
+            $("#list").removeClass("active-view-btn");
+
+            $("#viewStyle").val = "grid";
+
+        }
+        else {
+            $("#listResults").show();
+            $("#gridResults").hide();
+
+            $("#list").removeClass("active-view-btn").addClass("active-view-btn");
+            $("#grid").removeClass("active-view-btn");
+
+            $("#viewStyle").val = "list";
+
+        }
+    }
+    $(document).ready(function () {
+        var viewStyle = '@httpContextAccessor.HttpContext.Request.Query["viewStyle"]';
+        ChangeViewStyle(viewStyle);
+
+        $("#grid, #list").click(function () {
+            var id = (this).id;
+            ChangeViewStyle(id);
+
+        });
+    })
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            var values = [10, 200000]
+            $('.range-slider-ui').trigger("slide", 90);
+            $('.range-slider-ui').trigger("slide", values);
+
+
+            $('#sortOptions').change(function () {
+
+
+                $("#sortOption").val($(this).val());
+                $(".search-button").click();
+            });
+
+        });
+    </script>
+    <script>
+
+        $(document).ready(function () {
+            var url = '@Url.Action("GetLocations","Region")'
+            $('#location').autocomplete({
+
+                source: function (request, response) {
+                    $.ajax({
+                        url: url,
+                        data: { searchTerm: request.term },
+                        type: "GET",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                            label: item,
+                            value: item
+                        };
+                            }))
+                        }
+
+
+                    });
+                }
+            });
+        });
+    </script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            var pageCount = @Model.searchResult.PageCount;
+        
+            var pageNumber = @Model.searchResult.Page;
+          
+            var activeElements = $("li>.active");
+            activeElements.removeClass("active");
+            var currentPageNav = $("[data-pageNumber= " + pageNumber + "]");
+            currentPageNav.addClass("active");
+            console.log("here...");
+
+            $(".pageNumber").click(function () {
+
+                var pageNumber = $(this).attr("data-pageNumber");
+                $("#pageNumber").val(pageNumber);
+                $(".search-button").click();
+            })
+            $(".nextPage").click(function () {
+
+                if (pageNumber >= pageCount) return;
+                 $("#pageNumber").val(pageNumber+1);
+                $(".search-button").click();
+            })
+            $(".prevPage").click(function () {
+                if (pageNumber <= 1) return;
+                 $("#pageNumber").val(pageNumber-1);
+                $(".search-button").click();
+            })
+        })
+    </script>
+}
+
+

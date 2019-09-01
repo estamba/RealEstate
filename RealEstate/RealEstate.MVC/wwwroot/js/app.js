@@ -213,12 +213,12 @@ $(function () {
         var maxName = $(this).attr('data-max-name');
         var unit = $(this).attr('data-unit');
 
-        $(this).append("" +
-            "<span class='min-value'></span> " +
-            "<span class='max-value'></span>" +
-            "<input class='current-min' type='hidden' name='"+minName+"'>" +
-            "<input class='current-max' type='hidden' name='"+maxName+"'>"
-        );
+        //$(this).append("" +
+        //    "<span class='min-value'></span> " +
+        //    "<span class='max-value'></span>" +
+        //    "<input class='current-min' type='hidden' name='"+minName+"'>" +
+        //    "<input class='current-max' type='hidden' name='"+maxName+"'>"
+        //);
         $(this).slider({
             range: true,
             min: minRangeValue,
@@ -228,6 +228,7 @@ $(function () {
                 event = event;
                 var currentMin = parseInt(ui.values[0], 10);
                 var currentMax = parseInt(ui.values[1], 10);
+                console.log(currentMax);
                 $(this).children(".min-value").text( currentMin + " " + unit);
                 $(this).children(".max-value").text(currentMax + " " + unit);
                 $(this).children(".current-min").val(currentMin);

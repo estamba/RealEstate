@@ -8,3 +8,16 @@
     max-height: 150px;
     min-height: 150px;
 }
+
+.img-slider {
+    width: 730px;
+    height: 486px;
+}
+.thumb-nail-slider {
+    width: 80px;
+    height: 53px;
+}
+.property-list {
+    width: 350px;
+    height: 233px;
+}

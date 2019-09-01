@@ -1,4 +1,5 @@
-﻿@{
+﻿@model HomeViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -200,216 +201,49 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
         </div>
         <div class="row">
-            <div class="col-lg-4 col-md-6">
-                <div class="property-box">
-                    <div class="property-thumbnail">
-                        <a href="properties-details.html" class="property-img">
-                            <div class="tag">Featured</div>
-                            <div class="price-box"><span>$850.00</span> month</div>
-                            <img class="d-block w-100" src="http://placehold.it/350x233" alt="properties">
-                        </a>
-                    </div>
-                    <div class="detail">
-                        <h1 class="title">
-                            <a href="properties-grid-rightside.html">Relaxing Apartment</a>
-                        </h1>
-                        <div class="location">
-                            <a href="properties-details.html">
-                                <i class="flaticon-pin"></i>123 Kathal St. Tampa City,
-                            </a>
+
+
+            @{
+                foreach (var property in Model?.Properties)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="property-box">
+                            <div class="property-thumbnail">
+                                <a href="@Url.Action("Details","property", new { Id = property.Id})" class="property-img">
+                                    <div class="tag">Featured</div>
+                                    <div class="price-box"><span>GMD @property.Area.00</span></div>
+                                    <img class="d-block w-100 property-list" src="@Url.Action("GetImage", "Document", new { ImageId = property.PropertyImages.FirstOrDefault()?.ImageId })" alt="properties">
+                                </a>
+                            </div>
+                            <div class="detail">
+                                <h1 class="title">
+                                    <a href="@Url.Action("Details","property", new { Id = property.Id})">@property.Title</a>
+                                </h1>
+                                <div class="location">
+                                    <a href="@Url.Action("Details","property", new { Id = property.Id})">
+                                        <i class="flaticon-pin"></i>@property.City.Name
+                                    </a>
+                                </div>
+                                <ul class="facilities-list clearfix">
+                                    <li>
+                                        <i class="flaticon-bed"></i> 3 Beds
+                                    </li>
+                                    <li>
+                                        <i class="flaticon-bathroom"></i> 2 Baths
+                                    </li>
+                                    <li>
+                                        <i class="flaticon-ui"></i>@property.Area M<sup>2</sup>
+                                    </li>
+                                    <li>
+                                        <i class="flaticon-car"></i> 1 Garage
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        <ul class="facilities-list clearfix">
-                            <li>
-                                <i class="flaticon-bed"></i> 3 Beds
-                            </li>
-                            <li>
-                                <i class="flaticon-bathroom"></i> 2 Baths
-                            </li>
-                            <li>
-                                <i class="flaticon-ui"></i> Sq Ft:3400
-                            </li>
-                            <li>
-                                <i class="flaticon-car"></i> 1 Garage
-                            </li>
-                        </ul>
                     </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="property-box">
-                    <div class="property-thumbnail">
-                        <a href="properties-details.html" class="property-img">
-                            <div class="tag">Featured</div>
-                            <div class="price-box"><span>$850.00</span> month</div>
-                            <img class="d-block w-100" src="http://placehold.it/350x233" alt="properties">
-                        </a>
-                    </div>
-                    <div class="detail">
-                        <h1 class="title">
-                            <a href="properties-details.html">Beautiful Family House</a>
-                        </h1>
-                        <div class="location">
-                            <a href="properties-details.html">
-                                <i class="flaticon-pin"></i>123 Kathal St. Tampa City,
-                            </a>
-                        </div>
-                        <ul class="facilities-list clearfix">
-                            <li>
-                                <i class="flaticon-bed"></i> 3 Beds
-                            </li>
-                            <li>
-                                <i class="flaticon-bathroom"></i> 2 Baths
-                            </li>
-                            <li>
-                                <i class="flaticon-ui"></i> Sq Ft:3400
-                            </li>
-                            <li>
-                                <i class="flaticon-car"></i> 1 Garage
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="property-box">
-                    <div class="property-thumbnail">
-                        <a href="properties-details.html" class="property-img">
-                            <div class="tag">Featured</div>
-                            <div class="price-box"><span>$850.00</span> month</div>
-                            <img class="d-block w-100" src="http://placehold.it/350x233" alt="properties">
-                        </a>
-                    </div>
-                    <div class="detail">
-                        <h1 class="title">
-                            <a href="properties-details.html">Real Luxury Villa</a>
-                        </h1>
-                        <div class="location">
-                            <a href="properties-details.html">
-                                <i class="flaticon-pin"></i>123 Kathal St. Tampa City,
-                            </a>
-                        </div>
-                        <ul class="facilities-list clearfix">
-                            <li>
-                                <i class="flaticon-bed"></i> 3 Beds
-                            </li>
-                            <li>
-                                <i class="flaticon-bathroom"></i> 2 Baths
-                            </li>
-                            <li>
-                                <i class="flaticon-ui"></i> Sq Ft:3400
-                            </li>
-                            <li>
-                                <i class="flaticon-car"></i> 1 Garage
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="property-box">
-                    <div class="property-thumbnail">
-                        <a href="properties-details.html" class="property-img">
-                            <div class="tag">Featured</div>
-                            <div class="price-box"><span>$850.00</span> month</div>
-                            <img class="d-block w-100" src="http://placehold.it/350x233" alt="properties">
-                        </a>
-                    </div>
-                    <div class="detail">
-                        <h1 class="title">
-                            <a href="properties-details.html">Luxury Villa</a>
-                        </h1>
-                        <div class="location">
-                            <a href="properties-details.html">
-                                <i class="flaticon-pin"></i>123 Kathal St. Tampa City,
-                            </a>
-                        </div>
-                        <ul class="facilities-list clearfix">
-                            <li>
-                                <i class="flaticon-bed"></i> 3 Beds
-                            </li>
-                            <li>
-                                <i class="flaticon-bathroom"></i> 2 Baths
-                            </li>
-                            <li>
-                                <i class="flaticon-ui"></i> Sq Ft:3400
-                            </li>
-                            <li>
-                                <i class="flaticon-car"></i> 1 Garage
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="property-box">
-                    <div class="property-thumbnail">
-                        <a href="properties-details.html" class="property-img">
-                            <div class="tag">Featured</div>
-                            <div class="price-box"><span>$850.00</span> month</div>
-                            <img class="d-block w-100" src="http://placehold.it/350x233" alt="properties">
-                        </a>
-                    </div>
-                    <div class="detail">
-                        <h1 class="title">
-                            <a href="properties-details.html">Masons Villas</a>
-                        </h1>
-                        <div class="location">
-                            <a href="properties-details.html">
-                                <i class="flaticon-pin"></i>123 Kathal St. Tampa City,
-                            </a>
-                        </div>
-                        <ul class="facilities-list clearfix">
-                            <li>
-                                <i class="flaticon-bed"></i> 3 Beds
-                            </li>
-                            <li>
-                                <i class="flaticon-bathroom"></i> 2 Baths
-                            </li>
-                            <li>
-                                <i class="flaticon-ui"></i> Sq Ft:3400
-                            </li>
-                            <li>
-                                <i class="flaticon-car"></i> 1 Garage
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6">
-                <div class="property-box">
-                    <div class="property-thumbnail">
-                        <a href="properties-details.html" class="property-img">
-                            <div class="tag">Featured</div>
-                            <div class="price-box"><span>$850.00</span> month</div>
-                            <img class="d-block w-100" src="http://placehold.it/350x233" alt="properties">
-                        </a>
-                    </div>
-                    <div class="detail">
-                        <h1 class="title">
-                            <a href="properties-details.html">Office Apartment</a>
-                        </h1>
-                        <div class="location">
-                            <a href="properties-details.html">
-                                <i class="flaticon-pin"></i>123 Kathal St. Tampa City,
-                            </a>
-                        </div>
-                        <ul class="facilities-list clearfix">
-                            <li>
-                                <i class="flaticon-bed"></i> 3 Beds
-                            </li>
-                            <li>
-                                <i class="flaticon-bathroom"></i> 2 Baths
-                            </li>
-                            <li>
-                                <i class="flaticon-ui"></i> Sq Ft:3400
-                            </li>
-                            <li>
-                                <i class="flaticon-car"></i> 1 Garage
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+                }
+            }
+           
         </div>
     </div>
 </div>
@@ -860,3 +694,6 @@
         </div>
     </div>
 </div>
+@section styles{ 
+    <link href="~/css/custom.css" rel="stylesheet" />
+}

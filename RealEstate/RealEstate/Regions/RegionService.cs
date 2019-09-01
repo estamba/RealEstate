@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace RealEstate.Core.Services.Regions
 {
-    public class RegionService : IRegionService
+    public class LocationService : ILocationService
     {
         private readonly IRegionRepository regionRepository;
 
-        public RegionService(IRegionRepository regionRepository)
+        public LocationService(IRegionRepository regionRepository)
         {
             this.regionRepository = regionRepository;
         }
@@ -21,6 +21,11 @@ namespace RealEstate.Core.Services.Regions
         {
 
             return regionRepository.GetCities(regionId);
+        }
+
+        public List<Region> GetRegions()
+        {
+            return regionRepository.GetRegions();
         }
 
         public async Task<List<Region>> GetRegionsAsync()

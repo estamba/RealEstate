@@ -69,7 +69,7 @@ namespace RealEstate.Repositories
         }
         public virtual void Update(TEntity entity)
         {
-            dbContext.Attach(entity).State = EntityState.Deleted;
+            dbContext.Attach(entity).State = EntityState.Modified;
             dbContext.SaveChanges();
         }
     }

@@ -36,7 +36,8 @@ namespace RealEstate.MVC
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            
+
+            services.AddMemoryCache();
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<RealEstateDbContext>()
@@ -81,6 +82,7 @@ namespace RealEstate.MVC
             {
                 options.HtmlHelperOptions.ClientValidationEnabled = true;
             });
+            services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(Startup));
             SeedData(services);
         }

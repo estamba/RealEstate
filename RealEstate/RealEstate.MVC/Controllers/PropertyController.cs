@@ -16,20 +16,25 @@ using RealEstate.Core.Interfaces.Services.Properties;
 using RealEstate.Core.Interfaces.Services.Regions;
 using RealEstate.MVC.Extensions;
 using RealEstate.MVC.Models;
+using RealEstate.MVC.Services;
 
 namespace RealEstate.MVC.Controllers
 {
     public class PropertyController : Controller
     {
-        private readonly IRegionService regionService;
+        private readonly ILocationService regionService;
         private readonly IMetadataService metadataService;
         private readonly IMapper mapper;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IAgentService agentService;
         private readonly IAddPropertyService addPropertyService;
         private readonly IPropertyService propertyService;
+        private readonly CurrentUser currentUser;
+        private readonly IPropertyViewCountService viewCountService;
+        private readonly IPropertySearchService propertySearchService;
 
-        public PropertyController(IRegionService regionService, IMetadataService metadataService,IMapper mapper, UserManager<ApplicationUser> userManager, IAgentService agentService, IAddPropertyService addPropertyService, IPropertyService propertyService)
+        public PropertyController(ILocationService regionService, IMetadataService metadataService,IMapper mapper, UserManager<ApplicationUser> userManager, IAgentService agentService, IAddPropertyService addPropertyService, 
+            IPropertyService propertyService, CurrentUser currentUser, IPropertyViewCountService viewCountService, IPropertySearchService propertySearchService)
         {
             this.regionService = regionService;
             this.metadataService = metadataService;
@@ -38,6 +43,9 @@ namespace RealEstate.MVC.Controllers
             this.agentService = agentService;
             this.addPropertyService = addPropertyService;
             this.propertyService = propertyService;
+            this.currentUser = currentUser;
+            this.viewCountService = viewCountService;
+            this.propertySearchService = propertySearchService;
         }
         public IActionResult Index()
         {
@@ -73,8 +81,14 @@ namespace RealEstate.MVC.Controllers
         {
             var property = propertyService.GetProperty(Id);
             var similarProperties = await propertyService.GetPropertiesByTypeAsync(property.TypeId,8);
+            PropertySearchFormVm propertySearchFormVm = new PropertySearchFormVm()
+            {
+                PropertyStatuses = GetPropertyStatuses(),
+                PropertyTypes = GetPropertyTypes()
+            };
             PropertyDetailsVm vm = new PropertyDetailsVm()
             {
+                Id = property.Id,
                 Agent = property.Ágent,
                 ImageIds = property.PropertyImages.Select(i => i.ImageId).ToList(),
                 Description = property.Description,
@@ -83,32 +97,39 @@ namespace RealEstate.MVC.Controllers
                 Price = property.Price,
                 Type = property.Type.Name,
                 Status = property.Status.Name,
+                ViewCount = property.ViewCount,
 
-                SimilarProperties = similarProperties
+                SimilarProperties = similarProperties,
+                PropertySearchFormVm = propertySearchFormVm
             };
             return View(vm);
         }
 
-        private static async Task<List<Document>> GetDocuments(IFormFileCollection files)
-        {
-            var documents = new List<Document>();
-            foreach (var file in files)
-            {
-                var bytes = await file.ToByteArrayAsync();
-                Document document = new Document()
-                {
-                    Id = Guid.NewGuid(),
-                    ContentType = file.ContentType,
-                    Extension = Path.GetExtension(file.FileName),
-                    Name = file.FileName,
-                    Content = bytes
-                };
 
-                documents.Add(document);
-            }
-            return documents;
+        [HttpPost]
+        public IActionResult UpdateViewCount(Guid proprtyId)
+        {
+            if (string.IsNullOrEmpty(currentUser.VisitorId)) currentUser.VisitorId = Guid.NewGuid().ToString ();
+
+            viewCountService.Update(proprtyId, currentUser.VisitorId);
+            return Ok();
         }
 
+        [HttpGet]
+        public IActionResult Search(PropertySearchFilter searchFilter, int page=1)
+        {
+        
+            var data = propertySearchService.Search( searchFilter ?? new PropertySearchFilter(),pageNumber:page);
+            var vm = new PropertySearchVM()
+            {
+                searchResult = data,
+                SearchFilter = searchFilter,
+                PropertyStatuses = GetPropertyStatuses(),
+                PropertyTypes = GetPropertyTypes(),
+                SortOptions = GetSortingOptions()
+            };
+            return View(vm);
+        }
         [HttpPost("file-upload")]
         public IActionResult Test(string test)
         {
@@ -172,6 +193,63 @@ namespace RealEstate.MVC.Controllers
                 Value = x.Id.ToString()
             }).ToList();
         }
+        private List<SelectListItem>GetSortingOptions()
+        {
+            var enumValues = Enum.GetValues(typeof(PropertySortOptions));
+            var selectList = new List<SelectListItem>();
+            foreach ( var enumValue in enumValues)
+            {
+                selectList.Add(new SelectListItem()
+                {
+                    Value = enumValue.ToString(),
+                    Text = GetSortingDescription((PropertySortOptions)enumValue)
+                });
+            }
+            return selectList;
+        }
+        private static string GetSortingDescription(PropertySortOptions sortOption)
+        {
+            string description = "Default";
+            switch(sortOption)
+            {
+                case PropertySortOptions.PriceAsc:
+                    description = "Price Low to High";
+                    break;
+                case PropertySortOptions.PriceDesc:
+                    description = "Price High to Low";
+                    break;
+                case PropertySortOptions.AddedDateAsc:
+                    description = "Oldest Properties";
+                    break;
+                case PropertySortOptions.AddedDateDesc:
+                    description = "Newest Properties";
+                    break;
+                default:
+                     description = "Default Order";
+                    break;
+            }
+            return description;
+        }
+        private static async Task<List<Document>> GetDocuments(IFormFileCollection files)
+        {
+            var documents = new List<Document>();
+            foreach (var file in files)
+            {
+                var bytes = await file.ToByteArrayAsync();
+                Document document = new Document()
+                {
+                    Id = Guid.NewGuid(),
+                    ContentType = file.ContentType,
+                    Extension = Path.GetExtension(file.FileName),
+                    Name = file.FileName,
+                    Content = bytes
+                };
+
+                documents.Add(document);
+            }
+            return documents;
+        }
+
     }
 }
 

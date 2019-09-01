@@ -594,6 +594,7 @@
       },
       "RealEstate.Core.Services/1.0.0": {
         "dependencies": {
+          "Microsoft.Extensions.Caching.Memory": "2.2.0",
           "RealEstate.Core.Interfaces": "1.0.0"
         },
         "runtime": {

@@ -1,0 +1,26 @@
+﻿@model PropertySearchFormVm
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+    <form method="GET" asp-action="Search" asp-controller="Property">
+        <div class="form-group">
+            <input class="form-control" id="location" name="location" placeholder="enter your location" />
+        </div>
+        <div class="form-group">
+            <select class="form-control"  name="typeId" asp-items="@Model.PropertyTypes" >
+                <option value="">All Property Types</option>
+              
+            </select>
+        </div>
+        <div class="form-group">
+            <select class="form-control" name="statusId" asp-items="@Model.PropertyStatuses">
+                <option value="">All Status</option>
+              
+            </select>
+        </div>
+
+      
+        <div class="form-group mb-0">
+            <button class="search-button">Search</button>
+        </div>
+    </form>

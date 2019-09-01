@@ -26,17 +26,18 @@
                         <!-- main slider carousel items -->
                         <div class="carousel-inner">
                             @{
-                                <div class="active item carousel-item" data-slide-number="0">
-                                    <img src="@Url.Action("GetImage","Document",new {ImageId = Model.ImageIds[0] })" class="img-fluid" alt="slider-properties">
-                                </div>
+
                                 for (int i = 0; i < Model.ImageIds.Count; i++)
                                 {
                                     if (i == 0)
                                     {
+                                        <div class="active item carousel-item" data-slide-number="@i">
+                                            <img src="@Url.Action("GetImage","Document",new {ImageId = Model.ImageIds[i] })" class="img-slider" alt="slider-properties">
+                                        </div>
                                         continue;
                                     }
-                                    <div class="item carousel-item" data-slide-number="1">
-                                        <img src="@Url.Action("GetImage","Document",new {ImageId = Model.ImageIds[i]})" class="img-fluid" alt="slider-properties">
+                                    <div class="item carousel-item" data-slide-number="@i">
+                                        <img src="@Url.Action("GetImage","Document",new {ImageId = Model.ImageIds[i]})" class="img-slider" alt="slider-properties">
                                     </div>
                                 }
                             }
@@ -46,20 +47,21 @@
                         <ul class="carousel-indicators smail-properties list-inline nav nav-justified">
 
                             @{
-                                <li class="list-inline-item active">
-                                    <a id="carousel-selector-0" class="selected" data-slide-to="0" data-target="#propertiesDetailsSlider">
-                                        <img src="@Url.Action("GetImage","Document",new {ImageId = Model.ImageIds[0]})" class="img-fluid" alt="properties-small">
-                                    </a>
-                                </li>
+
                                 for (int i = 0; i < Model.ImageIds.Count; i++)
                                 {
                                     if (i == 0)
                                     {
+                                        <li class="list-inline-item active">
+                                            <a id="carousel-selector-@i" class="selected" data-slide-to="@i" data-target="#propertiesDetailsSlider">
+                                                <img src="@Url.Action("GetImage","Document",new {ImageId = Model.ImageIds[i]})" class="thumb-nail-slider" alt="properties-small">
+                                            </a>
+                                        </li>
                                         continue;
                                     }
                                     <li class="list-inline-item">
-                                        <a id="carousel-selector-1" data-slide-to="1" data-target="#propertiesDetailsSlider">
-                                            <img src="@Url.Action("GetImage","Document",new {ImageId = Model.ImageIds[i]})" class="img-fluid" alt="properties-small">
+                                        <a id="carousel-selector-@i" data-slide-to="@i" data-target="#propertiesDetailsSlider">
+                                            <img src="@Url.Action("GetImage","Document",new {ImageId = Model.ImageIds[i]})" class="thumb-nail-slider" alt="properties-small">
                                         </a>
                                     </li>
                                 }
@@ -69,7 +71,7 @@
                         </ul>
                         <div class="heading-properties-2">
                             <h3>@Model.Title</h3>
-                            <div class="price-location"><span class="property-price">GMD @Model.Price</span> <span class="rent">@Model.Status</span> <span class="location"><i class="flaticon-pin"></i>@Model.City</span></div>
+                            <div class="price-location"><span class="property-price">GMD @Model.Price</span> <span class="rent">@Model.Status</span> <span class="location"><i class="flaticon-pin"></i>@Model.City</span>  <span class="fa fa-eye" style="color:white" role="img"><b> @Model.ViewCount</b></span></div>
                         </div>
 
                     </div>
@@ -249,7 +251,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <img src="http://placehold.it/730x387" alt="floor-plans" class="img-fluid">
+                                    <img src="~/img/airpoint-Gambia.jpg" alt="floor-plans" class="img-fluid">
                                 </div>
                             </div>
                             <div class="tab-pane fade " id="three" role="tabpanel" aria-labelledby="three-tab">
@@ -393,7 +395,7 @@
                                     <h3 class="heading-2">
                                         Property Video
                                     </h3>
-                                    <iframe src="https://www.youtube.com/embed/5e0LxrLSzok" allowfullscreen=""></iframe>
+                                    @*<iframe src="https://www.youtube.com/embed/5e0LxrLSzok" allowfullscreen=""></iframe>*@
                                 </div>
                             </div>
                         </div>
@@ -406,7 +408,7 @@
                                 <div class="col-lg-4 col-md-6">
                                     <div class="property-box">
                                         <div class="property-thumbnail">
-                                            <a href="properties-details.html" class="property-img">
+                                            <a href="@Url.Action("Details","property", new { Id = property.Id})" class="property-img">
                                                 <div class="tag">Featured</div>
                                                 <div class="price-box"><span>GMD @property.Price</span> month</div>
                                                 <img class="d-block w-100 custom-image-size" src="@Url.Action("GetImage", "Document", new { ImageId = property.PropertyImages.FirstOrDefault()?.ImageId })" alt="properties">
@@ -414,26 +416,24 @@
                                         </div>
                                         <div class="detail">
                                             <h1 class="title">
-                                                <a href="properties-grid-rightside.html">@property.Title</a>
+                                                <a href="@Url.Action("Details","property", new { Id = property.Id})">@property.Title</a>
                                             </h1>
                                             <div class="location">
-                                                <a href="properties-details.html">
-                                                    <i class="flaticon-pin"></i>123 Kathal St. Tampa City,
+                                                <a href="@Url.Action("Details","property", new { Id = property.Id})">
+                                                    <i class="flaticon-pin"></i>@property.City.Name
                                                 </a>
                                             </div>
                                             <ul class="facilities-list clearfix">
+
                                                 <li>
-                                                    <i class="flaticon-bed"></i> 3 Beds
+                                                    <sp class="flaticon-ui"><span>@property.Area</span>M<sup>2</sup></sp>
                                                 </li>
                                                 <li>
-                                                    <i class="flaticon-bathroom"></i> 2 Baths
+                                                    <span class="fa fa-eye"><span>@property.ViewCount</span></span>
                                                 </li>
-                                                <li>
-                                                    <i class="flaticon-ui"></i> Sq m:@property.Area
-                                                </li>
-                                                <li>
-                                                    <i class="flaticon-car"></i> 1 Garage
-                                                </li>
+                                                @*<li>
+                                                        <i class="flaticon-car"></i> 1 Garage
+                                                    </li>*@
                                             </ul>
                                         </div>
                                     </div>
@@ -444,112 +444,112 @@
 
                     </div>
                     @*<!-- Heading 2 -->
-        <h3 class="heading-2">Comments Section</h3>
-        <!-- Comments start -->
-        <ul class="comments">
-            <li>
-                <div class="comment">
-                    <div class="comment-author">
-                        <a href="#">
-                            <img src="http://placehold.it/60x60" alt="comments-user">
-                        </a>
-                    </div>
-                    <div class="comment-content">
-                        <div class="comment-meta">
-                            <h6>
-                                Maikel Alisa
-                                <span class="float-right">11/28/2018<a href="#">Reply</a></span>
-                            </h6>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem vulputate interdum et vel eros. Maecenas eros enim  sem vulputate interdum et vel eros.</p>
-                    </div>
-                </div>
-                <ul>
-                    <li>
-                        <div class="comment">
-                            <div class="comment-author">
-                                <a href="#">
-                                    <img src="http://placehold.it/60x60" alt="comments-user">
-                                </a>
-                            </div>
-                            <div class="comment-content">
-                                <div class="comment-meta">
-                                    <h6>
-                                        Carolyn Stone
-                                        <span class="float-right">11/28/2018<a href="#">Reply</a></span>
-                                    </h6>
+                        <h3 class="heading-2">Comments Section</h3>
+                        <!-- Comments start -->
+                        <ul class="comments">
+                            <li>
+                                <div class="comment">
+                                    <div class="comment-author">
+                                        <a href="#">
+                                            <img src="http://placehold.it/60x60" alt="comments-user">
+                                        </a>
+                                    </div>
+                                    <div class="comment-content">
+                                        <div class="comment-meta">
+                                            <h6>
+                                                Maikel Alisa
+                                                <span class="float-right">11/28/2018<a href="#">Reply</a></span>
+                                            </h6>
+                                        </div>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem vulputate interdum et vel eros. Maecenas eros enim  sem vulputate interdum et vel eros.</p>
+                                    </div>
                                 </div>
-                                <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem vulputate interdum et.</P>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <div class="comment">
-                    <div class="comment-author">
-                        <a href="#">
-                            <img src="http://placehold.it/60x60" alt="comments-user">
-                        </a>
-                    </div>
-                    <div class="comment-content">
-                        <div class="comment-meta">
-                            <h6>
-                                Brandon Miller
-                                <span class="float-right">11/28/2018<a href="#">Reply</a></span>
-                            </h6>
-                        </div>
-                        <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem vulputate interdum et vel eros. Maecenas eros enim.</P>
-                    </div>
-                </div>
-                <ul>
-                    <li>
-                        <div class="comment mb-50">
-                            <div class="comment-author">
-                                <a href="#">
-                                    <img src="http://placehold.it/60x60" alt="comments-user">
-                                </a>
-                            </div>
-                            <div class="comment-content b-none">
-                                <div class="comment-meta">
-                                    <h6>
-                                        Michelle Nelson
-                                        <span class="float-right">11/28/2018<a href="#">Reply</a></span>
-                                    </h6>
+                                <ul>
+                                    <li>
+                                        <div class="comment">
+                                            <div class="comment-author">
+                                                <a href="#">
+                                                    <img src="http://placehold.it/60x60" alt="comments-user">
+                                                </a>
+                                            </div>
+                                            <div class="comment-content">
+                                                <div class="comment-meta">
+                                                    <h6>
+                                                        Carolyn Stone
+                                                        <span class="float-right">11/28/2018<a href="#">Reply</a></span>
+                                                    </h6>
+                                                </div>
+                                                <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem vulputate interdum et.</P>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <div class="comment">
+                                    <div class="comment-author">
+                                        <a href="#">
+                                            <img src="http://placehold.it/60x60" alt="comments-user">
+                                        </a>
+                                    </div>
+                                    <div class="comment-content">
+                                        <div class="comment-meta">
+                                            <h6>
+                                                Brandon Miller
+                                                <span class="float-right">11/28/2018<a href="#">Reply</a></span>
+                                            </h6>
+                                        </div>
+                                        <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem vulputate interdum et vel eros. Maecenas eros enim.</P>
+                                    </div>
                                 </div>
-                                <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem vulputate interdum et vel eros. Maecenas eros enim.</P>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <!-- Contact 2 start -->
-        <div class="contact-2 ca mb-50">
-            <h3 class="heading">Contact Form</h3>
-            <form action="#" method="GET" enctype="multipart/form-data">
-                <div class="row">
-                    <div class="form-group name col-md-6">
-                        <input type="text" name="name" class="form-control" placeholder="Name">
-                    </div>
-                    <div class="form-group email col-md-6">
-                        <input type="email" name="email" class="form-control" placeholder="Email">
-                    </div>
-                    <div class="form-group number col-md-6">
-                        <input type="text" name="phone" class="form-control" placeholder="Number">
-                    </div>
-                    <div class="form-group number col-md-6">
-                        <input type="text" name="subject" class="form-control" placeholder="Subject">
-                    </div>
-                    <div class="form-group message col-md-12">
-                        <textarea class="form-control" name="message" placeholder="Write message"></textarea>
-                    </div>
-                    <div class="send-btn col-md-12">
-                        <button type="submit" class="btn btn-md button-theme">Send Message</button>
-                    </div>
-                </div>
-            </form>
-        </div>*@
+                                <ul>
+                                    <li>
+                                        <div class="comment mb-50">
+                                            <div class="comment-author">
+                                                <a href="#">
+                                                    <img src="http://placehold.it/60x60" alt="comments-user">
+                                                </a>
+                                            </div>
+                                            <div class="comment-content b-none">
+                                                <div class="comment-meta">
+                                                    <h6>
+                                                        Michelle Nelson
+                                                        <span class="float-right">11/28/2018<a href="#">Reply</a></span>
+                                                    </h6>
+                                                </div>
+                                                <P>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem vulputate interdum et vel eros. Maecenas eros enim.</P>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- Contact 2 start -->
+                        <div class="contact-2 ca mb-50">
+                            <h3 class="heading">Contact Form</h3>
+                            <form action="#" method="GET" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="form-group name col-md-6">
+                                        <input type="text" name="name" class="form-control" placeholder="Name">
+                                    </div>
+                                    <div class="form-group email col-md-6">
+                                        <input type="email" name="email" class="form-control" placeholder="Email">
+                                    </div>
+                                    <div class="form-group number col-md-6">
+                                        <input type="text" name="phone" class="form-control" placeholder="Number">
+                                    </div>
+                                    <div class="form-group number col-md-6">
+                                        <input type="text" name="subject" class="form-control" placeholder="Subject">
+                                    </div>
+                                    <div class="form-group message col-md-12">
+                                        <textarea class="form-control" name="message" placeholder="Write message"></textarea>
+                                    </div>
+                                    <div class="send-btn col-md-12">
+                                        <button type="submit" class="btn btn-md button-theme">Send Message</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>*@
 
                 </div>
             </div>
@@ -558,171 +558,9 @@
                     <!-- Advanced search start -->
                     <div class="widget advanced-search d-none d-xl-block d-lg-block">
                         <h3 class="sidebar-title">Search Properties</h3>
-                        <form method="GET">
-                            <div class="form-group">
-                                <select class="selectpicker search-fields" name="all-status">
-                                    <option>All Status</option>
-                                    <option>For Sale</option>
-                                    <option>For Rent</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <select class="selectpicker search-fields" name="all-type">
-                                    <option>All Type</option>
-                                    <option>Apartments</option>
-                                    <option>Shop</option>
-                                    <option>Restaurant</option>
-                                    <option>Villa</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <select class="selectpicker search-fields" name="commercial">
-                                    <option>Commercial</option>
-                                    <option>Residential</option>
-                                    <option>Land</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <select class="selectpicker search-fields" name="location">
-                                    <option>Location</option>
-                                    <option>American</option>
-                                    <option>Florida</option>
-                                    <option>Belgium</option>
-                                    <option>Canada</option>
-                                </select>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="form-group">
-                                        <select class="selectpicker search-fields" name="bedrooms">
-                                            <option>Bedrooms</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="form-group">
-                                        <select class="selectpicker search-fields" name="bathroom">
-                                            <option>Bathroom</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="range-slider">
-                                <label>Price</label>
-                                <div data-min="0" data-max="150000" data-min-name="min_price" data-max-name="max_price" data-unit="USD" class="range-slider-ui ui-slider" aria-disabled="false"></div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <a class="show-more-options" data-toggle="collapse" data-target="#options-content">
-                                <i class="fa fa-plus-circle"></i> Other Features
-                            </a>
-                            <div id="options-content" class="collapse">
-                                <h3 class="sidebar-title">Amenities</h3>
-                                <div class="checkbox checkbox-theme checkbox-circle">
-                                    <input id="checkbox2" type="checkbox">
-                                    <label for="checkbox2">
-                                        Air Condition
-                                    </label>
-                                </div>
-                                <div class="checkbox checkbox-theme checkbox-circle">
-                                    <input id="checkbox3" type="checkbox">
-                                    <label for="checkbox3">
-                                        Places to seat
-                                    </label>
-                                </div>
-                                <div class="checkbox checkbox-theme checkbox-circle">
-                                    <input id="checkbox4" type="checkbox">
-                                    <label for="checkbox4">
-                                        Swimming Pool
-                                    </label>
-                                </div>
-                                <div class="checkbox checkbox-theme checkbox-circle">
-                                    <input id="checkbox1" type="checkbox">
-                                    <label for="checkbox1">
-                                        Free Parking
-                                    </label>
-                                </div>
-                                <div class="checkbox checkbox-theme checkbox-circle">
-                                    <input id="checkbox7" type="checkbox">
-                                    <label for="checkbox7">
-                                        Central Heating
-                                    </label>
-                                </div>
-                                <div class="checkbox checkbox-theme checkbox-circle">
-                                    <input id="checkbox5" type="checkbox">
-                                    <label for="checkbox5">
-                                        Laundry Room
-                                    </label>
-                                </div>
-                                <div class="checkbox checkbox-theme checkbox-circle">
-                                    <input id="checkbox6" type="checkbox">
-                                    <label for="checkbox6">
-                                        Window Covering
-                                    </label>
-                                </div>
-                                <div class="checkbox checkbox-theme checkbox-circle">
-                                    <input id="checkbox8" type="checkbox">
-                                    <label for="checkbox8">
-                                        Alarm
-                                    </label>
-                                </div>
-                                <br>
-                            </div>
-                            <div class="form-group mb-0">
-                                <button class="search-button">Search</button>
-                            </div>
-                        </form>
+                        @await Html.PartialAsync("_SearchFormPartial", Model?.PropertySearchFormVm)
                     </div>
                     <!-- Recent properties start -->
-                    <div class="widget recent-properties">
-                        <h3 class="sidebar-title">Recent Properties</h3>
-                        <div class="media mb-4">
-                            <a class="pr-3" href="properties-details.html">
-                                <img class="media-object" src="http://placehold.it/60x60" alt="small-properties">
-                            </a>
-                            <div class="media-body align-self-center">
-                                <h5>
-                                    <a href="properties-grid-rightside.html">Relaxing Apartment</a>
-                                </h5>
-                                <div class="listing-post-meta">
-                                    <a href="#"><i class="fa fa-calendar"></i> Oct 27, 2018 </a> | $345,000
-                                </div>
-                            </div>
-                        </div>
-                        <div class="media mb-4">
-                            <a class="pr-3" href="properties-details.html">
-                                <img class="media-object" src="http://placehold.it/60x60" alt="small-properties">
-                            </a>
-                            <div class="media-body align-self-center">
-                                <h5>
-                                    <a href="properties-grid-rightside.html">Office Apartment</a>
-                                </h5>
-                                <div class="listing-post-meta">
-                                    <a href="#"><i class="fa fa-calendar"></i> Oct 27, 2018 </a> | $345,000
-                                </div>
-                            </div>
-                        </div>
-                        <div class="media">
-                            <a class="pr-3" href="properties-details.html">
-                                <img class="media-object" src="http://placehold.it/60x60" alt="small-properties">
-                            </a>
-                            <div class="media-body align-self-center">
-                                <h5>
-                                    <a href="properties-grid-rightside.html">Real Luxury Villa</a>
-                                </h5>
-                                <div class="listing-post-meta">
-                                    <a href="#"><i class="fa fa-calendar"></i> Oct 27, 2018 </a> | $345,000
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <!-- Posts by category Start -->
 
                 </div>
@@ -750,5 +588,55 @@
 </div>
 @section styles{
     <link href="~/css/custom.css" rel="stylesheet" />
+    <link href="~/css/jquery-ui.min.css" rel="stylesheet" />
+
+}
+@section scripts{
+    <script src="~/js/jquery-ui.min.js"></script>
+    <script>
+    function UpdateViewCount() {
+        var ItemId = '@Model.Id';
+        $.ajax({
+            url: '@Url.Action("UpdateViewCount","Property")',
+            method: "POST",
+            data: { proprtyId: ItemId }
+        });
+    }
+    $(document).ready(function () {
+        UpdateViewCount();
+    })
+    </script>
+
+
    
+
+
+    <script>
+
+        $(document).ready(function () {
+            var url = '@Url.Action("GetLocations","Region")'
+            $('#location').autocomplete({
+
+                source: function (request, response) {
+                    $.ajax({
+                        url: url,
+                        data: { searchTerm: request.term },
+                        type: "GET",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                return {
+                            label: item,
+                            value: item
+                        };
+                            }))
+                        }
+
+
+                    });
+                }
+            });
+        });
+    </script>
+}
+
 }

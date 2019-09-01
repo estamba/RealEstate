@@ -1,14 +1,16 @@
 ﻿
-<title>@ViewData["Title"] - RealEstate.MVC</title>
+
 
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
-    <title>Fort - Real Estate HTML Template</title>
+    <title>@ViewData["Title"]</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
 
     <!-- External CSS libraries -->
+
+
     <link rel="stylesheet" type="text/css" href="~/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="~/css/animate.min.css">
     <link rel="stylesheet" type="text/css" href="~/css/bootstrap-submenu.css">
@@ -33,7 +35,7 @@
 
     <!-- Google fonts -->
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,300,700">
-    @RenderSection("styles",false)
+    @RenderSection("styles", false)
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link rel="stylesheet" type="text/css" href="~/css/ie10-viewport-bug-workaround.css">
 
@@ -46,6 +48,8 @@
     <script  src="~/js/html5shiv.min.js"></script>
     <script  src="~/js/respond.min.js"></script>
     <![endif]-->
+
+
 </head>
 <body>
     <div class="page_loader"></div>
@@ -88,7 +92,7 @@
     <header class="main-header fixed-header-2">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="navbar-brand company-logo"  asp-action="Index" asp-controller="Home">
+                <a class="navbar-brand company-logo" asp-action="Index" asp-controller="Home">
                     <img src="~/img/logos/black-logo.png" alt="logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -228,7 +232,7 @@
             </nav>
         </div>
     </header>
-  
+
     @RenderBody()
     <!-- Intro section end -->
     <!-- Footer start -->
@@ -393,6 +397,7 @@
     <script src="~/js/ie10-viewport-bug-workaround.js"></script>
     <!-- Custom javascript -->
     <script src="~/js/ie10-viewport-bug-workaround.js"></script>
+    @RenderSection("scripts", false);
 </body>
 </html>
 

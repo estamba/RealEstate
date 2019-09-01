@@ -11,6 +11,10 @@ namespace RealEstate.Core.Interfaces.Repositories
         List<PropertyState> GetPropertyStates();
         List<PropertyStatus> GetPropertyStatuses();
         List<PropertyType> GetPropertyTypes();
-   
+        List<Property> GetProperties(int count);
+        PaginatedSearchResult<Property> Search(PropertySearchFilter searchFilter,int pageSize, int pageNumber);
+
+
+
     }
 }

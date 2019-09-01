@@ -18,11 +18,16 @@ namespace RealEstate.Core.Services.Properties
             this.propertyRepository = propertyRepository;
         }
 
+        public List<Property> GetProperties(int count = 0)
+        {
+            return propertyRepository.GetProperties(count);
+        }
+
         public async Task<List<Property>> GetPropertiesByTypeAsync(short typeId,int count =0)
         {
             if(count ==0)
-            return (await propertyRepository.FindAsync(t => t.TypeId == typeId, "Type,Status,PropertyImages")).ToList();
-            return (await propertyRepository.FindAsync(t => t.TypeId == typeId, "Type,Status,PropertyImages",count)).ToList();
+            return (await propertyRepository.FindAsync(t => t.TypeId == typeId, "Type,Status,PropertyImages,City")).ToList();
+            return (await propertyRepository.FindAsync(t => t.TypeId == typeId, "Type,Status,PropertyImages,City",count)).ToList();
 
         }
 
