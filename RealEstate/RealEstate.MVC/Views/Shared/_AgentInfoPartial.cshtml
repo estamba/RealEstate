@@ -1,0 +1,28 @@
+﻿@model Agent
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+<div class="team-1">
+    <div class="team-photo">
+        @{
+            var name = Model.ApplicationUser.Name.Split(' ')[0].Trim()?.ToLower();
+        }
+        <a href="@Url.RouteUrl("agentProperties",new {Id= Model.Id, name= name })">
+            <img src="~/img/agent-image-placeholder.png" alt="agent" class="img-fluid">
+        </a>
+        <ul class="social-list clearfix">
+            <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a></li>
+            <li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
+            <li><a href="#" class="google"><i class="fa fa-google-plus"></i></a></li>
+            <li><a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a></li>
+        </ul>
+    </div>
+    <div class="team-details" style="width:auto">
+        
+        <h4><a href="@Url.RouteUrl("agentProperties",new {Id= Model.Id, name= name })">@Model.ApplicationUser.Name</a></h4>
+        <h6 class="flaticon-calendar"> Joined @DurationHelper.FormatDuration(DateTime.Now.AddDays(-10))</h6>
+        <h6><a href="tel:@Model.ApplicationUser.PhoneNumber" class="fa fa-phone-square"> @Model.ApplicationUser.PhoneNumber</a></h6>
+        <h6><a href="mailto: @Model.ApplicationUser.Email" class="flaticon-mail"> @Model.ApplicationUser.Email </a></h6>
+
+    </div>
+</div>

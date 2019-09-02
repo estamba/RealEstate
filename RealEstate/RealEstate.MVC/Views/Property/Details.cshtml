@@ -79,127 +79,8 @@
                     <!-- Advanced search start -->
                     <div class="widget-2 advanced-search bg-grea-2 d-lg-none d-xl-none">
                         <h3 class="sidebar-title">Search Properties</h3>
-                        <form method="GET">
-                            <div class="form-group">
-                                <select class="selectpicker search-fields" name="all-status">
-                                    <option>All Status</option>
-                                    <option>For Sale</option>
-                                    <option>For Rent</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <select class="selectpicker search-fields" name="all-type">
-                                    <option>All Type</option>
-                                    <option>Apartments</option>
-                                    <option>Shop</option>
-                                    <option>Restaurant</option>
-                                    <option>Villa</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <select class="selectpicker search-fields" name="commercial">
-                                    <option>Commercial</option>
-                                    <option>Residential</option>
-                                    <option>Land</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <select class="selectpicker search-fields" name="location">
-                                    <option>Location</option>
-                                    <option>American</option>
-                                    <option>Florida</option>
-                                    <option>Belgium</option>
-                                    <option>Canada</option>
-                                </select>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="form-group">
-                                        <select class="selectpicker search-fields" name="bedrooms">
-                                            <option>Bedrooms</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <div class="form-group">
-                                        <select class="selectpicker search-fields" name="bathroom">
-                                            <option>Bathroom</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="range-slider">
-                                <label>Price</label>
-                                <div data-min="0" data-max="150000" data-min-name="min_price" data-max-name="max_price" data-unit="USD" class="range-slider-ui ui-slider" aria-disabled="false"></div>
-                                <div class="clearfix"></div>
-                            </div>
-                            <a class="show-more-options" data-toggle="collapse" data-target="#options-content2">
-                                <i class="fa fa-plus-circle"></i> Other Features
-                            </a>
-                            <div id="options-content2" class="collapse">
-                                <h3 class="sidebar-title">Amenities</h3>
-                                <div class="checkbox checkbox-theme checkbox-circle">
-                                    <input id="checkbox9" type="checkbox">
-                                    <label for="checkbox9">
-                                        Air Condition
-                                    </label>
-                                </div>
-                                <div class="checkbox checkbox-theme checkbox-circle">
-                                    <input id="checkbox10" type="checkbox">
-                                    <label for="checkbox10">
-                                        Places to seat
-                                    </label>
-                                </div>
-                                <div class="checkbox checkbox-theme checkbox-circle">
-                                    <input id="checkbox11" type="checkbox">
-                                    <label for="checkbox11">
-                                        Swimming Pool
-                                    </label>
-                                </div>
-                                <div class="checkbox checkbox-theme checkbox-circle">
-                                    <input id="checkbox12" type="checkbox">
-                                    <label for="checkbox12">
-                                        Free Parking
-                                    </label>
-                                </div>
-                                <div class="checkbox checkbox-theme checkbox-circle">
-                                    <input id="checkbox13" type="checkbox">
-                                    <label for="checkbox13">
-                                        Central Heating
-                                    </label>
-                                </div>
-                                <div class="checkbox checkbox-theme checkbox-circle">
-                                    <input id="checkbox14" type="checkbox">
-                                    <label for="checkbox14">
-                                        Laundry Room
-                                    </label>
-                                </div>
-                                <div class="checkbox checkbox-theme checkbox-circle">
-                                    <input id="checkbox15" type="checkbox">
-                                    <label for="checkbox15">
-                                        Window Covering
-                                    </label>
-                                </div>
-                                <div class="checkbox checkbox-theme checkbox-circle">
-                                    <input id="checkbox16" type="checkbox">
-                                    <label for="checkbox16">
-                                        Alarm
-                                    </label>
-                                </div>
-                                <br>
-                            </div>
-                            <div class="form-group mb-0">
-                                <button class="search-button">Search</button>
-                            </div>
-                        </form>
+
+                        @await Html.PartialAsync("_AgentInfoPartial", Model.Agent)
                     </div>
                     <!-- Tabbing box start -->
                     <div class="tabbing tabbing-box mb-40">
@@ -207,7 +88,7 @@
                             <li class="nav-item">
                                 <a class="nav-link active show" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="one" aria-selected="false">Description</a>
                             </li>
-                            <li class="nav-item">
+                            @*<li class="nav-item">
                                 <a class="nav-link" id="6-tab" data-toggle="tab" href="#6" role="tab" aria-controls="6" aria-selected="true">Features</a>
                             </li>
                             <li class="nav-item">
@@ -221,16 +102,17 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="4-tab" data-toggle="tab" href="#4" role="tab" aria-controls="4" aria-selected="true">Video</a>
-                            </li>
+                            </li>*@
                         </ul>
                         <div class="tab-content" id="carTabContent">
                             <div class="tab-pane fade active show" id="one" role="tabpanel" aria-labelledby="one-tab">
-                                <div class="properties-description mb-50">
-                                    <h3 class="heading-2">
+                                <div class="properties-description mb-50" style="margin-bottom:100px">
+                                    @*<h3 class="heading-2">
                                         Description
-                                    </h3>
-                                    <h4>@Model.Description</h4>
+                                    </h3>*@
+                                    <p class="h5">@Model.Description</p>
                                 </div>
+                                
                             </div>
                             <div class="tab-pane fade" id="two" role="tabpanel" aria-labelledby="two-tab">
                                 <div class="floor-plans mb-50">
@@ -400,8 +282,11 @@
                             </div>
                         </div>
                     </div>
+                    <div style="margin-bottom:20px">
+                        <h4>Similar Properties</h4>
+                    </div>
                     <div class="row">
-
+                       
                         @{
                             foreach (var property in Model.SimilarProperties)
                             {
@@ -414,7 +299,8 @@
                                                 <img class="d-block w-100 custom-image-size" src="@Url.Action("GetImage", "Document", new { ImageId = property.PropertyImages.FirstOrDefault()?.ImageId })" alt="properties">
                                             </a>
                                         </div>
-                                        <div class="detail">
+
+                                        <div class="detail" style="height:200px">
                                             <h1 class="title">
                                                 <a href="@Url.Action("Details","property", new { Id = property.Id})">@property.Title</a>
                                             </h1>
@@ -423,18 +309,19 @@
                                                     <i class="flaticon-pin"></i>@property.City.Name
                                                 </a>
                                             </div>
-                                            <ul class="facilities-list clearfix">
+                                            <div class="facilities-list clearfix">
 
-                                                <li>
-                                                    <sp class="flaticon-ui"><span>@property.Area</span>M<sup>2</sup></sp>
-                                                </li>
-                                                <li>
-                                                    <span class="fa fa-eye"><span>@property.ViewCount</span></span>
-                                                </li>
-                                                @*<li>
-                                                        <i class="flaticon-car"></i> 1 Garage
-                                                    </li>*@
-                                            </ul>
+
+                                                <p>
+                                                    <span class="fa fa-eye"><span> @property.ViewCount Views</span></span>
+                                                </p>
+                                                <p>
+                                                    <span class="fa fa-calendar"><span> @DurationHelper.FormatDuration(property.DateCreated)</span></span>
+                                                </p>
+                                             
+                                               
+                                            </div>
+                                       
                                         </div>
                                     </div>
                                 </div>
@@ -557,8 +444,20 @@
                 <div class="sidebar-right">
                     <!-- Advanced search start -->
                     <div class="widget advanced-search d-none d-xl-block d-lg-block">
-                        <h3 class="sidebar-title">Search Properties</h3>
-                        @await Html.PartialAsync("_SearchFormPartial", Model?.PropertySearchFormVm)
+                       @await Html.PartialAsync("_AgentInfoPartial",Model.Agent)
+                               
+                                <!-- Advanced search start -->
+                                @*<div class="widget advanced-search d-none d-xl-block d-lg-block">
+                    <h3 class="sidebar-title">Search Properties</h3>
+                    @await Html.PartialAsync("_SearchFormPartial", Model?.PropertySearchFormVm)
+                </div>*@
+                                <!-- Recent properties start -->
+                                <!-- Posts by category Start -->
+
+                           
+
+                        @*<h3 class="sidebar-title">Search Properties</h3>
+        @await Html.PartialAsync("_SearchFormPartial", Model?.PropertySearchFormVm)*@
                     </div>
                     <!-- Recent properties start -->
                     <!-- Posts by category Start -->

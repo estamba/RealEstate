@@ -23,6 +23,12 @@ namespace RealEstate.Core.Services.Properties
             return propertyRepository.GetProperties(count);
         }
 
+        public async Task<List<Property>> GetPropertiesByAgentIDAsync(Guid agentID, PropertySortOptions propertySortOptions = PropertySortOptions.Default)
+        {
+            return await propertyRepository.GetPropertiesByAgentIDAsync(agentID, propertySortOptions);
+
+        }
+
         public async Task<List<Property>> GetPropertiesByTypeAsync(short typeId,int count =0)
         {
             if(count ==0)

@@ -1,4 +1,5 @@
-﻿using RealEstate.Core.Entities;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using RealEstate.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,7 @@ namespace RealEstate.MVC.Models
     public class HomeViewModel
     {
         public List<Property> Properties { get; set; }
+        public IEnumerable<SelectListItem> PropertyTypes { get; set; }
+
     }
 }

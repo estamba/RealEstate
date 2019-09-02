@@ -15,50 +15,18 @@
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod</p>
                     <div class="inline-search-area">
                         <div class="row row-3 none-768">
-                            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 search-col">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 search-col">
                                 <select class="selectpicker search-fields" name="any-status">
                                     <option>Any Status</option>
                                     <option>For Rent</option>
                                     <option>For Sale</option>
                                 </select>
                             </div>
-                            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 search-col">
-                                <select class="selectpicker search-fields" name="all-type">
-                                    <option>All Type</option>
-                                    <option>Apartments</option>
-                                    <option>Shop</option>
-                                    <option>Restaurant</option>
-                                    <option>Villa</option>
-                                </select>
+                         
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 search-col">
+                              <input class="form-control" placeholder="Search by location" style="font:500"/>
                             </div>
-                            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 search-col">
-                                <select class="selectpicker search-fields" name="bedrooms">
-                                    <option>Bedrooms</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                </select>
-                            </div>
-                            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 search-col">
-                                <select class="selectpicker search-fields" name="bathrooms">
-                                    <option>Bathrooms</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                </select>
-                            </div>
-                            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 search-col">
-                                <select class="selectpicker search-fields" name="location">
-                                    <option>Location</option>
-                                    <option>American</option>
-                                    <option>Florida</option>
-                                    <option>Belgium</option>
-                                    <option>Canada</option>
-                                </select>
-                            </div>
-                            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-6 search-col">
+                            <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12  search-col">
                                 <button class="btn button-theme btn-search btn-block">
                                     <i class="fa fa-search"></i><strong>Find</strong>
                                 </button>
@@ -226,16 +194,17 @@
                                 </div>
                                 <ul class="facilities-list clearfix">
                                     <li>
-                                        <i class="flaticon-bed"></i> 3 Beds
+                                        <i class="fa fa-eye"></i>@property.ViewCount views
                                     </li>
                                     <li>
-                                        <i class="flaticon-bathroom"></i> 2 Baths
+                                        <i class="flaticon-calendar"></i> @DurationHelper.FormatDuration(property.DateCreated)
                                     </li>
                                     <li>
-                                        <i class="flaticon-ui"></i>@property.Area M<sup>2</sup>
+                                        <i class="flaticon-ui"></i> <span>@property.Area M</span><sup>2</sup>
+
                                     </li>
                                     <li>
-                                        <i class="flaticon-car"></i> 1 Garage
+                                        <i class="flaticon-rent"></i>@property.Status.Name
                                     </li>
                                 </ul>
                             </div>

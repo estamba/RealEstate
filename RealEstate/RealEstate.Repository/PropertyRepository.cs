@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RealEstate.Repositories
 {
@@ -35,6 +36,7 @@ namespace RealEstate.Repositories
         {
             return dbContext.Property
                 .Include(d => d.Ágent)
+                .ThenInclude(d=>d.ApplicationUser)
                .Include(d => d.Status)
                .Include(d => d.Type)
                 .Include(d => d.PropertyImages)
@@ -44,7 +46,18 @@ namespace RealEstate.Repositories
 
                 .Where(d => d.Id == Id).AsNoTracking().FirstOrDefault();
         }
-
+        public async Task<List<Property>> GetPropertiesByAgentIDAsync(Guid Id, PropertySortOptions sortOptions)
+        {
+            var query = dbContext.Property.Include(d => d.Ágent)
+                .ThenInclude(d => d.ApplicationUser)
+                .Include(d => d.Type)
+                .Include(d => d.Status)
+                .Include(d => d.PropertyImages)
+                .Include(d => d.City)
+                .Where(d => d.AgentId == Id).AsQueryable();
+            query = Order(query, sortOptions);
+            return await query.ToListAsync();
+        }
         public List<Property> GetProperties(int count)
         {
             if (count > 0)
@@ -67,7 +80,7 @@ namespace RealEstate.Repositories
 
         public PaginatedSearchResult<Property> Search(PropertySearchFilter searchFilter, int pageSize, int pageNumber)
         {
-            var totalCount = dbContext.Property.Count();
+         
             var query = dbContext.Property.AsQueryable();
             if (!string.IsNullOrEmpty(searchFilter.Title)) query = query.Where(x => x.Title.Contains(searchFilter.Title));
             if (!string.IsNullOrEmpty(searchFilter.Location)) query = query.Where(x => x.City.Name == searchFilter.Location || x.City.Region.Name == searchFilter.Location);
@@ -80,6 +93,7 @@ namespace RealEstate.Repositories
             if (pageNumber > 0) skipCount  = (pageNumber - 1) * pageSize;
             query = Order(query, searchFilter.SortOption);
 
+            var totalCount = query.ToList().Count;
             query = query.Skip(skipCount);
             query = query.Take(pageSize);
 
@@ -88,12 +102,13 @@ namespace RealEstate.Repositories
                 .Include(d => d.PropertyImages)
                 .Include(d => d.City)
                 .Include(d => d.Status);
-
+            var results = query.ToList();
+         
             return new PaginatedSearchResult<Property>()
             {
                 Page = pageNumber,
                 PageSize = pageSize,
-                Results = query.ToList(),
+                Results = results,
                 PageCount = GetPageCount(totalCount,pageSize),
                 Total = totalCount
             };

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RealEstate.Core.Interfaces.Repositories
 {
@@ -13,8 +14,6 @@ namespace RealEstate.Core.Interfaces.Repositories
         List<PropertyType> GetPropertyTypes();
         List<Property> GetProperties(int count);
         PaginatedSearchResult<Property> Search(PropertySearchFilter searchFilter,int pageSize, int pageNumber);
-
-
-
+        Task<List<Property>> GetPropertiesByAgentIDAsync(Guid Id, PropertySortOptions sortOptions);
     }
 }

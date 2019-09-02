@@ -64,5 +64,18 @@ namespace RealEstate.MVC.Models
         public PropertySearchFilter SearchFilter { get; set; }
         public PaginatedSearchResult<Property> searchResult { get; set; }
     }
-  
+    public class AgentPropertiesVM
+    {
+        public AgentPropertiesVM()
+        {
+            Agent = new Agent();
+        }
+        public IEnumerable<SelectListItem> SortOptions { get; set; }
+        public List<Property> Properties { get; set; }
+        public Agent Agent { get; set; }
+
+
+
+    }
+
 }

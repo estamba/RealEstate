@@ -1,0 +1,240 @@
+﻿@model AgentPropertiesVM
+@{
+    ViewData["Title"] = "Agent";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!-- Sub banner start -->
+<div class="sub-banner">
+    <div class="container breadcrumb-area">
+        <div class="breadcrumb-areas">
+            <h1>Properties Grid</h1>
+            <ul class="breadcrumbs">
+                <li><a href="index.html">Home</a></li>
+                <li class="active">Properties Grid</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- Sub Banner end -->
+<!-- Properties section body start -->
+<div class="properties-section-body content-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-12">
+                <div class="sidebar-left">
+
+                    <!-- Advanced search start -->
+                    @await Html.PartialAsync("_AgentInfoPartial", Model.Agent)
+
+
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <!-- Option bar start -->
+                <div class="option-bar clearfix">
+                    <div class="sorting-options2">
+                        <span class="sort">Sort by:</span>
+                        <select class="selectpicker search-fields" name="default-order" asp-items="@Model.SortOptions" id="sortOptions"></select>
+                    </div>
+                    @*<div class="sorting-options float-right">
+                            <a class="change-view-btn active-view-btn" id="list"><i class="fa fa-th-list"></i></a>
+                            <a class="change-view-btn" id="grid"><i class="fa fa-th-large"></i></a>
+                        </div>*@
+                </div>
+
+
+                <div id="listResults">
+                    @await Html.PartialAsync("_SearchResultsListPartial", Model.Properties)
+
+                </div>
+
+                <!-- Page navigation start -->
+                @*<div class="pagination-box text-center" id="paginationDiv">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination">
+                                @{
+                                    var pageCount = Model.searchResult.PageCount;
+                                    int maxCount = Math.Min(pageCount, 5);
+                                    int minCount = 1;
+                                    if (Model.searchResult.Page >= maxCount)
+                                    {
+                                        maxCount = Math.Min(Model.searchResult.PageCount, Model.searchResult.Page + 3);
+                                        minCount = Math.Max(1, maxCount - 5);
+                                    }
+                                    <li class="page-item">
+                                        <a class="page-link prevPage" href="#"><i class="fa fa-angle-left"></i></a>
+                                    </li>
+                                    for (int i = minCount; i <= maxCount; i++)
+                                    {
+
+                                        <li class="page-item"><a class="page-link active pageNumber" data-pageNumber="@i">@i</a></li>
+
+
+                                    }
+                                    <li class="page-item">
+                                        <a class="page-link nextPage"><i class="fa fa-angle-right"></i></a>
+                                    </li>
+                                }
+
+
+                            </ul>
+                        </nav>
+                    </div>*@
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+<script>
+    $(document).ready(function () {
+
+        var url = '@Url.Action("GetPropertiesListPartial", "Agent")'
+        var Id = '@Model.Agent.Id';
+            $('#sortOptions').change(function () {
+
+                var selectedValue = $(this).val();
+                   $.ajax({
+                       url: url,
+                       data: { Id: Id, sortOption: selectedValue },
+                        type: "GET",
+                       success: function (data) {
+                           $("#listResults").html(data);
+                        }
+
+
+                    });
+                
+            });
+    });
+</script>
+}
+   
+    @*@section styles{
+            <link href="~/css/custom.css" rel="stylesheet" />
+            <link href="~/css/jquery-ui.min.css" rel="stylesheet" />
+
+        }
+        @section scripts{
+            <script src="~/js/jquery-ui.min.js"></script>
+
+
+            <script>
+            function ChangeViewStyle(style) {
+
+                if (style == "grid") {
+                    $("#listResults").hide();
+                    $("#gridResults").show();
+
+                    $("#grid").removeClass("active-view-btn").addClass("active-view-btn");
+                    $("#list").removeClass("active-view-btn");
+
+                    $("#viewStyle").val = "grid";
+
+                }
+                else {
+                    $("#listResults").show();
+                    $("#gridResults").hide();
+
+                    $("#list").removeClass("active-view-btn").addClass("active-view-btn");
+                    $("#grid").removeClass("active-view-btn");
+
+                    $("#viewStyle").val = "list";
+
+                }
+            }
+            $(document).ready(function () {
+                var viewStyle = '@httpContextAccessor.HttpContext.Request.Query["viewStyle"]';
+                ChangeViewStyle(viewStyle);
+
+                $("#grid, #list").click(function () {
+                    var id = (this).id;
+                    ChangeViewStyle(id);
+
+                });
+            })
+
+            </script>
+            <script>
+                $(document).ready(function () {
+                    var values = [10, 200000]
+                    $('.range-slider-ui').trigger("slide", 90);
+                    $('.range-slider-ui').trigger("slide", values);
+
+
+                    $('#sortOptions').change(function () {
+
+
+                        $("#sortOption").val($(this).val());
+                        $(".search-button").click();
+                    });
+
+                });
+            </script>
+            <script>
+
+                $(document).ready(function () {
+                    var url = '@Url.Action("GetLocations","Region")'
+                    $('#location').autocomplete({
+
+                        source: function (request, response) {
+                            $.ajax({
+                                url: url,
+                                data: { searchTerm: request.term },
+                                type: "GET",
+                                success: function (data) {
+                                    response($.map(data, function (item) {
+                                        return {
+                                    label: item,
+                                    value: item
+                                };
+                                    }))
+                                }
+
+
+                            });
+                        }
+                    });
+                });
+            </script>
+
+            <script>
+
+                $(document).ready(function () {
+
+                    var pageCount = @Model.searchResult.PageCount;
+
+                    var pageNumber = @Model.searchResult.Page;
+
+                    if (pageCount <= 1) $("#paginationDiv").hide();
+
+                    var activeElements = $("li>.active");
+                    activeElements.removeClass("active");
+                    var currentPageNav = $("[data-pageNumber= " + pageNumber + "]");
+                    currentPageNav.addClass("active");
+                    console.log("here...");
+
+                    $(".pageNumber").click(function () {
+
+                        var pageNumber = $(this).attr("data-pageNumber");
+                        $("#pageNumber").val(pageNumber);
+                        $(".search-button").click();
+                    })
+                    $(".nextPage").click(function () {
+
+                        if (pageNumber >= pageCount) return;
+                         $("#pageNumber").val(pageNumber+1);
+                        $(".search-button").click();
+                    })
+                    $(".prevPage").click(function () {
+                        if (pageNumber <= 1) return;
+                         $("#pageNumber").val(pageNumber-1);
+                        $(".search-button").click();
+                    })
+                })
+            </script>
+        }*@
+
+
+

@@ -7,7 +7,7 @@ namespace RealEstate.Core.Interfaces.Services.Properties
 {
    public interface IPropertySearchService
     {
-        PaginatedSearchResult<Property> Search(PropertySearchFilter searchFilter, int pageSize = 3, int pageNumber = 0);
+        PaginatedSearchResult<Property> Search(PropertySearchFilter searchFilter, int pageSize = 10, int pageNumber = 0);
 
     }
 }

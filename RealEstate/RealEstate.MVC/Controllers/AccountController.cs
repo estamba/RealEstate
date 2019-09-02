@@ -52,7 +52,7 @@ namespace RealEstate.MVC.Controllers
         public async Task<IActionResult> SignUp(SignUpVm model)
         {
             if (!ModelState.IsValid) return View(model);
-            var user = new ApplicationUser { UserName = model.EmailAddress, Email = model.EmailAddress, PhoneNumber = model.PhoneNumber, NormalizedUserName = model.Name };
+            var user = new ApplicationUser { UserName = model.EmailAddress, Email = model.EmailAddress, PhoneNumber = model.PhoneNumber, NormalizedUserName = model.Name, Name =model.Name };
             var result = await userManager.CreateAsync(user, model.Password);
             if (result.Succeeded)
             {

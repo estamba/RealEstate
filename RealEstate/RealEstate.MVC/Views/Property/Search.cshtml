@@ -97,15 +97,22 @@
                 </div>
 
                 <!-- Page navigation start -->
-                <div class="pagination-box text-center">
+                <div class="pagination-box text-center" id="paginationDiv">
                     <nav aria-label="Page navigation example">
                         <ul class="pagination">
                             @{
-                                        var pageCount = Model.searchResult.PageCount;
+                                var pageCount = Model.searchResult.PageCount;
+                                int maxCount = Math.Min(pageCount,5);
+                                int minCount = 1;
+                                if (Model.searchResult.Page >= maxCount)
+                                {
+                                    maxCount = Math.Min(Model.searchResult.PageCount, Model.searchResult.Page + 3);
+                                    minCount = Math.Max(1, maxCount - 5);
+                                }
                                 <li class="page-item">
                                     <a class="page-link prevPage" href="#"><i class="fa fa-angle-left"></i></a>
                                 </li>
-                                for (int i = 1; i <= pageCount; i++)
+                                for (int i = minCount; i <= maxCount; i++)
                                 {
 
                                     <li class="page-item"><a class="page-link active pageNumber" data-pageNumber="@i">@i</a></li>
@@ -220,7 +227,9 @@
             var pageCount = @Model.searchResult.PageCount;
         
             var pageNumber = @Model.searchResult.Page;
-          
+         
+            if (pageCount <= 1) $("#paginationDiv").hide();
+
             var activeElements = $("li>.active");
             activeElements.removeClass("active");
             var currentPageNav = $("[data-pageNumber= " + pageNumber + "]");
