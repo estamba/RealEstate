@@ -38,10 +38,10 @@ namespace RealEstate.Repositories
                 .Include(d => d.Ágent)
                 .ThenInclude(d=>d.ApplicationUser)
                .Include(d => d.Status)
+               .Include(d => d.State)
                .Include(d => d.Type)
                 .Include(d => d.PropertyImages)
                 .Include(d => d.City)
-                .Include(d => d.Status)
 
 
                 .Where(d => d.Id == Id).AsNoTracking().FirstOrDefault();
@@ -52,9 +52,10 @@ namespace RealEstate.Repositories
                 .ThenInclude(d => d.ApplicationUser)
                 .Include(d => d.Type)
                 .Include(d => d.Status)
+               .Include(d => d.State)
                 .Include(d => d.PropertyImages)
                 .Include(d => d.City)
-                .Where(d => d.AgentId == Id).AsQueryable();
+                .Where(d => d.AgentId == Id && !d.IsDelete).AsQueryable();
             query = Order(query, sortOptions);
             return await query.ToListAsync();
         }
@@ -67,6 +68,7 @@ namespace RealEstate.Repositories
                 .Include(d => d.PropertyImages)
                 .Include(d => d.City)
                 .Include(d => d.Status)
+                .Where(d => !d.IsDelete)
                 .Take(count).AsNoTracking().ToList();
 
             return dbContext.Property.Include(d => d.Ágent)
@@ -75,6 +77,7 @@ namespace RealEstate.Repositories
                 .Include(d => d.PropertyImages)
                 .Include(d => d.City)
                 .Include(d => d.Status)
+                .Where(d=>!d.IsDelete)
                 .AsNoTracking().ToList();
         }
 
@@ -101,7 +104,9 @@ namespace RealEstate.Repositories
                .Include(d => d.Type)
                 .Include(d => d.PropertyImages)
                 .Include(d => d.City)
-                .Include(d => d.Status);
+                .Include(d => d.Status)
+                .Where(d => !d.IsDelete);
+
             var results = query.ToList();
          
             return new PaginatedSearchResult<Property>()

@@ -130,6 +130,18 @@ namespace RealEstate.MVC.Controllers
             };
             return View(vm);
         }
+
+        public IActionResult UpdateState(Guid Id, string state)
+        {
+            addPropertyService.UpdatePropertyState(Id, state);
+            return Ok();
+        }
+        public IActionResult Delete(Guid Id)
+        {
+            addPropertyService.Delete(Id);
+            return Ok();
+        }
+
         [HttpPost("file-upload")]
         public IActionResult Test(string test)
         {

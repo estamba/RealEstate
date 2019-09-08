@@ -3,6 +3,7 @@ using RealEstate.Core.Interfaces.Repositories;
 using RealEstate.Core.Interfaces.Services.Properties;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace RealEstate.Core.Services.Properties
@@ -30,12 +31,33 @@ namespace RealEstate.Core.Services.Properties
                 StatusId = (short)postPropertyModel.SelectedStatus,
                 TypeId =  (short)postPropertyModel.SelectedType,
                 PropertyImages =  GetPropertyImages(postPropertyModel.Documents),
+                StateId = 2// Active
+               
              
 
             };
 
             return propertyRepository.Add(property);
         }
+
+        public void Delete(Guid Id)
+        {
+            var property = propertyRepository.GetPropertyById(Id);
+            property.IsDelete = true;
+
+            propertyRepository.Update(property);
+        }
+
+        public void UpdatePropertyState(Guid Id, string state)
+        {
+
+            var property = propertyRepository.GetPropertyById(Id);
+            var propertyStates = propertyRepository.GetPropertyStates();
+            property.StateId = (short)propertyStates.Where(s=>s.Name?.ToLower() == state.ToLower()).FirstOrDefault()?.Id;
+            propertyRepository.Update(property);
+            
+        }
+
         private List<PropertyImage> GetPropertyImages(List<Document> documents)
         {
             List<PropertyImage> propertyImages = new List<PropertyImage>();

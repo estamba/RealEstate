@@ -1,0 +1,57 @@
+﻿@model  List<Property>
+
+@{
+    foreach (var property in Model)
+    {
+         var state = property?.State?.Name?.ToLower();
+        <tr class="responsive-table">
+            <td class="listing-photoo">
+                <img src="@Url.Action("GetImage","Document", new {ImageId = property.PropertyImages.FirstOrDefault()?.ImageId })" alt="listing-photo" class="img-fluid" style="width:180px; height:120px">
+            </td>
+            <td class="title-container">
+                <h2><a href="#">@property.Title</a></h2>
+                <h5 class="d-none d-xl-block d-lg-block d-md-block"><i class="flaticon-pin"></i>@property.City.Name </h5>
+                <h6 class="table-property-price">GMD @property.Price</h6>
+                @{
+                    if (state == "sold")
+                    {
+                        <span class="badge badge-pill badge-dark">Sold</span>
+
+                    }
+                }
+
+            </td>
+            <td class="expire-date">@property.DateCreated.ToString("MM/dd/yyyy")</td>
+
+            <td class="action">
+                @{
+                   
+
+                    if (state == "sold")
+                    {
+                        <a  data-target="#deleteModal" data-toggle="modal" data-id="@property.Id" data-title="@property.Title"class="delete"><i class="fa fa-remove"></i> Delete</a>
+
+                    }
+                    else if (state == "active")
+                    {
+                        <a href="#"><i class="fa fa-pencil"></i> Edit</a>
+                        <a data-target="#statusUpdateModal" data-toggle="modal" data-id="@property.Id" data-title="@property.Title" data-action="hide" data-changeto="inactive"><i class="fa  fa-eye-slash"></i> Hide</a>
+                        <a class="delete" data-toggle="modal" data-target="#deleteModal" data-id="@property.Id" data-title="@property.Title"><i class="fa fa-remove"></i> Delete</a>
+                        <a href="#" class="delete" data-target="#statusUpdateModal"  data-toggle="modal" rel="tooltip" title="Click to mark as sold" data-id="@property.Id" data-title="@property.Title" data-action="sold" data-changeto="sold"><i class="fa fa-buysellads" ></i>Sold</a>
+
+
+
+                    }
+                    else
+                    {
+                        <a href="#"><i class="fa fa-pencil"></i> Edit</a>
+                        <a data-target="#statusUpdateModal" data-toggle="modal" data-id="@property.Id" data-title="@property.Title" data-action="un-hide" data-changeto="active"><i class="fa  fa-eye"></i> Un-Hide</a>
+                        <a  class="delete"  data-target="#deleteModal" data-toggle="modal" data-id="@property.Id" data-title="@property.Title"><i class="fa fa-remove"></i> Delete</a>
+
+                    }
+                }
+            </td>
+        </tr>
+
+    }
+}

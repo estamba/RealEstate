@@ -77,5 +77,11 @@ namespace RealEstate.MVC.Models
 
 
     }
+    public class MyPropertiesVM
+    {
+        public List<Property> properties { get; set; }
+        public IEnumerable<SelectListItem> SortOptions { get; set; }
+
+    }
 
 }

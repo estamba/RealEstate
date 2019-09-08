@@ -8,5 +8,8 @@ namespace RealEstate.Core.Interfaces.Services.Properties
     public interface IAddPropertyService
     {
         Property Add(PostPropertyModel postPropertyModel);
+        void UpdatePropertyState(Guid Id, string state);
+        void Delete(Guid Id);
+
     }
 }

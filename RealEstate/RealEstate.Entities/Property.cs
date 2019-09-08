@@ -23,8 +23,9 @@ namespace RealEstate.Core.Entities
         public City City { get; set; }
         public int CityId { get; set; }
 
-        public short SateId { get; set; }
+        public short StateId { get; set; }
         public PropertyState State { get; set; }
+        public bool IsDelete { get; set; }
 
         public ICollection<PropertyImage> PropertyImages { get; set; }
 

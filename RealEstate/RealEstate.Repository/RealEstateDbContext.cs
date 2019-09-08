@@ -43,6 +43,9 @@ namespace RealEstate.Repository
             .Property(a => a.Isverified)
             .HasDefaultValue(false);
 
+            modelBuilder.Entity<Property>()
+          .Property(p =>p.IsDelete )
+          .HasDefaultValue(false);
 
             modelBuilder.Entity<PropertyState>()
             .Property(a => a.Id)

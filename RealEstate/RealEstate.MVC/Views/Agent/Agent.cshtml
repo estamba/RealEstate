@@ -39,49 +39,49 @@
                         <select class="selectpicker search-fields" name="default-order" asp-items="@Model.SortOptions" id="sortOptions"></select>
                     </div>
                     @*<div class="sorting-options float-right">
-                            <a class="change-view-btn active-view-btn" id="list"><i class="fa fa-th-list"></i></a>
-                            <a class="change-view-btn" id="grid"><i class="fa fa-th-large"></i></a>
-                        </div>*@
+                <a class="change-view-btn active-view-btn" id="list"><i class="fa fa-th-list"></i></a>
+                <a class="change-view-btn" id="grid"><i class="fa fa-th-large"></i></a>
+            </div>*@
                 </div>
 
-
+          
                 <div id="listResults">
                     @await Html.PartialAsync("_SearchResultsListPartial", Model.Properties)
 
                 </div>
-
+                <!-- Modal -->
                 <!-- Page navigation start -->
                 @*<div class="pagination-box text-center" id="paginationDiv">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                @{
-                                    var pageCount = Model.searchResult.PageCount;
-                                    int maxCount = Math.Min(pageCount, 5);
-                                    int minCount = 1;
-                                    if (Model.searchResult.Page >= maxCount)
-                                    {
-                                        maxCount = Math.Min(Model.searchResult.PageCount, Model.searchResult.Page + 3);
-                                        minCount = Math.Max(1, maxCount - 5);
-                                    }
-                                    <li class="page-item">
-                                        <a class="page-link prevPage" href="#"><i class="fa fa-angle-left"></i></a>
-                                    </li>
-                                    for (int i = minCount; i <= maxCount; i++)
-                                    {
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    @{
+                        var pageCount = Model.searchResult.PageCount;
+                        int maxCount = Math.Min(pageCount, 5);
+                        int minCount = 1;
+                        if (Model.searchResult.Page >= maxCount)
+                        {
+                            maxCount = Math.Min(Model.searchResult.PageCount, Model.searchResult.Page + 3);
+                            minCount = Math.Max(1, maxCount - 5);
+                        }
+                        <li class="page-item">
+                            <a class="page-link prevPage" href="#"><i class="fa fa-angle-left"></i></a>
+                        </li>
+                        for (int i = minCount; i <= maxCount; i++)
+                        {
 
-                                        <li class="page-item"><a class="page-link active pageNumber" data-pageNumber="@i">@i</a></li>
-
-
-                                    }
-                                    <li class="page-item">
-                                        <a class="page-link nextPage"><i class="fa fa-angle-right"></i></a>
-                                    </li>
-                                }
+                            <li class="page-item"><a class="page-link active pageNumber" data-pageNumber="@i">@i</a></li>
 
 
-                            </ul>
-                        </nav>
-                    </div>*@
+                        }
+                        <li class="page-item">
+                            <a class="page-link nextPage"><i class="fa fa-angle-right"></i></a>
+                        </li>
+                    }
+
+
+                </ul>
+            </nav>
+        </div>*@
             </div>
         </div>
     </div>

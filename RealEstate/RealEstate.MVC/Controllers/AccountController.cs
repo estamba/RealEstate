@@ -24,6 +24,7 @@ namespace RealEstate.MVC.Controllers
         public IActionResult Index()
         {
             return View();
+            
         }
         public IActionResult Login(string returnUrl)
         {
