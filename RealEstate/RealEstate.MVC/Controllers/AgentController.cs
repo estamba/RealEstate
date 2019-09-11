@@ -10,6 +10,7 @@ using RealEstate.Core.Entities;
 using RealEstate.Core.Interfaces.Services.Agents;
 using RealEstate.Core.Interfaces.Services.Properties;
 using RealEstate.MVC.Models;
+using RealEstate.MVC.Services;
 
 namespace RealEstate.MVC.Controllers
 {
@@ -19,12 +20,16 @@ namespace RealEstate.MVC.Controllers
         private readonly IPropertyService propertyService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IAgentService agentService;
+        private readonly PropertyVmService propertyVmService;
+        private readonly IAgentPropertyStatsService agentPropertyStatsService;
 
-        public AgentController(IPropertyService propertyService, UserManager<ApplicationUser> userManager,IAgentService agentService)
+        public AgentController(IPropertyService propertyService, UserManager<ApplicationUser> userManager,IAgentService agentService, PropertyVmService propertyVmService, IAgentPropertyStatsService agentPropertyStatsService)
         {
             this.propertyService = propertyService;
             this.userManager = userManager;
             this.agentService = agentService;
+            this.propertyVmService = propertyVmService;
+            this.agentPropertyStatsService = agentPropertyStatsService;
         }
         [HttpGet("{Id}/{name}", Name ="agentProperties")]
         public async Task<IActionResult> Agent(Guid Id)
@@ -35,7 +40,7 @@ namespace RealEstate.MVC.Controllers
             AgentPropertiesVM agentPropertiesVM = new AgentPropertiesVM()
             {
                 Properties = properties,
-                SortOptions = GetSortingOptions(),
+                SortOptions = propertyVmService. GetSortingOptions(),
                 Agent = agent
             };
 
@@ -48,15 +53,23 @@ namespace RealEstate.MVC.Controllers
             var userId = userManager.GetUserId(User);
             var agent = await agentService.GetAgentByApplicationUserIdAsync(userId);
             var properties = await propertyService.GetPropertiesByAgentIDAsync(agent.Id);
-            MyPropertiesVM vm = new MyPropertiesVM() { properties = properties, SortOptions = GetSortingOptions() };
+            MyPropertiesVM vm = new MyPropertiesVM() { properties = properties, SortOptions = propertyVmService.GetSortingOptions() };
             return View(vm);
         }
         [Authorize]
         [HttpGet("dashboard", Name = "dashboard")]
-        public IActionResult DashBoard()
+        public async Task<IActionResult> DashBoard()
         {
-
-            return View();
+            var userId = userManager.GetUserId(User);
+            var agent = await agentService.GetAgentByApplicationUserIdAsync(userId);
+            var properties = await propertyService.GetPropertiesByAgentIDAsync(agent.Id);
+            DashboardVM vm = new DashboardVM()
+            {
+                Properties = properties?.OrderByDescending(p => p.DateCreated)?.Take(5)?.ToList(),
+                Agent = agent,
+                propertyStats = await agentPropertyStatsService.Get(agent.Id)
+            };
+            return View(vm);
         }
         [HttpGet("my-propertiesPartial")]
         public async Task<IActionResult> MyPropertiesPartial(Guid Id, PropertySortOptions sortOption)
@@ -72,42 +85,6 @@ namespace RealEstate.MVC.Controllers
 
             return PartialView("_SearchResultsListPartial", properties);
         }
-        private List<SelectListItem> GetSortingOptions()
-        {
-            var enumValues = Enum.GetValues(typeof(PropertySortOptions));
-            var selectList = new List<SelectListItem>();
-            foreach (var enumValue in enumValues)
-            {
-                selectList.Add(new SelectListItem()
-                {
-                    Value = enumValue.ToString(),
-                    Text = GetSortingDescription((PropertySortOptions)enumValue)
-                });
-            }
-            return selectList;
-        }
-        private static string GetSortingDescription(PropertySortOptions sortOption)
-        {
-            string description = "Default";
-            switch (sortOption)
-            {
-                case PropertySortOptions.PriceAsc:
-                    description = "Price Low to High";
-                    break;
-                case PropertySortOptions.PriceDesc:
-                    description = "Price High to Low";
-                    break;
-                case PropertySortOptions.AddedDateAsc:
-                    description = "Oldest Properties";
-                    break;
-                case PropertySortOptions.AddedDateDesc:
-                    description = "Newest Properties";
-                    break;
-                default:
-                    description = "Default Order";
-                    break;
-            }
-            return description;
-        }
+  
     }
 }

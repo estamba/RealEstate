@@ -1,4 +1,5 @@
 ﻿@model MyPropertiesVM
+@inject IHttpContextAccessor httpAccessor
 @{
     ViewData["Title"] = "MyProperties";
     Layout = "~/Views/Shared/_LayoutDasboard.cshtml";
@@ -15,10 +16,10 @@
                         <div class="breadcrumb-nav">
                             <ul>
                                 <li>
-                                    <a href="index.html">Index</a>
+                                    <a href="@Url.Action("Index","Home")">Index</a>
                                 </li>
                                 <li>
-                                    <a href="dashboard.html">Dashboard</a>
+                                    <a href="@Url.RouteUrl("dashboard")">Dashboard</a>
                                 </li>
                                 <li class="active">My Properties</li>
                             </ul>
@@ -27,15 +28,28 @@
                 </div>
             </div>
             <div>
+
+                @{
+                    if (httpAccessor.HttpContext.Request.Query["process"] == "editSuccess")
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Great!</strong> Your property has been updated!.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    }
+                }
+
                 <div class="option-bar clearfix float-right">
                     <div class="sorting-options2">
                         <span class="sort">Sort by:</span>
                         <select class="selectpicker search-fields" name="default-order" id="sortOption" asp-items="@Model.SortOptions"></select>
                     </div>
                     @*<div class="sorting-options float-right">
-                            <a class="change-view-btn active-view-btn" id="list"><i class="fa fa-th-list"></i></a>
-                            <a class="change-view-btn" id="grid"><i class="fa fa-th-large"></i></a>
-                        </div>*@
+                <a class="change-view-btn active-view-btn" id="list"><i class="fa fa-th-list"></i></a>
+                <a class="change-view-btn" id="grid"><i class="fa fa-th-large"></i></a>
+            </div>*@
                 </div>
             </div>
             <div class="dashboard-list">

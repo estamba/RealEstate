@@ -1,4 +1,4 @@
-﻿
+﻿@inject IHttpContextAccessor httpAccessor
 
 
 <!DOCTYPE html>
@@ -99,7 +99,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav header-ml">
+                    @*<ul class="navbar-nav header-ml">
                         <li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Home
@@ -217,13 +217,34 @@
                                 <li><a class="dropdown-item" href="@Url.Action("add","property")">Submit Property</a></li>
                             </ul>
                         </li>
-                    </ul>
+                    </ul>*@
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item ">
-                            <a class="nav-link" href="@Url.Action("Login","Account")">
-                                <i class="flaticon-logout"></i>Sign In
-                            </a>
-                        </li>
+
+                        @{
+                            if (httpAccessor.HttpContext.User.Identity.IsAuthenticated)
+                            {
+
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="@Url.Action("SignOut","Account")">
+                                        <i class="flaticon-logout"></i>Sign Out
+                                    </a>
+                                </li>
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="@Url.RouteUrl("dashboard")">
+                                        <i class="flaticon-dashboard"></i>Dashboard
+                                    </a>
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item ">
+                                    <a class="nav-link" href="@Url.Action("Login","Account")">
+                                        <i class="fa fa-sign-in"></i>Sign In
+                                    </a>
+                                </li>
+                            }
+                        }
+
                         <li class="nav-item">
                             <a href="@Url.Action("Add","Property")" class="nav-link link-color"><i class="flaticon-plus"></i>Submit Property</a>
                         </li>

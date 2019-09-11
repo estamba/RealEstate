@@ -34,17 +34,17 @@
                     }
                     else if (state == "active")
                     {
-                        <a href="#"><i class="fa fa-pencil"></i> Edit</a>
+                        <a href="@Url.Action("Edit","Property",new {Id = property.Id })"><i class="fa fa-pencil"></i> Edit</a>
                         <a data-target="#statusUpdateModal" data-toggle="modal" data-id="@property.Id" data-title="@property.Title" data-action="hide" data-changeto="inactive"><i class="fa  fa-eye-slash"></i> Hide</a>
                         <a class="delete" data-toggle="modal" data-target="#deleteModal" data-id="@property.Id" data-title="@property.Title"><i class="fa fa-remove"></i> Delete</a>
-                        <a href="#" class="delete" data-target="#statusUpdateModal"  data-toggle="modal" rel="tooltip" title="Click to mark as sold" data-id="@property.Id" data-title="@property.Title" data-action="sold" data-changeto="sold"><i class="fa fa-buysellads" ></i>Sold</a>
+                        <a class="delete" data-target="#statusUpdateModal"  data-toggle="modal" rel="tooltip" title="Click to mark as sold" data-id="@property.Id" data-title="@property.Title" data-action="sold" data-changeto="sold"><i class="fa fa-buysellads" ></i>Sold</a>
 
 
 
                     }
                     else
                     {
-                        <a href="#"><i class="fa fa-pencil"></i> Edit</a>
+                        <a href="@Url.Action("Edit","Property",new {Id = property.Id })"><i class="fa fa-pencil"></i> Edit</a>
                         <a data-target="#statusUpdateModal" data-toggle="modal" data-id="@property.Id" data-title="@property.Title" data-action="un-hide" data-changeto="active"><i class="fa  fa-eye"></i> Un-Hide</a>
                         <a  class="delete"  data-target="#deleteModal" data-toggle="modal" data-id="@property.Id" data-title="@property.Title"><i class="fa fa-remove"></i> Delete</a>
 

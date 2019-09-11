@@ -32,9 +32,10 @@ namespace RealEstate.MVC.Controllers
         private readonly CurrentUser currentUser;
         private readonly IPropertyViewCountService viewCountService;
         private readonly IPropertySearchService propertySearchService;
+        private readonly PropertyVmService propertyVmService;
 
         public PropertyController(ILocationService regionService, IMetadataService metadataService,IMapper mapper, UserManager<ApplicationUser> userManager, IAgentService agentService, IAddPropertyService addPropertyService, 
-            IPropertyService propertyService, CurrentUser currentUser, IPropertyViewCountService viewCountService, IPropertySearchService propertySearchService)
+            IPropertyService propertyService, CurrentUser currentUser, IPropertyViewCountService viewCountService, IPropertySearchService propertySearchService, PropertyVmService propertyVmService)
         {
             this.regionService = regionService;
             this.metadataService = metadataService;
@@ -46,6 +47,7 @@ namespace RealEstate.MVC.Controllers
             this.currentUser = currentUser;
             this.viewCountService = viewCountService;
             this.propertySearchService = propertySearchService;
+            this.propertyVmService = propertyVmService;
         }
         public IActionResult Index()
         {
@@ -83,8 +85,8 @@ namespace RealEstate.MVC.Controllers
             var similarProperties = await propertyService.GetPropertiesByTypeAsync(property.TypeId,8);
             PropertySearchFormVm propertySearchFormVm = new PropertySearchFormVm()
             {
-                PropertyStatuses = GetPropertyStatuses(),
-                PropertyTypes = GetPropertyTypes()
+                PropertyStatuses = propertyVmService.GetPropertyStatuses(),
+                PropertyTypes = propertyVmService.GetPropertyTypes()
             };
             PropertyDetailsVm vm = new PropertyDetailsVm()
             {
@@ -116,17 +118,17 @@ namespace RealEstate.MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult Search(PropertySearchFilter searchFilter, int page=1)
+        public IActionResult Search(PropertySearchFilter searchFilter, int page = 1)
         {
-        
-            var data = propertySearchService.Search( searchFilter ?? new PropertySearchFilter(),pageNumber:page);
+
+            var data = propertySearchService.Search(searchFilter ?? new PropertySearchFilter(), pageNumber: page);
             var vm = new PropertySearchVM()
             {
                 searchResult = data,
                 SearchFilter = searchFilter,
-                PropertyStatuses = GetPropertyStatuses(),
-                PropertyTypes = GetPropertyTypes(),
-                SortOptions = GetSortingOptions()
+                PropertyStatuses = propertyVmService.GetPropertyStatuses(),
+                PropertyTypes = propertyVmService.GetPropertyTypes(),
+                SortOptions = propertyVmService.GetSortingOptions()
             };
             return View(vm);
         }
@@ -141,7 +143,50 @@ namespace RealEstate.MVC.Controllers
             addPropertyService.Delete(Id);
             return Ok();
         }
+        public async Task<IActionResult> Edit(Guid Id)
+        {
+            var property = propertyService.GetProperty(Id);
+            var regions = await regionService.GetRegionsAsync();
+            EditPropertyVM vm = new EditPropertyVM()
+            {
+                Area = property.Area,
+                Description = property.Description,
+                PropertyStatuses = propertyVmService.GetPropertyStatuses(),
+                PropertyTypes = propertyVmService.GetPropertyTypes(),
+                Price = (double)property.Price,
+                Title = property.Title,
+                SelectedCity = property.CityId,
+                SelectedStatus = property.StatusId,
+                SelectedType = property.TypeId,
+                SelectedRegion = property.City.RegionId,
+                Regions = GetRegions(regions),
+                Cities = GetCitySelectList(property.City)
+            };
+           return View(vm);
 
+        }
+        [HttpPost]
+        public async Task<IActionResult>Edit(EditPropertyVM model)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                var property = propertyService.GetProperty(model.Id);
+
+                var regions = await regionService.GetRegionsAsync();
+                model.PropertyStatuses = propertyVmService.GetPropertyStatuses();
+                model.PropertyTypes = propertyVmService.GetPropertyTypes();
+                model.Regions = GetRegions(regions);
+                model.Cities = GetCitySelectList(property.City);
+                return View(model);
+            }
+            var editModel = mapper.Map<EditPropertyModel>(model);
+
+            addPropertyService.Update(editModel);
+            TempData["edit-success"] = true;
+            return RedirectToRoute("my-properties", new { process = "editSuccess" });
+        
+        }
         [HttpPost("file-upload")]
         public IActionResult Test(string test)
         {
@@ -157,8 +202,8 @@ namespace RealEstate.MVC.Controllers
 
            //vm.Cities = GetCities(regions);
             vm.Regions = GetRegions(regions);
-            vm.PropertyTypes = GetPropertyTypes();
-            vm.PropertyStatuses = GetPropertyStatuses();
+            vm.PropertyTypes = propertyVmService. GetPropertyTypes();
+            vm.PropertyStatuses = propertyVmService.GetPropertyStatuses();
             return vm;
         }
         private List<SelectListItem> GetCities(List<Region> regions)
@@ -174,6 +219,13 @@ namespace RealEstate.MVC.Controllers
                 Value = x.Id.ToString()
             }).ToList();
         }
+        private List<SelectListItem> GetCitySelectList(City city)
+        {
+            List<SelectListItem> selectListItems = new List<SelectListItem>();
+            selectListItems.Add(new SelectListItem() { Text = city.Name, Value = city.Id.ToString() });
+
+            return selectListItems;
+        }
 
         private List<SelectListItem> GetRegions(List<Region> regions)
         {
@@ -184,64 +236,10 @@ namespace RealEstate.MVC.Controllers
                 Value = x.Id.ToString()
             }).ToList();
         }
-        private List<SelectListItem> GetPropertyStatuses()
-        {
 
-            var propertyStatuses = metadataService.GetPropertyStatuses();
-
-            return propertyStatuses.Select(x => new SelectListItem()
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }).ToList();
-        }
-        private List<SelectListItem> GetPropertyTypes()
-        {
-            var propertyTypes = metadataService.GetPropertyTypes();
-
-            return propertyTypes.Select(x => new SelectListItem()
-            {
-                Text = x.Name,
-                Value = x.Id.ToString()
-            }).ToList();
-        }
-        private List<SelectListItem>GetSortingOptions()
-        {
-            var enumValues = Enum.GetValues(typeof(PropertySortOptions));
-            var selectList = new List<SelectListItem>();
-            foreach ( var enumValue in enumValues)
-            {
-                selectList.Add(new SelectListItem()
-                {
-                    Value = enumValue.ToString(),
-                    Text = GetSortingDescription((PropertySortOptions)enumValue)
-                });
-            }
-            return selectList;
-        }
-        private static string GetSortingDescription(PropertySortOptions sortOption)
-        {
-            string description = "Default";
-            switch(sortOption)
-            {
-                case PropertySortOptions.PriceAsc:
-                    description = "Price Low to High";
-                    break;
-                case PropertySortOptions.PriceDesc:
-                    description = "Price High to Low";
-                    break;
-                case PropertySortOptions.AddedDateAsc:
-                    description = "Oldest Properties";
-                    break;
-                case PropertySortOptions.AddedDateDesc:
-                    description = "Newest Properties";
-                    break;
-                default:
-                     description = "Default Order";
-                    break;
-            }
-            return description;
-        }
+      
+       
+       
         private static async Task<List<Document>> GetDocuments(IFormFileCollection files)
         {
             var documents = new List<Document>();

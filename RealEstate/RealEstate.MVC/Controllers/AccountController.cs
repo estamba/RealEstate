@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RealEstate.Core.Entities;
@@ -70,6 +71,12 @@ namespace RealEstate.MVC.Controllers
             }
             AddErrors(result);
             return View();
+        }
+        [Authorize]
+        public async Task<IActionResult> SignOut()
+        {
+            await signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
         private ActionResult RedirectToLocal(string returnUrl)
         {

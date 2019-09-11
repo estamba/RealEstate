@@ -48,6 +48,24 @@ namespace RealEstate.Core.Services.Properties
             propertyRepository.Update(property);
         }
 
+        public void Update(EditPropertyModel editPropertyModel)
+        {
+            var property = propertyRepository.GetPropertyById(editPropertyModel.Id);
+
+
+            property.Area = editPropertyModel.Area;
+            property.CityId = (short)editPropertyModel.SelectedCity;
+            property.Description = editPropertyModel.Description;
+            property.Price = (decimal)editPropertyModel.Price;
+            property.Title = editPropertyModel.Title;
+            property.TypeId = (short)editPropertyModel.SelectedType;
+            property.StatusId = (short)editPropertyModel.SelectedStatus;
+
+
+
+            propertyRepository.Update(property);
+        }
+
         public void UpdatePropertyState(Guid Id, string state)
         {
 

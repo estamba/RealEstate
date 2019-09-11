@@ -5,7 +5,7 @@
 
 <!DOCTYPE html>
 <html lang="zxx">
-@RenderSection("modal", false)
+
 <head>
     <title>@ViewData["Title"] - RealEstate.MVC</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,7 +51,7 @@
     <![endif]-->
 </head>
 <body>
-
+    @RenderSection("modal", false)
 
     <div class="page_loader"></div>
 
@@ -68,31 +68,31 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto d-lg-none d-xl-none">
                         <li class="nav-item dropdown">
-                            <a href="dashboard.html" class="nav-link">Dashboard</a>
+                            <a href="@Url.RouteUrl("dashboard")" class="nav-link">Dashboard</a>
                         </li>
-                        <li class="nav-item dropdown">
+                        @*<li class="nav-item dropdown">
                             <a href="messages.html" class="nav-link">Messages</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a href="bookings.html" class="nav-link">Bookings</a>
-                        </li>
+                        </li>*@
                         <li class="nav-item dropdown">
-                            <a href="my-properties.html" class="nav-link">My Properties</a>
+                            <a href="@Url.RouteUrl("my-properties")" class="nav-link">My Properties</a>
                         </li>
-                        <li class="nav-item dropdown">
+                        @*<li class="nav-item dropdown">
                             <a href="my-invoices.html" class="nav-link">My Invoices</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a href="favorited-properties.html" class="nav-link">Favorited Properties</a>
-                        </li>
+                        </li>*@
                         <li class="nav-item dropdown active">
-                            <a href="submit-property.html" class="nav-link">Submit Property</a>
+                            <a href="@Url.Action("Add","Property")" class="nav-link">Submit Property</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a href="my-profile.html" class="nav-link">My Profile</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a href="index.html" class="nav-link">Logout</a>
+                            <a href="@Url.Action("SignOut", "Account")" class="nav-link">Logout</a>
                         </li>
                     </ul>
                     <div class="navbar-buttons ml-auto d-none d-xl-block d-lg-block">
@@ -104,16 +104,16 @@
                                         My Account
                                     </a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="dashboard.html">Dashboard</a>
-                                        <a class="dropdown-item" href="messages.html">Messages</a>
-                                        <a class="dropdown-item" href="bookings.html">Bookings</a>
-                                        <a class="dropdown-item" href="my-profile.html">My profile</a>
-                                        <a class="dropdown-item" href="index.html">Logout</a>
+                                        <a class="dropdown-item" href="@Url.RouteUrl("dashboard")">Dashboard</a>
+                                        @*<a class="dropdown-item" href="messages.html">Messages</a>
+                                        <a class="dropdown-item" href="bookings.html">Bookings</a>*@
+                                        <a class="dropdown-item" href="#">My profile</a>
+                                        <a class="dropdown-item" href="@Url.Action("SignOut", "Account")">Logout</a>
                                     </div>
                                 </div>
                             </li>
                             <li>
-                                <a class="btn btn-theme btn-md" href="submit-property.html">Submit property</a>
+                                <a class="btn btn-theme btn-md" href="@Url.Action("Add","Property")">Submit property</a>
                             </li>
                         </ul>
                     </div>
@@ -131,21 +131,23 @@
                         <div class="dashboard-inner">
                             <h4>Main</h4>
                             <ul>
-                                <li><a href="dashboard.html"><i class="flaticon-dashboard"></i> Dashboard</a></li>
-                                <li><a href="messages.html"><i class="flaticon-mail"></i> Messages <span class="nav-tag">5</span></a></li>
-                                <li><a href="bookings.html"><i class="flaticon-calendar"></i> Bookings</a></li>
+                                <li><a href="@Url.RouteUrl("dashboard")"><i class="flaticon-dashboard"></i> Dashboard</a></li>
+                                <li><a href="@Url.RouteUrl("my-properties")"><i class="flaticon-apartment"></i>My Properties</a></li>
+                                <li class="active"><a href="@Url.Action("Add","Property")"><i class="flaticon-plus"></i>Submit Property</a></li>
+                                @*<li><a href="messages.html"><i class="flaticon-mail"></i> Messages <span class="nav-tag">5</span></a></li>
+        <li><a href="bookings.html"><i class="flaticon-calendar"></i> Bookings</a></li>*@
                             </ul>
-                            <h4>Listings</h4>
+                            @*<h4>Listings</h4>
                             <ul>
                                 <li><a href="@Url.RouteUrl("my-properties")"><i class="flaticon-apartment"></i>My Properties</a></li>
                                 <li><a href="my-invoices.html"><i class="flaticon-bill"></i>My Invoices</a></li>
                                 <li><a href="favorited-properties.html"><i class="flaticon-heart"></i>Favorited Properties</a></li>
-                                <li class="active"><a href="submit-property.html"><i class="flaticon-plus"></i>Submit Property</a></li>
-                            </ul>
+                                <li class="active"><a href="@Url.Action("Add","Property")"><i class="flaticon-plus"></i>Submit Property</a></li>
+                            </ul>*@
                             <h4>Account</h4>
                             <ul>
-                                <li><a href="my-profile.html"><i class="flaticon-user"></i>My Profile</a></li>
-                                <li><a href="index.html"><i class="flaticon-logout"></i>Logout</a></li>
+                                <li><a href="#"><i class="flaticon-user"></i>My Profile</a></li>
+                                <li><a href="@Url.Action("SignOut","Account")"><i class="flaticon-logout"></i>Logout</a></li>
                             </ul>
                         </div>
                     </div>

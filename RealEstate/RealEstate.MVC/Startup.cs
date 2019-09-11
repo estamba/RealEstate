@@ -81,7 +81,10 @@ namespace RealEstate.MVC
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddViewOptions(options =>
             {
                 options.HtmlHelperOptions.ClientValidationEnabled = true;
-            });
+            })
+            .AddSessionStateTempDataProvider();
+            services.AddSession();
+
             services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(Startup));
             SeedData(services);
@@ -105,6 +108,7 @@ namespace RealEstate.MVC
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

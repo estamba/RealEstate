@@ -10,6 +10,7 @@ namespace RealEstate.Core.Interfaces.Services.Properties
         Property Add(PostPropertyModel postPropertyModel);
         void UpdatePropertyState(Guid Id, string state);
         void Delete(Guid Id);
+        void Update(EditPropertyModel editPropertyModel);
 
     }
 }
