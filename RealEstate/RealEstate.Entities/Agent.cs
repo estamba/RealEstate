@@ -15,6 +15,7 @@ namespace RealEstate.Core.Entities
         public bool Isverified { get; set; }
         public City City { get; set; }
         public int? CityId { get; set; }
+        public DateTime? DateCreated { get; set; } = DateTime.Now;
         public ICollection<Property> Properties { get; set; }
 
 
