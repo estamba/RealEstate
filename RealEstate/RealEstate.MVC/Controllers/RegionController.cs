@@ -19,6 +19,7 @@ namespace RealEstate.MVC.Controllers
             var cities = regionService.GetCities(regionId.Value);
             return Json(cities);
         }
+     
         [HttpGet]
         public IActionResult GetLocations(string searchTerm)
         {
@@ -31,7 +32,7 @@ namespace RealEstate.MVC.Controllers
                 locations.Add(region.Name);
                 locations.AddRange(region.Cities.Select(c => c.Name));
             }
-            var results = locations.Where(l => l.ToLower().Contains(searchTerm));
+            var results = locations.Where(l => l.ToLower().Contains(searchTerm)).Distinct();
             return Ok(results);
         }
     }

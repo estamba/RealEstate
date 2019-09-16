@@ -11,6 +11,6 @@ namespace RealEstate.Core.Interfaces.Services.Regions
         Task<List<Region>>GetRegionsAsync();
         List<City> GetCities(int regionId);
         List<Region> GetRegions();
-
+        List<City> GetCities();
     }
 }

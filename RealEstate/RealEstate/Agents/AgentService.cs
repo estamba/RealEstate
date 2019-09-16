@@ -19,7 +19,9 @@ namespace RealEstate.Core.Services.Agents
         }
         public async Task<Agent> GetAgentByApplicationUserIdAsync(string applicationUserId)
         {
-            return ( await agentRepository.FindAsync(a => a.ApplicationUserId == applicationUserId, "ApplicationUser")).FirstOrDefault();
+            return ( await agentRepository.FindAsync(a => a.ApplicationUserId == applicationUserId, "ApplicationUser,City")).FirstOrDefault();
         }
+
+      
     }
 }

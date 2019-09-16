@@ -37,6 +37,7 @@ namespace RealEstate.Repositories
             return dbContext.Property
                 .Include(d => d.Ágent)
                 .ThenInclude(d=>d.ApplicationUser)
+                .Include(d=>d.Ágent.City)
                .Include(d => d.Status)
                .Include(d => d.State)
                .Include(d => d.Type)

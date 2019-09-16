@@ -9,8 +9,6 @@ namespace RealEstate.Core.Interfaces.Repositories
     {
         List<City> GetCities(int regionId);
         List<Region> GetRegions();
-
-
-
+        List<City> GetCities();
     }
 }

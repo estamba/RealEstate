@@ -10,8 +10,8 @@ using RealEstate.Repository;
 namespace RealEstate.Repositories.Migrations
 {
     [DbContext(typeof(RealEstateDbContext))]
-    [Migration("20190908115829_addedDefaultValueForIsDelte")]
-    partial class addedDefaultValueForIsDelte
+    [Migration("20190914105251_addedImageToAgent")]
+    partial class addedImageToAgent
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -138,6 +138,10 @@ namespace RealEstate.Repositories.Migrations
 
                     b.Property<string>("ApplicationUserId");
 
+                    b.Property<int?>("CityId");
+
+                    b.Property<Guid?>("ImageId");
+
                     b.Property<bool>("Isverified")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(false);
@@ -145,6 +149,10 @@ namespace RealEstate.Repositories.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("ImageId");
 
                     b.ToTable("Agent");
                 });
@@ -404,6 +412,14 @@ namespace RealEstate.Repositories.Migrations
                     b.HasOne("RealEstate.Core.Entities.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("RealEstate.Core.Entities.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
+
+                    b.HasOne("RealEstate.Core.Entities.Image", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
                 });
 
             modelBuilder.Entity("RealEstate.Core.Entities.City", b =>

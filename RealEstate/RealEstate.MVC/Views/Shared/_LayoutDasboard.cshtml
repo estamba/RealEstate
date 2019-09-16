@@ -1,4 +1,5 @@
-﻿
+﻿@inject IHttpContextAccessor httpContextAccessor
+@inject DashboardVmService dashboardVmService
 @{
     Layout = null;
 }
@@ -71,20 +72,20 @@
                             <a href="@Url.RouteUrl("dashboard")" class="nav-link">Dashboard</a>
                         </li>
                         @*<li class="nav-item dropdown">
-                            <a href="messages.html" class="nav-link">Messages</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a href="bookings.html" class="nav-link">Bookings</a>
-                        </li>*@
+                                <a href="messages.html" class="nav-link">Messages</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="bookings.html" class="nav-link">Bookings</a>
+                            </li>*@
                         <li class="nav-item dropdown">
                             <a href="@Url.RouteUrl("my-properties")" class="nav-link">My Properties</a>
                         </li>
                         @*<li class="nav-item dropdown">
-                            <a href="my-invoices.html" class="nav-link">My Invoices</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a href="favorited-properties.html" class="nav-link">Favorited Properties</a>
-                        </li>*@
+                                <a href="my-invoices.html" class="nav-link">My Invoices</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="favorited-properties.html" class="nav-link">Favorited Properties</a>
+                            </li>*@
                         <li class="nav-item dropdown active">
                             <a href="@Url.Action("Add","Property")" class="nav-link">Submit Property</a>
                         </li>
@@ -100,13 +101,35 @@
                             <li>
                                 <div class="dropdown btns">
                                     <a class="dropdown-toggle" data-toggle="dropdown">
-                                        <img src="http://placehold.it/60x60" alt="avatar">
+                                        @{
+                                            if (httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+                                            {
+                                                var imageId = await dashboardVmService.GetUserImageId(httpContextAccessor.HttpContext.User);
+                                                if (imageId != default(Guid))
+                                                {
+                                                    <img src="@Url.Action("GetImage","Document", new {ImageId = imageId})" alt="avatar" style="width:60px; height:60px">
+
+                                                }
+                                                else
+                                                {
+                                                    <img src="http://placehold.it/60x60" alt="avatar">
+
+                                                }
+
+                                            }
+                                            else
+                                            {
+                                                <img src="http://placehold.it/60x60" alt="avatar">
+
+                                            }
+
+                                        }
                                         My Account
                                     </a>
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="@Url.RouteUrl("dashboard")">Dashboard</a>
                                         @*<a class="dropdown-item" href="messages.html">Messages</a>
-                                        <a class="dropdown-item" href="bookings.html">Bookings</a>*@
+                                            <a class="dropdown-item" href="bookings.html">Bookings</a>*@
                                         <a class="dropdown-item" href="#">My profile</a>
                                         <a class="dropdown-item" href="@Url.Action("SignOut", "Account")">Logout</a>
                                     </div>
@@ -135,18 +158,20 @@
                                 <li><a href="@Url.RouteUrl("my-properties")"><i class="flaticon-apartment"></i>My Properties</a></li>
                                 <li class="active"><a href="@Url.Action("Add","Property")"><i class="flaticon-plus"></i>Submit Property</a></li>
                                 @*<li><a href="messages.html"><i class="flaticon-mail"></i> Messages <span class="nav-tag">5</span></a></li>
-        <li><a href="bookings.html"><i class="flaticon-calendar"></i> Bookings</a></li>*@
+                                    <li><a href="bookings.html"><i class="flaticon-calendar"></i> Bookings</a></li>*@
                             </ul>
                             @*<h4>Listings</h4>
-                            <ul>
-                                <li><a href="@Url.RouteUrl("my-properties")"><i class="flaticon-apartment"></i>My Properties</a></li>
-                                <li><a href="my-invoices.html"><i class="flaticon-bill"></i>My Invoices</a></li>
-                                <li><a href="favorited-properties.html"><i class="flaticon-heart"></i>Favorited Properties</a></li>
-                                <li class="active"><a href="@Url.Action("Add","Property")"><i class="flaticon-plus"></i>Submit Property</a></li>
-                            </ul>*@
+                                <ul>
+                                    <li><a href="@Url.RouteUrl("my-properties")"><i class="flaticon-apartment"></i>My Properties</a></li>
+                                    <li><a href="my-invoices.html"><i class="flaticon-bill"></i>My Invoices</a></li>
+                                    <li><a href="favorited-properties.html"><i class="flaticon-heart"></i>Favorited Properties</a></li>
+                                    <li class="active"><a href="@Url.Action("Add","Property")"><i class="flaticon-plus"></i>Submit Property</a></li>
+                                </ul>*@
                             <h4>Account</h4>
                             <ul>
-                                <li><a href="#"><i class="flaticon-user"></i>My Profile</a></li>
+                                <li><a href="@Url.Action("UpdateProfile","Account")"><i class="flaticon-user"></i>Update Profile</a></li>
+                                <li><a href="@Url.Action("UpdateProfile","Account")"><i class="flaticon-user"></i>Change Password</a></li>
+
                                 <li><a href="@Url.Action("SignOut","Account")"><i class="flaticon-logout"></i>Logout</a></li>
                             </ul>
                         </div>

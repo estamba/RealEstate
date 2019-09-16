@@ -29,6 +29,11 @@ namespace RealEstate.Repositories
             return dbContext.City.Where(c => c.RegionId == regionId).ToList();
         }
 
+        public List<City> GetCities()
+        {
+            return dbContext.City.ToList();
+        }
+
         public List<Region> GetRegions()
         {
             return dbContext.Region.Include(r => r.Cities).ToList();

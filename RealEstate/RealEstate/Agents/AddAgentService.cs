@@ -1,6 +1,10 @@
 ﻿using RealEstate.Core.Entities;
 using RealEstate.Core.Interfaces.Repositories;
 using RealEstate.Core.Interfaces.Services.Agents;
+using RealEstate.Core.Interfaces.Services.Regions;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace RealEstate.Core.Services.Agents
 {
@@ -11,6 +15,7 @@ namespace RealEstate.Core.Services.Agents
         public AddAgentService(IAgentRepository agentRepository)
         {
             this.agentRepository = agentRepository;
+          
         }
         public Agent Add(Agent agent)
         {
@@ -18,5 +23,7 @@ namespace RealEstate.Core.Services.Agents
             agentRepository.Add(agent);
             return agent;
         }
+
+   
     }
 }

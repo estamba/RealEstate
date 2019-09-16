@@ -39,8 +39,13 @@ namespace RealEstate.MVC
             services.AddTransient<ICacheManager, CacheManager>();
             services.AddTransient<IPropertySearchService, PropertySearchService>();
             services.AddTransient<IAgentPropertyStatsService, AgentPropertyStatsService>();
+            services.AddTransient<IUpdateAgentService, UpdateAgentService>();
+
             services.AddTransient<CurrentUser>();
+            services.AddTransient<DashboardVmService>();
             services.AddTransient<PropertyVmService>();
+          
+
 
             return services;
         }

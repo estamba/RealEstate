@@ -15,6 +15,7 @@ namespace RealEstate.MVC
 
             CreateMap<AddPropertyVm, PostPropertyModel>().ReverseMap();
             CreateMap<EditPropertyVM, EditPropertyModel>().ReverseMap();
+            CreateMap<UpdateProfileVM, UpdateProfileModel>().ReverseMap();
 
         }
     }

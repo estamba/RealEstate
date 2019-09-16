@@ -9,5 +9,7 @@ namespace RealEstate.Core.Interfaces.Services.Agents
   public  interface IAgentService
     {
         Task<Agent> GetAgentByApplicationUserIdAsync(string applicationUserId);
+
+        
     }
 }

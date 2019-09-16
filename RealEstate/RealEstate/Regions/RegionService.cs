@@ -22,7 +22,11 @@ namespace RealEstate.Core.Services.Regions
 
             return regionRepository.GetCities(regionId);
         }
+        public List<City> GetCities()
+        {
 
+            return regionRepository.GetCities();
+        }
         public List<Region> GetRegions()
         {
             return regionRepository.GetRegions();

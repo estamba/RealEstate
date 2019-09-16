@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace RealEstate.Core.Interfaces.Services.Agents
 {
-    public interface IAddAgentService
+    public interface IUpdateAgentService
     {
-        Agent Add(Agent agent);
-        
+        Task <Agent> UpdateProfile(UpdateProfileModel updateProfileModel);
     }
 }

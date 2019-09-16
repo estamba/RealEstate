@@ -67,10 +67,11 @@ namespace RealEstate.Repositories
 
             return await query.ToListAsync();
         }
-        public virtual void Update(TEntity entity)
+        public virtual TEntity Update(TEntity entity)
         {
             dbContext.Attach(entity).State = EntityState.Modified;
             dbContext.SaveChanges();
+            return entity;
         }
     }
 }

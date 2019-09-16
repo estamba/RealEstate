@@ -42,6 +42,7 @@ namespace RealEstate.MVC
             services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<RealEstateDbContext>()
     .AddDefaultTokenProviders();
+           
 
             services.AddServices()
                 .AddRepositories();
@@ -71,11 +72,12 @@ namespace RealEstate.MVC
             {
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
 
                 options.LoginPath = "/Account/Login";
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
+                
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddViewOptions(options =>
@@ -83,8 +85,26 @@ namespace RealEstate.MVC
                 options.HtmlHelperOptions.ClientValidationEnabled = true;
             })
             .AddSessionStateTempDataProvider();
-            services.AddSession();
 
+            services.AddSession();
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                // facebookOptions.CallbackPath = "/signin-Test";
+              
+                //facebookOptions.SignInScheme = IdentityConstants.ApplicationScheme;
+                
+                
+            }).AddGoogle(googleOptions=>
+            {
+                googleOptions.ClientId = Configuration["Authentication:Google:AppId"];
+                googleOptions.ClientSecret = Configuration["Authentication:Google:AppSecret"];
+                // facebookOptions.CallbackPath = "/signin-Test";
+                googleOptions.SaveTokens = true;
+               // googleOptions.SignInScheme = IdentityConstants.ApplicationScheme;
+
+            });
             services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(Startup));
             SeedData(services);

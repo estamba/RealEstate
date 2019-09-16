@@ -11,7 +11,7 @@
             <!-- details -->
             <div class="details">
                 <!-- Logo-->
-                <a href="index.html">
+                <a href="@Url.Action("Index","Home")">
                     <img src="~/img/black-logo.png" class="cm-logo" alt="black-logo">
                 </a>
                 <!-- Name -->
@@ -41,15 +41,13 @@
                 </form>
                 <!-- Social List -->
                 <ul class="social-list clearfix">
-                    <li><a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a></li>
-                    <li><a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a></li>
-                    <li><a href="#" class="google-bg"><i class="fa fa-google-plus"></i></a></li>
-                    <li><a href="#" class="linkedin-bg"><i class="fa fa-linkedin"></i></a></li>
+                    <li><a a asp-action="SignIn" asp-route-returnUrl="@Context.Request.Query["returnUrl"]" asp-route-provider="Facebook" class="facebook-bg"><i class="fa fa-facebook"></i></a></li>
+                    <li><a a asp-action="SignIn" asp-route-returnUrl="@Context.Request.Query["returnUrl"]" asp-route-provider="Google" class="google-bg"><i class="fa fa-google-plus"></i></a></li>
                 </ul>
             </div>
             <!-- Footer -->
             <div class="footer">
-                <span>Already a member? <a href="login.html">Login here</a></span>
+                <span>Already a member? <a href="@Url.Action("Login","Account")">Login here</a></span>
             </div>
         </div>
         <!-- Form content box end -->

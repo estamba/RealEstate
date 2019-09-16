@@ -10,8 +10,8 @@ using RealEstate.Repository;
 namespace RealEstate.Repositories.Migrations
 {
     [DbContext(typeof(RealEstateDbContext))]
-    [Migration("20190908061801_renameStateProp")]
-    partial class renameStateProp
+    [Migration("20190914103207_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -138,6 +138,8 @@ namespace RealEstate.Repositories.Migrations
 
                     b.Property<string>("ApplicationUserId");
 
+                    b.Property<int?>("CityId");
+
                     b.Property<bool>("Isverified")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(false);
@@ -145,6 +147,8 @@ namespace RealEstate.Repositories.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("CityId");
 
                     b.ToTable("Agent");
                 });
@@ -265,6 +269,10 @@ namespace RealEstate.Repositories.Migrations
                     b.Property<DateTime>("DateCreated");
 
                     b.Property<string>("Description");
+
+                    b.Property<bool>("IsDelete")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(false);
 
                     b.Property<decimal>("Price");
 
@@ -400,6 +408,10 @@ namespace RealEstate.Repositories.Migrations
                     b.HasOne("RealEstate.Core.Entities.ApplicationUser", "ApplicationUser")
                         .WithMany()
                         .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("RealEstate.Core.Entities.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId");
                 });
 
             modelBuilder.Entity("RealEstate.Core.Entities.City", b =>

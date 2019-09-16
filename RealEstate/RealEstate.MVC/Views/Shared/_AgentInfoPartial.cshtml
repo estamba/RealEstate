@@ -8,7 +8,18 @@
             var name = Model.ApplicationUser.Name.Split(' ')[0].Trim()?.ToLower();
         }
         <a href="@Url.RouteUrl("agentProperties",new {Id= Model.Id, name= name })">
-            <img src="~/img/agent-image-placeholder.png" alt="agent" class="img-fluid">
+            @{
+                if (Model.ImageId is null)
+                {
+                    <img src="~/img/agent-image-placeholder.png" alt="agent" class="img-fluid">
+
+                }
+                else
+                {
+                    <img src="@Url.Action("GetImage","Document", new {ImageId = Model.ImageId})" alt="agent" class="img-fluid" style="width:255px; height:212px">
+
+                }
+            }
         </a>
         <ul class="social-list clearfix">
             <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a></li>
@@ -18,8 +29,15 @@
         </ul>
     </div>
     <div class="team-details" style="width:auto">
-        
+
         <h4><a href="@Url.RouteUrl("agentProperties",new {Id= Model.Id, name= name })">@Model.ApplicationUser.Name</a></h4>
+        @{
+            if (Model.City != null)
+            {
+                <h6 class="fa fa-location-arrow"> @Model.City.Name</h6>
+
+            }
+        }
         <h6 class="flaticon-calendar"> Joined @DurationHelper.FormatDuration(DateTime.Now.AddDays(-10))</h6>
         <h6><a href="tel:@Model.ApplicationUser.PhoneNumber" class="fa fa-phone-square"> @Model.ApplicationUser.PhoneNumber</a></h6>
         <h6><a href="mailto: @Model.ApplicationUser.Email" class="flaticon-mail"> @Model.ApplicationUser.Email </a></h6>

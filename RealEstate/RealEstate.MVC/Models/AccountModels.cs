@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,6 +17,18 @@ namespace RealEstate.MVC.Models
         public string Password { get; set; }
         public bool RememberMe { get; set; } = true;
 
+
+    }
+    public class UpdateProfileVM
+    {
+        public Guid AgentId { get; set; }
+         public string Email { get; set; }
+        [Required] public string Name { get; set; }
+        public string City { get; set; }
+        [Required] public string PhoneNumber { get; set; }
+
+        public Guid ProfilePhotoId { get; set; }
+        public List<string> Cities { get; set; }
 
     }
     public class SignUpVm
