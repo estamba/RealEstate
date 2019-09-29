@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "7b99579f72eba01a4d238e420b192a1954d356e8"
+    "signature": "0aebaf48cb96491ac6d11cdbbef48b085db3b5b4"
   },
   "compilationOptions": {
     "defines": [
@@ -28,9 +28,11 @@
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "6.1.1",
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
+          "Microsoft.Extensions.Configuration": "2.2.0",
           "Microsoft.NETCore.App": "2.2.0",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.2.3",
           "RealEstate.Core.Services": "1.0.0",
+          "RealEstate.ExternalServices": "1.0.0",
           "RealEstate.Repositories": "1.0.0"
         },
         "runtime": {
@@ -361,6 +363,20 @@
           }
         }
       },
+      "Sendgrid/9.12.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "11.0.2"
+        },
+        "runtime": {
+          "lib/netstandard2.0/SendGrid.dll": {
+            "assemblyVersion": "9.12.0.0",
+            "fileVersion": "9.12.0.0"
+          }
+        },
+        "compile": {
+          "lib/netstandard2.0/SendGrid.dll": {}
+        }
+      },
       "System.Collections.Immutable/1.5.0": {},
       "System.Composition/1.0.31": {
         "dependencies": {
@@ -602,6 +618,19 @@
         },
         "compile": {
           "RealEstate.Core.Services.dll": {}
+        }
+      },
+      "RealEstate.ExternalServices/1.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Configuration": "2.2.0",
+          "RealEstate.Core.Interfaces": "1.0.0",
+          "Sendgrid": "9.12.0"
+        },
+        "runtime": {
+          "RealEstate.ExternalServices.dll": {}
+        },
+        "compile": {
+          "RealEstate.ExternalServices.dll": {}
         }
       },
       "RealEstate.Repositories/1.0.0": {
@@ -3859,6 +3888,13 @@
       "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
       "hashPath": "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
     },
+    "Sendgrid/9.12.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HrH336vKylh6Yy4bqKFNPf0Rk1C7CDd4WX7D2f7D/g0Dy584Wx2Qh7vdM+NgAkHTWQ7bKwl7K9DZ9BiFKbimdA==",
+      "path": "sendgrid/9.12.0",
+      "hashPath": "sendgrid.9.12.0.nupkg.sha512"
+    },
     "System.Collections.Immutable/1.5.0": {
       "type": "package",
       "serviceable": true,
@@ -3954,6 +3990,11 @@
       "sha512": ""
     },
     "RealEstate.Core.Services/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "RealEstate.ExternalServices/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RealEstate.Core.Entities;
+using RealEstate.Core.Interfaces.ExternalServices;
 using RealEstate.Core.Interfaces.Services.Agents;
 using RealEstate.Core.Interfaces.Services.Regions;
 using RealEstate.MVC.Extensions;
@@ -28,8 +30,10 @@ namespace RealEstate.MVC.Controllers
         private readonly ILocationService locationService;
         private readonly IMapper mapper;
         private readonly IUpdateAgentService updateAgentService;
+        private readonly IEmailSender emailSender;
+        private readonly AccountVmService accountVmService;
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IAddAgentService addAgentService, IAgentService agentService, ILocationService locationService, IMapper mapper,IUpdateAgentService updateAgentService)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IAddAgentService addAgentService, IAgentService agentService, ILocationService locationService, IMapper mapper,IUpdateAgentService updateAgentService, IEmailSender emailSender, AccountVmService accountVmService)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -38,6 +42,8 @@ namespace RealEstate.MVC.Controllers
             this.locationService = locationService;
             this.mapper = mapper;
             this.updateAgentService = updateAgentService;
+            this.emailSender = emailSender;
+            this.accountVmService = accountVmService;
         }
         public IActionResult Index()
         {
@@ -119,8 +125,36 @@ namespace RealEstate.MVC.Controllers
             return Challenge(props, provider);
 
         }
+        [HttpGet]
+        public  IActionResult PasswordRecovery()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> PasswordRecovery(PasswordRecoveryVM model)
+        {
+            if (!ModelState.IsValid) return View(model);
+            var appUser = await userManager.FindByEmailAsync(model.EmailAddress);
+            if(appUser is null)
+            {
+                ModelState.AddModelError("", "email addresss does not exist in our systems");
+                return View(model);
+            }
+            
+            var token = await userManager.GenerateUserTokenAsync(appUser, TokenOptions.DefaultProvider, "PasswordRecovery");
 
-
+            var emailModel = accountVmService.GetPasswordRecoverEmailModel(appUser.Email, GetPasswordRecoveryUrl(token, appUser.Email));
+            await emailSender.SendAsync(emailModel);
+            return View();
+        }
+       [HttpGet("password-recovery")]
+        public async Task<IActionResult> RecoverPassword(string code, string emailAddress)
+        {
+            var appUser = await userManager.FindByEmailAsync(emailAddress);
+            var isValid = await userManager.VerifyUserTokenAsync(appUser, TokenOptions.DefaultProvider, "PasswordRecovery", code);
+            
+            return RedirectToAction("Login");
+        }
         [HttpGet]
         public async Task<IActionResult> UpdateProfile()
         {
@@ -156,6 +190,12 @@ namespace RealEstate.MVC.Controllers
             await userManager.UpdateAsync(appUser);
             model.ProfilePhotoId = (updatedAgent.ImageId is null) ? default(Guid) : updatedAgent.ImageId.Value;
             return View(model);
+        }
+        private string GetPasswordRecoveryUrl(string token, string emailAddress)
+        {
+            string route = Url.Action("RecoverPassword", "Account", new { code = token,emailAddress });
+
+            return $"{Request.Scheme}://{Request.Host}{route}";
         }
         private bool IsFileValid(IFormFile file)
         {

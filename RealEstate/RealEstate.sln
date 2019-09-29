@@ -3,19 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.MVC", "RealEstate.MVC\RealEstate.MVC.csproj", "{88E2E2C5-677F-43ED-9C32-E3F5C6A5F0A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.MVC", "RealEstate.MVC\RealEstate.MVC.csproj", "{88E2E2C5-677F-43ED-9C32-E3F5C6A5F0A3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{99A8574A-CD69-44C2-AC13-3322E804D43B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.Core.Services", "RealEstate\RealEstate.Core.Services.csproj", "{E9D535B7-74E6-4A41-9CF9-E1D93E144CF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.Core.Services", "RealEstate\RealEstate.Core.Services.csproj", "{E9D535B7-74E6-4A41-9CF9-E1D93E144CF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.Repositories", "RealEstate.Repository\RealEstate.Repositories.csproj", "{F29FA8EB-313B-450C-A809-0FBDC39C696E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.Repositories", "RealEstate.Repository\RealEstate.Repositories.csproj", "{F29FA8EB-313B-450C-A809-0FBDC39C696E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.Core.Entities", "RealEstate.Entities\RealEstate.Core.Entities.csproj", "{0E0402C3-FCDE-46F5-B287-57EEEF57090F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.Core.Entities", "RealEstate.Entities\RealEstate.Core.Entities.csproj", "{0E0402C3-FCDE-46F5-B287-57EEEF57090F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.Core.Interfaces", "RealEstate.Interfaces\RealEstate.Core.Interfaces.csproj", "{9AE3F6C9-CAE0-4CEB-BC3E-8C7EF93DC995}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.Core.Interfaces", "RealEstate.Interfaces\RealEstate.Core.Interfaces.csproj", "{9AE3F6C9-CAE0-4CEB-BC3E-8C7EF93DC995}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.WebTemplate", "RealEstate.WebTemplate\RealEstate.WebTemplate.csproj", "{471087D3-A693-463D-940D-F1B371401548}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RealEstate.WebTemplate", "RealEstate.WebTemplate\RealEstate.WebTemplate.csproj", "{471087D3-A693-463D-940D-F1B371401548}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate.ExternalServices", "RealEstate.ExternalServices\RealEstate.ExternalServices.csproj", "{B7DD23E2-6F62-4F84-9117-679E9C071B70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{471087D3-A693-463D-940D-F1B371401548}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{471087D3-A693-463D-940D-F1B371401548}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{471087D3-A693-463D-940D-F1B371401548}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7DD23E2-6F62-4F84-9117-679E9C071B70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7DD23E2-6F62-4F84-9117-679E9C071B70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7DD23E2-6F62-4F84-9117-679E9C071B70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7DD23E2-6F62-4F84-9117-679E9C071B70}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

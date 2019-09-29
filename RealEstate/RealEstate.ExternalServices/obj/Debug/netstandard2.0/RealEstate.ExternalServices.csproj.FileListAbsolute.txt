@@ -1,0 +1,16 @@
+C:\ws\RealEstate\RealEstate\RealEstate.ExternalServices\bin\Debug\netstandard2.0\RealEstate.ExternalServices.deps.json
+C:\ws\RealEstate\RealEstate\RealEstate.ExternalServices\bin\Debug\netstandard2.0\RealEstate.ExternalServices.dll
+C:\ws\RealEstate\RealEstate\RealEstate.ExternalServices\bin\Debug\netstandard2.0\RealEstate.Core.Entities.dll
+C:\ws\RealEstate\RealEstate\RealEstate.ExternalServices\bin\Debug\netstandard2.0\RealEstate.Core.Interfaces.dll
+C:\ws\RealEstate\RealEstate\RealEstate.ExternalServices\bin\Debug\netstandard2.0\Microsoft.Extensions.Identity.Stores.dll
+C:\ws\RealEstate\RealEstate\RealEstate.ExternalServices\bin\Debug\netstandard2.0\RealEstate.Core.Interfaces.pdb
+C:\ws\RealEstate\RealEstate\RealEstate.ExternalServices\bin\Debug\netstandard2.0\RealEstate.Core.Entities.pdb
+C:\ws\RealEstate\RealEstate\RealEstate.ExternalServices\bin\Debug\netstandard2.0\Microsoft.Extensions.Identity.Stores.xml
+C:\ws\RealEstate\RealEstate\RealEstate.ExternalServices\obj\Debug\netstandard2.0\RealEstate.ExternalServices.csprojAssemblyReference.cache
+C:\ws\RealEstate\RealEstate\RealEstate.ExternalServices\obj\Debug\netstandard2.0\RealEstate.ExternalServices.csproj.CoreCompileInputs.cache
+C:\ws\RealEstate\RealEstate\RealEstate.ExternalServices\obj\Debug\netstandard2.0\RealEstate.ExternalServices.AssemblyInfoInputs.cache
+C:\ws\RealEstate\RealEstate\RealEstate.ExternalServices\obj\Debug\netstandard2.0\RealEstate.ExternalServices.AssemblyInfo.cs
+C:\ws\RealEstate\RealEstate\RealEstate.ExternalServices\obj\Debug\netstandard2.0\RealEstate.ExternalServices.csproj.CopyComplete
+C:\ws\RealEstate\RealEstate\RealEstate.ExternalServices\bin\Debug\netstandard2.0\RealEstate.ExternalServices.pdb
+C:\ws\RealEstate\RealEstate\RealEstate.ExternalServices\obj\Debug\netstandard2.0\RealEstate.ExternalServices.dll
+C:\ws\RealEstate\RealEstate\RealEstate.ExternalServices\obj\Debug\netstandard2.0\RealEstate.ExternalServices.pdb

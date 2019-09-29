@@ -53,4 +53,10 @@ namespace RealEstate.MVC.Models
 
 
     }
+    public class PasswordRecoveryVM
+    {
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        public string EmailAddress { get; set; }
+    }
 }

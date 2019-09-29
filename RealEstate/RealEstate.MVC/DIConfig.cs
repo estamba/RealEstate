@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using RealEstate.Core.Interfaces.ExternalServices;
 using RealEstate.Core.Interfaces.Repositories;
 using RealEstate.Core.Interfaces.Services.Agents;
 using RealEstate.Core.Interfaces.Services.Documents;
@@ -13,6 +14,7 @@ using RealEstate.Core.Services.Metadata;
 using RealEstate.Core.Services.Properties;
 using RealEstate.Core.Services.Regions;
 using RealEstate.Core.Services.Utilities;
+using RealEstate.ExternalServices;
 using RealEstate.MVC.Services;
 using RealEstate.Repositories;
 using RealEstate.Repository;
@@ -40,7 +42,8 @@ namespace RealEstate.MVC
             services.AddTransient<IPropertySearchService, PropertySearchService>();
             services.AddTransient<IAgentPropertyStatsService, AgentPropertyStatsService>();
             services.AddTransient<IUpdateAgentService, UpdateAgentService>();
-
+            services.AddScoped<IEmailSender, EmailSender>();
+            services.AddScoped<AccountVmService>();
             services.AddTransient<CurrentUser>();
             services.AddTransient<DashboardVmService>();
             services.AddTransient<PropertyVmService>();
