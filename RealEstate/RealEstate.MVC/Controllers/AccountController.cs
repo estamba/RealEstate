@@ -126,12 +126,12 @@ namespace RealEstate.MVC.Controllers
 
         }
         [HttpGet]
-        public  IActionResult PasswordRecovery()
+        public  IActionResult ForgotPassword()
         {
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> PasswordRecovery(PasswordRecoveryVM model)
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordVM model)
         {
             if (!ModelState.IsValid) return View(model);
             var appUser = await userManager.FindByEmailAsync(model.EmailAddress);
@@ -147,14 +147,33 @@ namespace RealEstate.MVC.Controllers
             await emailSender.SendAsync(emailModel);
             return View();
         }
-       [HttpGet("password-recovery")]
+   
         public async Task<IActionResult> RecoverPassword(string code, string emailAddress)
         {
             var appUser = await userManager.FindByEmailAsync(emailAddress);
-            var isValid = await userManager.VerifyUserTokenAsync(appUser, TokenOptions.DefaultProvider, "PasswordRecovery", code);
+            if (appUser is null) return RedirectToAction("Login");
             
-            return RedirectToAction("Login");
+            var isValid = await userManager.VerifyUserTokenAsync(appUser, TokenOptions.DefaultProvider, "PasswordRecovery", code);
+            if(!isValid) RedirectToAction("Login");
+            return View(new PasswordRecoveryVM() { Code = code, EmailAddress = emailAddress });
         }
+        [HttpPost]
+        public  async Task<IActionResult> RecoverPasswordPost(PasswordRecoveryVM model)
+        {
+            if (!ModelState.IsValid) return View("RecoverPassword", model);
+            var appUser = await userManager.FindByEmailAsync(model.EmailAddress);
+            if (appUser is null) return RedirectToAction("Login");
+
+            var isValid = await userManager.VerifyUserTokenAsync(appUser, TokenOptions.DefaultProvider, "PasswordRecovery", model.Code);
+            if (isValid)
+            {
+                appUser.PasswordHash = userManager.PasswordHasher.HashPassword(appUser, model.Password);
+               await  userManager.UpdateAsync(appUser);
+            }
+           return RedirectToAction("Login");
+        
+        }
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> UpdateProfile()
         {
@@ -172,6 +191,7 @@ namespace RealEstate.MVC.Controllers
             };
             return View(vm);
         }
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> UpdateProfile(UpdateProfileVM model, IFormFile photo)
         {
@@ -190,6 +210,29 @@ namespace RealEstate.MVC.Controllers
             await userManager.UpdateAsync(appUser);
             model.ProfilePhotoId = (updatedAgent.ImageId is null) ? default(Guid) : updatedAgent.ImageId.Value;
             return View(model);
+        }
+        [Authorize]
+        [HttpGet]
+        public IActionResult ChangePassword()
+        {
+
+            return View();
+        }
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordVM model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var appUser = await userManager.GetUserAsync(User);
+            var result = await userManager.ChangePasswordAsync(appUser, model.CurrentPassword, model.NewPassword);
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError("", "error updating password");
+                return View(model);
+            }
+            return RedirectToRoute("dashboard");
         }
         private string GetPasswordRecoveryUrl(string token, string emailAddress)
         {

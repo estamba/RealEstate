@@ -116,7 +116,7 @@ namespace RealEstate.Repositories.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -137,7 +137,7 @@ namespace RealEstate.Repositories.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -240,7 +240,7 @@ namespace RealEstate.Repositories.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     RegionId = table.Column<int>(nullable: false)
                 },
@@ -260,9 +260,11 @@ namespace RealEstate.Repositories.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    ImageId = table.Column<Guid>(nullable: true),
                     ApplicationUserId = table.Column<string>(nullable: true),
                     Isverified = table.Column<bool>(nullable: false, defaultValue: false),
-                    CityId = table.Column<int>(nullable: true)
+                    CityId = table.Column<int>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -277,6 +279,12 @@ namespace RealEstate.Repositories.Migrations
                         name: "FK_Agent_City_CityId",
                         column: x => x.CityId,
                         principalTable: "City",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Agent_Image_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Image",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -369,6 +377,11 @@ namespace RealEstate.Repositories.Migrations
                 column: "CityId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Agent_ImageId",
+                table: "Agent",
+                column: "ImageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
@@ -377,8 +390,7 @@ namespace RealEstate.Repositories.Migrations
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -404,8 +416,7 @@ namespace RealEstate.Repositories.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_City_RegionId",
@@ -472,13 +483,7 @@ namespace RealEstate.Repositories.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Image");
-
-            migrationBuilder.DropTable(
                 name: "Property");
-
-            migrationBuilder.DropTable(
-                name: "Document");
 
             migrationBuilder.DropTable(
                 name: "Agent");
@@ -499,7 +504,13 @@ namespace RealEstate.Repositories.Migrations
                 name: "City");
 
             migrationBuilder.DropTable(
+                name: "Image");
+
+            migrationBuilder.DropTable(
                 name: "Region");
+
+            migrationBuilder.DropTable(
+                name: "Document");
         }
     }
 }

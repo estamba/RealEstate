@@ -22,7 +22,7 @@ namespace RealEstate.Repository
         {
             if (!optionsBuilder.IsConfigured)
             {
-              optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+              optionsBuilder.UseMySql(configuration.GetConnectionString("DefaultConnection"));
             }
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -62,6 +62,9 @@ namespace RealEstate.Repository
            .Property(a => a.Id)
            .ValueGeneratedNever();
 
+            modelBuilder.Entity<City>()
+         .Property(a => a.Id)
+         .ValueGeneratedOnAdd();
 
 
 

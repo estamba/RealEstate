@@ -13,6 +13,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
+    <PackageReference Include="WebEssentials.AspNetCore.PWA" Version="1.0.59" />
   </ItemGroup>
 
 
@@ -177,6 +179,6 @@
   </ItemGroup>
 
 
-  <ProjectExtensions><VisualStudio><UserProperties wwwroot_4lib_4bootstrap_4dist_4css_4bootstrap_1css_1map__JsonSchema="http://json.schemastore.org/solidaritySchema" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1production_1json__JsonSchema="{{" wwwroot_4lib_4bootstrap_4dist_4css_4bootstrap_1css_1map__JsonSchema="http://json.schemastore.org/solidaritySchema" /></VisualStudio></ProjectExtensions>
 
 </Project>
