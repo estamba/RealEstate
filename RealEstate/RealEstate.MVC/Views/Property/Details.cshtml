@@ -9,7 +9,7 @@
         <div class="breadcrumb-areas">
             <h1>Properties Details</h1>
             <ul class="breadcrumbs">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="@Url.Action("Index","Home")">Home</a></li>
                 <li class="active">Properties Details</li>
             </ul>
         </div>
@@ -71,7 +71,7 @@
                         </ul>
                         <div class="heading-properties-2">
                             <h3>@Model.Title</h3>
-                            <div class="price-location"><span class="property-price">GMD @Model.Price</span> <span class="rent">@Model.Status</span> <span class="location"><i class="flaticon-pin"></i>@Model.City</span>  <span class="fa fa-eye" style="color:white" role="img"><b> @Model.ViewCount</b></span></div>
+                            <div class="price-location"><span class="property-price">GMD @String.Format("{0:0.00}",Model.Price)</span> <span class="rent">@Model.Status</span> <span class="location"><i class="flaticon-pin"></i>@Model.City</span>  <span class="fa fa-eye" style="color:white" role="img"><b> @Model.ViewCount</b></span></div>
                         </div>
 
                     </div>
@@ -295,7 +295,7 @@
                                         <div class="property-thumbnail">
                                             <a href="@Url.Action("Details","property", new { Id = property.Id})" class="property-img">
                                                 <div class="tag">Featured</div>
-                                                <div class="price-box"><span>GMD @property.Price</span> month</div>
+                                                <div class="price-box"><span>GMD @String.Format("{0:0.00}",property.Price)</span></div>
                                                 <img class="d-block w-100 custom-image-size" src="@Url.Action("GetImage", "Document", new { ImageId = property.PropertyImages.FirstOrDefault()?.ImageId })" alt="properties">
                                             </a>
                                         </div>
