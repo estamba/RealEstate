@@ -78,7 +78,7 @@ namespace RealEstate.MVC.Controllers
             return Ok(property.Id);
         }
 
-        [Authorize]
+       
         public async Task<IActionResult> Details(Guid Id)
         {
             var property = propertyService.GetProperty(Id);

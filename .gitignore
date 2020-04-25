@@ -14,3 +14,4 @@ bin/
 /RealEstate/RealEstate.WebTemplate/obj/Release/netcoreapp2.2
 /RealEstate/RealEstate.WebTemplate/obj
 /RealEstate/RealEstate.Repository/obj
+/RealEstate/RealEstate.MVC/Properties/PublishProfiles
