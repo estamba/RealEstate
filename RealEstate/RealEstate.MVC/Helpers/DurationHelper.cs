@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RealEstate.MVC.Helpers
 {
-    public static class TimeService
+    public static class DurationHelper
     {
         public static string FormatDuration(DateTime time)
         {
@@ -42,7 +42,7 @@ namespace RealEstate.MVC.Helpers
             return "now";
         }
 
-
+       
 
     }
 }
