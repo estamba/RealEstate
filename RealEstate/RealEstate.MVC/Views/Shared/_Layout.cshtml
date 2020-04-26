@@ -224,24 +224,29 @@
                             if (httpAccessor.HttpContext.User.Identity.IsAuthenticated)
                             {
 
-                                <li class="nav-item ">
-                                    <a class="nav-link" href="@Url.Action("SignOut","Account")">
-                                        <i class="flaticon-logout"></i>Sign Out
-                                    </a>
-                                </li>
-                                <li class="nav-item ">
-                                    <a class="nav-link" href="@Url.RouteUrl("dashboard")">
-                                        <i class="flaticon-dashboard"></i>Dashboard
-                                    </a>
-                                </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="@Url.Action("SignOut","Account")">
+                                    <i class="flaticon-logout"></i>Sign Out
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="@Url.Action("SignOut","Account")">
+                                    <i class="flaticon-user"></i>Hi @httpAccessor.HttpContext.User.Identity.Name
+                                </a>
+                            </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="@Url.RouteUrl("dashboard")">
+                                    <i class="flaticon-dashboard"></i>Dashboard
+                                </a>
+                            </li>
                             }
                             else
                             {
-                                <li class="nav-item ">
-                                    <a class="nav-link" href="@Url.Action("Login","Account")">
-                                        <i class="fa fa-sign-in"></i>Sign In
-                                    </a>
-                                </li>
+                            <li class="nav-item ">
+                                <a class="nav-link" href="@Url.Action("Login","Account")">
+                                    <i class="fa fa-sign-in"></i>Sign In
+                                </a>
+                            </li>
                             }
                         }
 
