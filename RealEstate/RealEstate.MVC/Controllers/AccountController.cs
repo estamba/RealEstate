@@ -64,7 +64,13 @@ namespace RealEstate.MVC.Controllers
 
 
             var loginResult = await signInManager.PasswordSignInAsync(model.UserName, model.Password,true, lockoutOnFailure: false);
-            if (loginResult.Succeeded) return RedirectToLocal(returnUrl);
+            if (loginResult.Succeeded)
+            {
+                if (string.IsNullOrEmpty(returnUrl))
+                    return RedirectToRoute("dashboard");
+                return RedirectToLocal(returnUrl);
+
+            }
             ModelState.AddModelError("", "Invalid login credentials");
             return View(model);
         }
