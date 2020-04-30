@@ -95,7 +95,10 @@ namespace RealEstate.MVC.Controllers
                 return View("SignUp", signUpVm);
             }
             await signInManager.SignInAsync(appUser, true);
+            if (string.IsNullOrEmpty(returnUrl))
+                return RedirectToRoute("dashboard");
             return RedirectToLocal(returnUrl);
+
 
         }
         [HttpPost]
