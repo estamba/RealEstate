@@ -27,6 +27,7 @@ namespace RealEstate.Core.Entities
         public PropertyState State { get; set; }
         public bool IsDelete { get; set; }
 
+
         public ICollection<PropertyImage> PropertyImages { get; set; }
 
     }
