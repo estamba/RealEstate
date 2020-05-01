@@ -25,6 +25,8 @@ namespace RealEstate.Core.Entities
 
         public short StateId { get; set; }
         public PropertyState State { get; set; }
+
+
         public bool IsDelete { get; set; }
 
 
