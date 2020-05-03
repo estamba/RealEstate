@@ -3,23 +3,16 @@
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 <div class="team-1">
-    <div class="team-photo">
+    @{
+        var imgUrl = (Model.ImageId == null)
+            ? "/img/agent-image-placeholder.png"
+            : @Url.Action("GetImage","Document", new {ImageId = Model.ImageId});
+    }
+    <div class="team-photo" style="background-image: url('@imgUrl'); background-position: center; background-size: cover; height: 212px;">
         @{
             var name = Model.ApplicationUser.Name.Split(' ')[0].Trim()?.ToLower();
         }
         <a href="@Url.RouteUrl("agentProperties",new {Id= Model.Id, name= name })">
-            @{
-                if (Model.ImageId is null)
-                {
-                    <img src="~/img/agent-image-placeholder.png" alt="agent" class="img-fluid">
-
-                }
-                else
-                {
-                    <img src="@Url.Action("GetImage","Document", new {ImageId = Model.ImageId})" alt="agent" class="img-fluid" style="width:255px; height:212px">
-
-                }
-            }
         </a>
         <ul class="social-list clearfix">
             <li><a href="#" class="facebook"><i class="fa fa-facebook"></i></a></li>

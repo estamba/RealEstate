@@ -717,7 +717,7 @@ input[type=checkbox]:checked + label:before {
 }
 
 .main-header .company-logo img {
-    height: 50px;
+    height: 100px;
 }
 
 .logo img{
@@ -891,7 +891,7 @@ input[type=checkbox]:checked + label:before {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 0;
+    /* width: 0; */
 }
 
 .banner-bg {
@@ -2788,14 +2788,14 @@ footer {
 }
 
 .footer ul li a{
-    color: #7c7e83;
+    color: white;
 }
 
 .footer h4 {
     font-size: 22px;
     margin-bottom: 25px;
     font-weight: 500;
-    color: #c5c5c5;
+    color: white;
 }
 
 .footer .footer-item {
@@ -2817,7 +2817,7 @@ footer {
 }
 
 .footer a{
-    color: #7c7e83;
+    color: white;
 }
 
 .footer .footer-inner p {
@@ -2826,7 +2826,7 @@ footer {
 }
 
 .footer .footer-inner p a{
-    color: #7c7e83;
+    color: white;
 }
 
 .footer .recent-properties .listing-post-meta {
@@ -2835,7 +2835,7 @@ footer {
 }
 
 .footer .recent-properties .listing-post-meta a{
-    color: #7c7e83;
+    color: white;
 }
 
 .footer .recent-properties .media h5 a:hover{
@@ -2846,7 +2846,7 @@ footer {
     margin-bottom: 15px;
     font-size: 15px;
     font-weight: 500;
-    color: #7c7e83;
+    color: white;
     position: relative;
     padding-left: 30px;
 }
