@@ -82,6 +82,8 @@ namespace RealEstate.MVC.Controllers
         public async Task<IActionResult> Details(Guid Id)
         {
             var property = propertyService.GetProperty(Id);
+            if (property is null) return RedirectToAction("Index", "Home");
+
             var similarProperties = await propertyService.GetPropertiesByTypeAsync(property.TypeId,8);
             PropertySearchFormVm propertySearchFormVm = new PropertySearchFormVm()
             {
