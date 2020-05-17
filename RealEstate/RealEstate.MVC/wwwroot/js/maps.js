@@ -535,7 +535,7 @@ function generateMap(latitude, longitude, mapProvider, layout) {
     var propertiesMarkers = [];
 
     $.each(properties.data, function (index, property) {
-        var icon = '<img src="img/logos/black-logo.png">';
+        var icon = '<img src="img/logos/logo.jpeg">';
         if (property.type_icon) {
             icon = '<img src="' + property.type_icon + '">';
         }

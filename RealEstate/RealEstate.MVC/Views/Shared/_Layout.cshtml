@@ -93,7 +93,7 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
                 <a class="navbar-brand company-logo" asp-action="Index" asp-controller="Home">
-                    <img src="~/img/Free_Sample_By_Wix.jpeg" alt="logo">
+                    <img src="~/img/logos/logo.jpeg" alt="logo">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -267,27 +267,25 @@
             <div class="row">
                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                     <div class="footer-item clearfix">
-                        <img src="~/img/Free_Sample_By_Wix.jpeg" width="100" alt="logo" style="padding-bottom:20px">
+                        <img src="~/img/logos/logo.jpeg" width="100" height="100" alt="logo" style="padding-bottom:20px">
                         <ul class="contact-info">
                             <li>
-                                <i class="flaticon-pin"></i>20/F Green Road, Dhanmondi, Dhaka
+                                <i class="flaticon-pin"></i>Banjul
                             </li>
                             <li>
-                                <i class="flaticon-mail"></i><a href="mailto:sales@hotelempire.com">info@themevessel.com</a>
+                                <i class="flaticon-mail"></i><a href="mailto:support@kerrgi.com">support@kerrgi.com</a>
                             </li>
                             <li>
-                                <i class="flaticon-phone"></i><a href="tel:+55-417-634-7071">+0477 85X6 552</a>
+                                <i class="flaticon-phone"></i><a href="tel:+220 336 1244">+220 336 1244</a>
                             </li>
                             <li>
-                                <i class="flaticon-fax"></i>+0477 85X6 552
+                                <i class="flaticon-fax"></i>+220 336 1244
                             </li>
                         </ul>
                         <div class="clearfix"></div>
                         <div class="social-list-2">
                             <ul>
                                 <li><a href="#" class="facebook-bg"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#" class="twitter-bg"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#" class="google-bg"><i class="fa fa-google-plus"></i></a></li>
                                 <li><a href="#" class="linkedin-bg"><i class="fa fa-linkedin"></i></a></li>
                             </ul>
                         </div>
@@ -303,22 +301,18 @@
                                 <a href="#">Home</a>
                             </li>
                             <li>
-                                <a href="about.html">About Us</a>
+                                <a href="#">About Us</a>
+                            </li>
+                            
+                            <li>
+                                <a href="#">Contact Us</a>
                             </li>
                             <li>
-                                <a href="services.html">Services</a>
+                                <a href="@Url.RouteUrl("dashboard")">Dashboard</a>
                             </li>
+                            
                             <li>
-                                <a href="contact.html">Contact Us</a>
-                            </li>
-                            <li>
-                                <a href="dashboard.html">Dashboard</a>
-                            </li>
-                            <li>
-                                <a href="faq.html">Faq</a>
-                            </li>
-                            <li>
-                                <a href="my-profile.html">My Profile</a>
+                                <a href="@Url.Action("UpdateProfile","Account")">My Profile</a>
                             </li>
                             <li>
                                 <a href="@Url.Action("Add","Property")">Submit Property</a>

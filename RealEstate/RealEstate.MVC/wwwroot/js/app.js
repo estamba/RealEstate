@@ -4,7 +4,7 @@ $(function () {
 
     // Showing page loader
     $(window).on('load', function () {
-        populateColorPlates();
+        //populateColorPlates();
         setTimeout(function () {
             $(".page_loader").fadeOut("fast");
         }, 100);
@@ -64,19 +64,19 @@ $(function () {
                     $('.sticky-header').addClass('header-shrink');
                 }
                 if($('.do-sticky').length < 1) {
-                    $('.logo img').attr('src', '/img/logos/black-logo.png');
+                    $('.logo img').attr('src', '/img/logos/logo.jpeg');
                 }
             }
             else {
                 $('.sticky-header').removeClass('header-shrink');
                 if($('.do-sticky').length < 1 && $('.fixed-header').length == 0 && $('.fixed-header2').length == 0) {
-                    $('.logo img').attr('src', '/img/logos/logo.png');
+                    $('.logo img').attr('src', '/img/logos/logo.jpeg');
                 } else {
-                    $('.logo img').attr('src', '/img/logos/black-logo.png');
+                    $('.logo img').attr('src', '/img/logos/logo.jpeg');
                 }
             }
         } else {
-            $('.logo img').attr('src', '/img/logos/black-logo.png');
+            $('.logo img').attr('src', '/img/logos/logo.jpeg');
         }
     }
 
