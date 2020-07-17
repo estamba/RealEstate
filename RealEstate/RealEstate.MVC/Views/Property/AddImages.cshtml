@@ -1,0 +1,141 @@
+﻿@model Guid
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Views/Shared/_LayoutDasboard.cshtml";
+}
+
+<div class="col-lg-9 col-md-12 col-sm-12 col-pad">
+    <div class="content-area5 dashboard-content">
+        <div class="dashboard-header clearfix">
+            <div class="row">
+                <div class="col-sm-12 col-md-6"><h4>Submit Property</h4></div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="breadcrumb-nav">
+                        <ul>
+                            <li>
+                                <a href="index.html">Index</a>
+                            </li>
+                            <li>
+                                <a href="dashboard.html">Dashboard</a>
+                            </li>
+                            <li class="active">Submit Property</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="submit-address dashboard-list">
+            <form method="post" asp-controller="Property" asp-action="Add" enctype="multipart/form-data" id="myform">
+                <input name="Id" value="@Model" type="hidden" />
+                <h4 class="bg-grea-3">Property Gallery</h4>
+                <div class="row pad-20">
+                    <div class="col-lg-12">
+                        <div id="myDropZone" class="dropzone dropzone-design dz-clickable">
+                            <div class="dz-default dz-message"><span>Drop files here to upload</span></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row pad-20 justify-content-around">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <a class="btn btn-md button-theme"  href="@Url.Action("LoadTempPropertyData","Property",new { Id = Model })">Back</a>
+                        @*<button style="display:none" id="submitButton"></button>*@
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <button class="btn btn-md button-theme" id="submit" type="submit"> Images</button>
+                        @*<button style="display:none" id="submitButton"></button>*@
+                    </div>
+                </div>
+            </form>
+        </div>
+        <p class="sub-banner-2 text-center">© @DateTime.Now.Year Theme Vessel. Trademarks and brands are the property of their respective owners.</p>
+    </div>
+</div>
+@section styles {
+    <link href="~/css/custom.css" type="text/css" rel="stylesheet" />
+}
+
+@section scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        var detailsPageUrl = "/Property/Details/";
+        function myParamName() {
+            return "files";
+        }
+        $(function () {
+            $("div#myDropZone").dropzone({
+                url: "/Property/AddImages",
+                autoProcessQueue: false,
+                addRemoveLinks: true,
+                uploadMultiple: true,
+
+                paramName: myParamName,
+                maxFilesize: 2,
+                maxFiles: 4,
+                parallelUploads:4,
+                init: function () {
+
+                    var myDropzone = this;
+
+                    // Update selector to match your button
+                    $("#submit").click(function (e) {
+                        e.preventDefault();
+                        myDropzone.processQueue();
+                    });
+
+                    this.on('sending', function (file, xhr, formData) {
+                        // Append all form inputs to the formData Dropzone will POST
+                        console.log("here");
+                        var data = $('#myform').serializeArray();
+                        $.each(data, function (key, el) {
+                            formData.append(el.name, el.value);
+                        });
+                    });
+                     this.on('success', function (file, response) {
+                         // Append all form inputs to the formData Dropzone will POST
+                         var url = '@Url.Action("Details", "Property",new {Id= "_Id"   })';
+                         window.location.href = url.replace('_Id', response);
+
+                    });
+
+                }
+            });
+        });
+    </script>
+    <script>
+
+
+        $(document).ready(function () {
+            $('#SelectedRegion').change(function () {
+
+
+                $.ajax({
+                    url: "/Region/GetCities",
+                    type: "GET",
+                    data: { regionId: $("#SelectedRegion").val() }, //id of the state which is used to extract cities
+                    traditional: true,
+                    success: function (result) {
+                        $('#SelectedCity').empty();
+                        $('#SelectedCity').append('<option value="">Select a City</option>');
+
+
+                        $.each(result, function (i, item) {
+                            $("#SelectedCity").append('<option value="' + item["id"] + '"> ' + item["name"] + ' </option>');
+                            console.log(item);
+                        });
+                    },
+                    error: function () {
+                        //   alert("Something went wrong call the police");
+                    }
+                });
+            });
+        });
+    </script>
+
+
+
+
+
+
+}

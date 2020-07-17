@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using RealEstate.Core.Entities;
 using RealEstate.Core.Interfaces.Services.Agents;
 using RealEstate.Core.Interfaces.Services.Metadata;
@@ -54,13 +55,13 @@ namespace RealEstate.MVC.Controllers
             return View();
         }
         [Authorize]
-        public async Task<IActionResult> Add()
+        public async Task<IActionResult> Add(AddPropertyVm vm =null)
         {
             var regions = await regionService.GetRegionsAsync();
-            AddPropertyVm vm = new AddPropertyVm();
             
-            return View(await AddMetaDataAsync(vm));
+            return View(await AddMetaDataAsync(vm??new AddPropertyVm()));
         }
+
         [HttpPost]
         public async Task<IActionResult> Add(AddPropertyVm vm, IFormFileCollection files)
         {
@@ -74,11 +75,36 @@ namespace RealEstate.MVC.Controllers
             var agent = await agentService.GetAgentByApplicationUserIdAsync(userId);
             postPropertyModel.Documents = await GetDocuments(files);
             postPropertyModel.AgentId = agent.Id;
-            var property = addPropertyService.Add(postPropertyModel);
+            var Id = addPropertyService.AddTempPropertyInfo(new TempPropertyInfo() {Id= Guid.NewGuid(), Content = JsonConvert.SerializeObject(postPropertyModel) });
+            return RedirectToAction("AddImages", new {Id });
+        }
+
+        public IActionResult LoadTempPropertyData(Guid Id)
+        {
+            var propertyInfo = propertyService.GetTempPropertyInfo(Id);
+
+            var data = JsonConvert.DeserializeObject<PostPropertyModel>(propertyInfo.Content);
+            AddPropertyVm vm = mapper.Map< AddPropertyVm>(data);
+            return RedirectToAction("Add", vm);
+
+        }
+        public IActionResult AddImages(Guid Id)
+        {
+
+            return View(Id);
+        }
+        [HttpPost]
+        public  async Task<IActionResult> AddImages(Guid Id, IFormFileCollection files)
+        {
+
+            var propertyInfo = propertyService.GetTempPropertyInfo(Id);
+
+            var data = JsonConvert.DeserializeObject<PostPropertyModel>(propertyInfo.Content);
+            data.Documents = await GetDocuments(files);
+            var property = addPropertyService.Add(data);
             return Ok(property.Id);
         }
 
-       
         public async Task<IActionResult> Details(Guid Id)
         {
             var property = propertyService.GetProperty(Id);

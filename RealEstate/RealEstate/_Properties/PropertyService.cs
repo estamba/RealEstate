@@ -41,5 +41,9 @@ namespace RealEstate.Core.Services.Properties
         {
             return propertyRepository.GetPropertyById(Id);
         }
+        public TempPropertyInfo GetTempPropertyInfo(Guid Id)
+        {
+            return propertyRepository.GetTempPropertyInfo(Id);
+        }
     }
 }

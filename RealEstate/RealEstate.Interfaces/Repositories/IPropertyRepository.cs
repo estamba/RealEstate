@@ -15,5 +15,7 @@ namespace RealEstate.Core.Interfaces.Repositories
         List<Property> GetProperties(int count);
         PaginatedSearchResult<Property> Search(PropertySearchFilter searchFilter,int pageSize, int pageNumber);
         Task<List<Property>> GetPropertiesByAgentIDAsync(Guid Id, PropertySortOptions sortOptions);
+        void AddTempPropertyInfo(TempPropertyInfo tempPropertyInfo);
+        TempPropertyInfo GetTempPropertyInfo(Guid Id);
     }
 }

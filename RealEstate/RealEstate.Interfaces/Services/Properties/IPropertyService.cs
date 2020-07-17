@@ -12,7 +12,6 @@ namespace RealEstate.Core.Interfaces.Services.Properties
         Task<List<Property>> GetPropertiesByTypeAsync(short typeId, int count =0);
         List<Property> GetProperties(int count =0);
         Task<List<Property>> GetPropertiesByAgentIDAsync(Guid agentID, PropertySortOptions propertySortOptions = PropertySortOptions.Default);
-
-
+        TempPropertyInfo GetTempPropertyInfo(Guid Id);
     }
 }

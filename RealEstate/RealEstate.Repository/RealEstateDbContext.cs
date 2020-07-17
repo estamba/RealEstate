@@ -79,6 +79,8 @@ namespace RealEstate.Repository
         public DbSet<PropertyState> PropertyState { get; set; }
         public DbSet<Region> Region { get; set; }
         public DbSet<City> City { get; set; }
+        public DbSet<TempPropertyInfo> TempPropertyInfo { get; set; }
+
 
 
 

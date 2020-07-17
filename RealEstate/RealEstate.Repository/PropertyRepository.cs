@@ -147,5 +147,17 @@ namespace RealEstate.Repositories
             int pageCount = total / pageSize;
             return total > (pageCount * pageSize) ? pageCount + 1 : pageCount;
         }
+
+        public void AddTempPropertyInfo(TempPropertyInfo tempPropertyInfo)
+        {
+            dbContext.TempPropertyInfo.Add(tempPropertyInfo);
+            dbContext.SaveChanges();
+
+        }
+        public TempPropertyInfo GetTempPropertyInfo(Guid Id)
+        {
+            return dbContext.TempPropertyInfo.Find(Id);
+
+        }
     }
 }

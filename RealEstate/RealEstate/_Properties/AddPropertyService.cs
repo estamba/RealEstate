@@ -1,9 +1,11 @@
-﻿using RealEstate.Core.Entities;
+﻿using Newtonsoft.Json;
+using RealEstate.Core.Entities;
 using RealEstate.Core.Interfaces.Repositories;
 using RealEstate.Core.Interfaces.Services.Properties;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization.Json;
 using System.Text;
 
 namespace RealEstate.Core.Services.Properties
@@ -18,7 +20,13 @@ namespace RealEstate.Core.Services.Properties
         }
         public Property Add(PostPropertyModel postPropertyModel)
         {
-           
+            Property property = GetProperty(postPropertyModel);
+
+            return propertyRepository.Add(property);
+        }
+
+        private Property GetProperty(PostPropertyModel postPropertyModel)
+        {
             Property property = new Property()
             {
                 AgentId = postPropertyModel.AgentId,
@@ -27,17 +35,25 @@ namespace RealEstate.Core.Services.Properties
                 Description = postPropertyModel.Description,
                 Price = (decimal)postPropertyModel.Price,
                 Title = postPropertyModel.Title,
-                CityId =  postPropertyModel.SelectedCity.Value,
+                CityId = postPropertyModel.SelectedCity.Value,
                 StatusId = (short)postPropertyModel.SelectedStatus,
-                TypeId =  (short)postPropertyModel.SelectedType,
-                PropertyImages =  GetPropertyImages(postPropertyModel.Documents),
+                TypeId = (short)postPropertyModel.SelectedType,
+                PropertyImages = GetPropertyImages(postPropertyModel.Documents),
                 StateId = 2// Active
-               
-             
+
+
 
             };
+            return property;
+        }
 
-            return propertyRepository.Add(property);
+        public Guid AddTempPropertyInfo(TempPropertyInfo tempPropertyInfo)
+        {
+
+            
+            propertyRepository.AddTempPropertyInfo(tempPropertyInfo);
+            return tempPropertyInfo.Id;
+
         }
 
         public void Delete(Guid Id)
