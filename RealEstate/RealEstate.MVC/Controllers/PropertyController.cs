@@ -34,9 +34,10 @@ namespace RealEstate.MVC.Controllers
         private readonly IPropertyViewCountService viewCountService;
         private readonly IPropertySearchService propertySearchService;
         private readonly PropertyVmService propertyVmService;
+        private readonly ILocationService locationService;
 
         public PropertyController(ILocationService regionService, IMetadataService metadataService,IMapper mapper, UserManager<ApplicationUser> userManager, IAgentService agentService, IAddPropertyService addPropertyService, 
-            IPropertyService propertyService, CurrentUser currentUser, IPropertyViewCountService viewCountService, IPropertySearchService propertySearchService, PropertyVmService propertyVmService)
+            IPropertyService propertyService, CurrentUser currentUser, IPropertyViewCountService viewCountService, IPropertySearchService propertySearchService, PropertyVmService propertyVmService, ILocationService locationService)
         {
             this.regionService = regionService;
             this.metadataService = metadataService;
@@ -49,24 +50,23 @@ namespace RealEstate.MVC.Controllers
             this.viewCountService = viewCountService;
             this.propertySearchService = propertySearchService;
             this.propertyVmService = propertyVmService;
+            this.locationService = locationService;
         }
         public IActionResult Index()
         {
             return View();
         }
         [Authorize]
-        public async Task<IActionResult> Add(AddPropertyVm vm =null)
+        public async Task<IActionResult> Add()
         {
-            var regions = await regionService.GetRegionsAsync();
             
-            return View(await AddMetaDataAsync(vm??new AddPropertyVm()));
+            return View(await AddMetaDataAsync(new AddPropertyVm()));
         }
 
         [HttpPost]
         public async Task<IActionResult> Add(AddPropertyVm vm, IFormFileCollection files)
         {
-            var form = await
-                Request.ReadFormAsync();
+           
             if (!ModelState.IsValid) return View(await AddMetaDataAsync(vm));
 
             var postPropertyModel = mapper.Map<PostPropertyModel>(vm);
@@ -79,13 +79,17 @@ namespace RealEstate.MVC.Controllers
             return RedirectToAction("AddImages", new {Id });
         }
 
-        public IActionResult LoadTempPropertyData(Guid Id)
+        public async Task<IActionResult> LoadTempPropertyData(Guid Id)
         {
             var propertyInfo = propertyService.GetTempPropertyInfo(Id);
 
             var data = JsonConvert.DeserializeObject<PostPropertyModel>(propertyInfo.Content);
             AddPropertyVm vm = mapper.Map< AddPropertyVm>(data);
-            return RedirectToAction("Add", vm);
+
+            await AddMetaDataAsync(vm);
+            vm.Cities = GetCitiesSelectList(locationService.GetCities(vm.SelectedRegion));
+
+            return View("Add", await AddMetaDataAsync(vm));
 
         }
         public IActionResult AddImages(Guid Id)
@@ -188,7 +192,7 @@ namespace RealEstate.MVC.Controllers
                 SelectedType = property.TypeId,
                 SelectedRegion = property.City.RegionId,
                 Regions = GetRegions(regions),
-                Cities = GetCitySelectList(property.City)
+                Cities = GetCitiesSelectList(locationService.GetCities(property.City.RegionId))
             };
            return View(vm);
 
@@ -264,10 +268,19 @@ namespace RealEstate.MVC.Controllers
                 Value = x.Id.ToString()
             }).ToList();
         }
+        private List<SelectListItem> GetCitiesSelectList(List<City> cities)
+        {
 
-      
-       
-       
+            return cities.Select(x => new SelectListItem()
+            {
+                Text = x.Name,
+                Value = x.Id.ToString()
+            }).ToList();
+        }
+
+
+
+
         private static async Task<List<Document>> GetDocuments(IFormFileCollection files)
         {
             var documents = new List<Document>();
