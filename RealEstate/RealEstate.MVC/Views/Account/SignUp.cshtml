@@ -1,4 +1,4 @@
-﻿
+﻿@model SignUpVm
 @{
     ViewData["Title"] = "SignUp";
     Layout = "~/Views/Shared/_LayoutLogin.cshtml";
@@ -19,19 +19,19 @@
                 <!-- Form start-->
                 <form asp-action="SignUp" asp-controller="Account" method="post">
                     <div class="form-group">
-                        <input type="text" name="name" class="input-text" placeholder="Full Name">
+                        <input type="text" name="name" class="input-text" placeholder="Full Name" asp-for="Name">
                     </div>
                     <div class="form-group">
-                        <input type="email" name="emailAddress" class="input-text" placeholder="Email Address">
+                        <input type="email" name="emailAddress" class="input-text" placeholder="Email Address" asp-for="EmailAddress">
                     </div>
                     <div class="form-group">
-                        <input type="text" name="phoneNumber" class="input-text" placeholder="phone number">
+                        <input type="text" name="phoneNumber" class="input-text" placeholder="phone number" asp-for="PhoneNumber">
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password" class="input-text" placeholder="Password">
+                        <input type="password" name="password" class="input-text" placeholder="Password" asp-for="Password">
                     </div>
                     <div class="form-group">
-                        <input type="password" name="confirmPassword" class="input-text" placeholder="Confirm Password">
+                        <input type="password" name="confirmPassword" class="input-text" placeholder="Confirm Password" asp-for="ConfirmPassword">
                     </div>
                     <div class="form-group mb-0">
                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })

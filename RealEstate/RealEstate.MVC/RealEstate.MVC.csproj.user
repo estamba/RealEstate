@@ -10,7 +10,7 @@
     <WebStackScaffolding_ControllerDialogWidth>600</WebStackScaffolding_ControllerDialogWidth>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <ShowAllFiles>true</ShowAllFiles>
-    <ActiveDebugProfile>RealEstate.MVC</ActiveDebugProfile>
+    <ActiveDebugProfile>Docker</ActiveDebugProfile>
     <WebStackScaffolding_LayoutPageFile>~/Views/Shared/_LayoutDasboard.cshtml</WebStackScaffolding_LayoutPageFile>
     <NameOfLastUsedPublishProfile>kerrgi - Web Deploy</NameOfLastUsedPublishProfile>
   </PropertyGroup>
