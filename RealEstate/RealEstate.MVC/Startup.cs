@@ -106,6 +106,7 @@ namespace RealEstate.MVC
             services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(Startup));
             SeedData(services);
+            services.AddAntiforgery();
            // services.AddProgressiveWebApp();
         }
 
