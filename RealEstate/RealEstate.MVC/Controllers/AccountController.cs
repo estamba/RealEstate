@@ -113,7 +113,8 @@ namespace RealEstate.MVC.Controllers
                 Agent agent = new Agent()
                 {
                     ApplicationUserId = user.Id,
-                    Id = Guid.NewGuid()
+                    Id = Guid.NewGuid(),
+                    DateCreated = DateTime.Now
                 };
                 addAgentService.Add(agent);
                 await signInManager.SignInAsync(user, isPersistent: false);

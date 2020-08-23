@@ -41,15 +41,10 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link rel="stylesheet" type="text/css" href="~/css/ie10-viewport-bug-workaround.css">
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script  src="js/ie8-responsive-file-warning.js"></script><![endif]-->
+    
     <script src="~/js/ie-emulation-modes-warning.js"></script>
     @RenderSection("styles", false)
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script  src="js/html5shiv.min.js"></script>
-    <script  src="js/respond.min.js"></script>
-    <![endif]-->
+  
 </head>
 <body>
     @RenderSection("modal", false)
@@ -71,21 +66,11 @@
                         <li class="nav-item dropdown">
                             <a href="@Url.RouteUrl("dashboard")" class="nav-link">Dashboard</a>
                         </li>
-                        @*<li class="nav-item dropdown">
-                                <a href="messages.html" class="nav-link">Messages</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a href="bookings.html" class="nav-link">Bookings</a>
-                            </li>*@
+                     
                         <li class="nav-item dropdown">
                             <a href="@Url.RouteUrl("my-properties")" class="nav-link">My Properties</a>
                         </li>
-                        @*<li class="nav-item dropdown">
-                                <a href="my-invoices.html" class="nav-link">My Invoices</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a href="favorited-properties.html" class="nav-link">Favorited Properties</a>
-                            </li>*@
+                      
                         <li class="nav-item dropdown active">
                             <a href="@Url.Action("Add","Property")" class="nav-link">Submit Property</a>
                         </li>
@@ -160,13 +145,7 @@
                                 @*<li><a href="messages.html"><i class="flaticon-mail"></i> Messages <span class="nav-tag">5</span></a></li>
                                     <li><a href="bookings.html"><i class="flaticon-calendar"></i> Bookings</a></li>*@
                             </ul>
-                            @*<h4>Listings</h4>
-                                <ul>
-                                    <li><a href="@Url.RouteUrl("my-properties")"><i class="flaticon-apartment"></i>My Properties</a></li>
-                                    <li><a href="my-invoices.html"><i class="flaticon-bill"></i>My Invoices</a></li>
-                                    <li><a href="favorited-properties.html"><i class="flaticon-heart"></i>Favorited Properties</a></li>
-                                    <li class="active"><a href="@Url.Action("Add","Property")"><i class="flaticon-plus"></i>Submit Property</a></li>
-                                </ul>*@
+                         
                             <h4>Account</h4>
                             <ul>
                                 <li><a href="@Url.Action("UpdateProfile","Account")"><i class="flaticon-user"></i>Update Profile</a></li>

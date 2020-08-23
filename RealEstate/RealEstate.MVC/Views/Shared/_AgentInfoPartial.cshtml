@@ -31,7 +31,7 @@
 
             }
         }
-        <h6 class="flaticon-calendar"> Joined @DurationHelper.FormatDuration(DateTime.Now.AddDays(-10))</h6>
+        <h6 class="flaticon-calendar"> Joined @DurationHelper.FormatDuration(Model.DateCreated.GetValueOrDefault())</h6>
         <h6><a href="tel:@Model.ApplicationUser.PhoneNumber" class="fa fa-phone-square"> @Model.ApplicationUser.PhoneNumber</a></h6>
         <h6><a href="mailto: @Model.ApplicationUser.Email" class="flaticon-mail"> @Model.ApplicationUser.Email </a></h6>
 
