@@ -12,7 +12,7 @@
         <div class="breadcrumb-areas">
             <h1>Properties Grid</h1>
             <ul class="breadcrumbs">
-                <li><a href="index.html">Home</a></li>
+                <li><a href="@Url.Action("Index","Home")">Home</a></li>
                 <li class="active">Properties Grid</li>
             </ul>
         </div>
@@ -49,17 +49,27 @@
                                 </select>
                             </div>
 
-                            <div class="range-slider">
-                                <label>Price</label>
-                                <div data-min="0" data-max="150000" data-min-name="min_price" data-max-name="max_price" data-unit="USD" class="range-slider-ui ui-slider" aria-disabled="false">
 
-                                    <span class='min-value'></span>
-                                    <span class='max-value'></span>
-                                    <input class='current-min' type='hidden' asp-for="SearchFilter.MinPrice">
-                                    <input class='current-max' type='hidden' asp-for="SearchFilter.Maxprice">
-                                </div>
-                                <div class="clearfix"></div>
+                            <div class="form-group">
+                                <select class="form-control" asp-items="@Model.PriceRanges" asp-for="SearchFilter.SelectedPriceRange">
+                                    <option value="">Any Price</option>
+
+                                </select>
                             </div>
+
+
+
+                            @*<div class="range-slider">
+                                    <label>Price</label>
+                                    <div data-min="0" data-max="150000" data-min-name="min_price" data-max-name="max_price" data-unit="@AppSettings.Currency" class="range-slider-ui ui-slider" aria-disabled="false">
+
+                                        <span class='min-value'></span>
+                                        <span class='max-value'></span>
+                                        <input class='current-min' type='hidden' asp-for="SearchFilter.MinPrice">
+                                        <input class='current-max' type='hidden' asp-for="SearchFilter.Maxprice">
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>*@
 
                             <div class="form-group mb-0">
                                 <button class="search-button">Search</button>
@@ -102,7 +112,7 @@
                         <ul class="pagination">
                             @{
                                 var pageCount = Model.searchResult.PageCount;
-                                int maxCount = Math.Min(pageCount,5);
+                                int maxCount = Math.Min(pageCount, 5);
                                 int minCount = 1;
                                 if (Model.searchResult.Page >= maxCount)
                                 {
@@ -225,9 +235,9 @@
         $(document).ready(function () {
 
             var pageCount = @Model.searchResult.PageCount;
-        
+
             var pageNumber = @Model.searchResult.Page;
-         
+
             if (pageCount <= 1) $("#paginationDiv").hide();
 
             var activeElements = $("li>.active");

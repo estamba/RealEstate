@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using RealEstate.Core.Entities;
 using RealEstate.Core.Interfaces.Services.Metadata;
+using RealEstate.MVC.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace RealEstate.MVC.Services
@@ -51,6 +53,49 @@ namespace RealEstate.MVC.Services
             }
             return selectList;
         }
+        public List<SelectListItem> GetPriceRanges()
+        {
+            List<string> priceRanges = new List<string>();
+            priceRanges.AddRange(new List<string>()
+            {
+                "0-1,000",
+                "5,000-10,000",
+                "10,000-15,000",
+                "15,000-20,000",
+                "20,000-25,000",
+                "25,000-30,000",
+                "30,000-35,000",
+                "35,000+",
+
+
+
+            });
+            return priceRanges.Select(p => new SelectListItem()
+            {
+                Value = p,
+                Text = p
+
+            }).ToList();
+        }
+        public PriceRange GetPriceRange(string rawPriceRange)
+        {
+            if (string.IsNullOrEmpty(rawPriceRange) || rawPriceRange.Contains("+"))
+                return PriceRange.DefaultRange;
+
+            var prices = rawPriceRange.Split('-');
+
+            if (prices.Length != 2) return PriceRange.DefaultRange;
+
+            if (!int.TryParse(prices[0].Trim(), NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out int minPrice)) return PriceRange.DefaultRange;
+            if (!int.TryParse(prices[1].Trim(), NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out int maxPrice)) return PriceRange.DefaultRange;
+
+            return new PriceRange()
+            {
+                MinPrice = minPrice,
+                MaxPrice = maxPrice
+            };
+
+        }
         private static string GetSortingDescription(PropertySortOptions sortOption)
         {
             string description = "Default";
@@ -74,6 +119,6 @@ namespace RealEstate.MVC.Services
             }
             return description;
         }
-       
+
     }
 }

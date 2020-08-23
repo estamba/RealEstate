@@ -60,9 +60,28 @@ namespace RealEstate.MVC.Models
 
         public IEnumerable<SelectListItem> PropertyTypes { get; set; }
         public IEnumerable<SelectListItem> SortOptions { get; set; }
+        public IEnumerable<SelectListItem> PriceRanges { get; set; }
+
 
         public PropertySearchFilter SearchFilter { get; set; }
         public PaginatedSearchResult<Property> searchResult { get; set; }
+    }
+    public class PriceRange
+    {
+        public decimal MinPrice { get; set; }
+        public decimal MaxPrice { get; set; }
+        public static PriceRange DefaultRange
+        {
+            get
+            {
+                return new PriceRange()
+                {
+                    MinPrice = 0,
+                    MaxPrice = int.MaxValue
+                };
+            }
+        }
+
     }
     public class AgentPropertiesVM
     {

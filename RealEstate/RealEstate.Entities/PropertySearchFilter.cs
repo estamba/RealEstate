@@ -11,7 +11,8 @@ namespace RealEstate.Core.Entities
         public string Title { get; set; }
         public decimal? MinPrice { get; set; }
         public decimal? Maxprice { get; set; }
-        public int? StatusId  { get; set; }
+        public int? StatusId { get; set; }
+        public string SelectedPriceRange { get; set; }
         public PropertySortOptions SortOption { get; set; }
 
 

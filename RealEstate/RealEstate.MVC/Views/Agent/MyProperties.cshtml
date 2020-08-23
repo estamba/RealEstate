@@ -47,23 +47,24 @@
                         <select class="selectpicker search-fields" name="default-order" id="sortOption" asp-items="@Model.SortOptions"></select>
                     </div>
                     @*<div class="sorting-options float-right">
-                <a class="change-view-btn active-view-btn" id="list"><i class="fa fa-th-list"></i></a>
-                <a class="change-view-btn" id="grid"><i class="fa fa-th-large"></i></a>
-            </div>*@
+                        <a class="change-view-btn active-view-btn" id="list"><i class="fa fa-th-list"></i></a>
+                        <a class="change-view-btn" id="grid"><i class="fa fa-th-large"></i></a>
+                    </div>*@
                 </div>
             </div>
             <div class="dashboard-list">
 
                 <table class="manage-table">
                     <tbody id="tableBody">
-                      
+
                         @await Html.PartialAsync("_MyPropertiesPartial", Model?.properties)
 
                     </tbody>
                 </table>
             </div>
         </div>
-        <p class="sub-banner-2 text-center">© 2019 Theme Vessel. Trademarks and brands are the property of their respective owners.</p>
+        <p class="sub-banner-2 text-center">© @AppSettings.AppName @DateTime.Now.Year </p>
+
     </div>
 </div>
 

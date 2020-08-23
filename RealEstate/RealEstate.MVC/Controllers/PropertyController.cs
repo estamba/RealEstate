@@ -153,6 +153,10 @@ namespace RealEstate.MVC.Controllers
         public IActionResult Search(PropertySearchFilter searchFilter, int page = 1)
         {
 
+            var priceRange = propertyVmService.GetPriceRange(searchFilter.SelectedPriceRange);
+            searchFilter.MinPrice = priceRange.MinPrice;
+            searchFilter.Maxprice = priceRange.MaxPrice;
+
             var data = propertySearchService.Search(searchFilter ?? new PropertySearchFilter(), pageNumber: page);
             var vm = new PropertySearchVM()
             {
@@ -160,7 +164,8 @@ namespace RealEstate.MVC.Controllers
                 SearchFilter = searchFilter,
                 PropertyStatuses = propertyVmService.GetPropertyStatuses(),
                 PropertyTypes = propertyVmService.GetPropertyTypes(),
-                SortOptions = propertyVmService.GetSortingOptions()
+                SortOptions = propertyVmService.GetSortingOptions(),
+                PriceRanges = propertyVmService.GetPriceRanges()
             };
             return View(vm);
         }

@@ -11,7 +11,7 @@
             <td class="title-container">
                 <h2><a href="#">@property.Title</a></h2>
                 <h5 class="d-none d-xl-block d-lg-block d-md-block"><i class="flaticon-pin"></i>@property.City.Name </h5>
-                <h6 class="table-property-price">GMD @property.Price</h6>
+                <h6 class="table-property-price">@AppSettings.Currency @String.Format("{0:0.00}", property.Price)</h6>
                 @{
                     if (state == "sold")
                     {

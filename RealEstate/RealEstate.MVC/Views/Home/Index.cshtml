@@ -61,7 +61,7 @@
                             <div class="property-thumbnail">
                                 <a href="@Url.Action("Details","property", new { Id = property.Id})" class="property-img">
                                     <div class="tag">Featured</div>
-                                    <div class="price-box"><span>GMD @property.Area.00</span></div>
+                                    <div class="price-box"><span>@AppSettings.Currency @String.Format("{0:0.00}", property.Price)</span></div>
                                     <img class="d-block w-100 property-list" src="@Url.Action("GetImage", "Document", new { ImageId = property.PropertyImages.FirstOrDefault()?.ImageId })" alt="properties">
                                 </a>
                             </div>
