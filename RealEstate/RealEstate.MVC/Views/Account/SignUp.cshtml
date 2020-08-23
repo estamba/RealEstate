@@ -18,6 +18,8 @@
                 <h3>Create an account</h3>
                 <!-- Form start-->
                 <form asp-action="SignUp" asp-controller="Account" method="post">
+                    @Html.AntiForgeryToken()
+
                     <div class="form-group">
                         <input type="text" name="name" class="input-text" placeholder="Full Name" asp-for="Name">
                     </div>
